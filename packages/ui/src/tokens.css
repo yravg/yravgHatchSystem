@@ -1,0 +1,41 @@
+/* GENERATED from specs/design/tokens.json by `pnpm gen:tokens`. Do not edit. Brand.* is provisional (logo pending). */
+:root {
+  --hs-brand-primary: #B4532A;
+  --hs-brand-primary-hover: #9A4521;
+  --hs-brand-primary-ink: #FFFFFF;
+  --hs-brand-primary-tint: #F6E7DF;
+  --hs-brand-on-dark: #E8875C;
+  --hs-canvas: #FAF9F5;
+  --hs-surface: #FFFFFF;
+  --hs-surface-2: #F3F0E8;
+  --hs-line: #E6E2D8;
+  --hs-line-strong: #C9C3B5;
+  --hs-ink: #1F1F1F;
+  --hs-ink-dim: #55524C;
+  --hs-ink-faint: #76726A;
+  --hs-ok: #2F7A4F;
+  --hs-warn: #8A5A0B;
+  --hs-danger: #8E3B24;
+  --hs-focus: #1D5FD1;
+  --hs-font: Inter, 'Noto Sans', system-ui, sans-serif;
+  --hs-mono: 'JetBrains Mono', 'DejaVu Sans Mono', ui-monospace, monospace;
+  --hs-type-ops-xs: 12px/16px;
+  --hs-type-ops-sm: 14px/20px;
+  --hs-space-2: 8px;
+  --hs-space-3: 12px;
+  --hs-space-4: 16px;
+  --hs-radius-sm: 6px;
+  --hs-radius-md: 8px;
+  --hs-size-touch-min: 44px;
+}
+.hs-dark {
+  --hs-canvas: #121110;
+  --hs-surface: #1E1C1A;
+  --hs-surface-2: #2A2724;
+  --hs-line: #3A3632;
+  --hs-ink: #F4F1EA;
+  --hs-ink-dim: #C9C3B8;
+  --hs-ink-faint: #9C968C;
+  --hs-focus: #FFD54A;
+  --hs-brand-primary: var(--hs-brand-on-dark);
+}

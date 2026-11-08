@@ -1,0 +1,165 @@
+v26.13.0
+10.33.0
+openjdk version "21.0.13" 2026-10-20 LTS
+Gradle 9.9.0
+10.0.403
+== pnpm lint
+
+> yravg-hatchsystem@ lint /srv/hatch/wt/t01
+> eslint .
+
+EXIT[pnpm lint]=0
+== pnpm typecheck
+
+> yravg-hatchsystem@ typecheck /srv/hatch/wt/t01
+> tsc -p tsconfig.json --noEmit && pnpm -r --if-present typecheck
+
+Scope: 6 of 7 workspace projects
+
+> @yravg/contracts@0.0.0 typecheck /srv/hatch/wt/t01/packages/contracts
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/ui@0.0.0 typecheck /srv/hatch/wt/t01/packages/ui
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/web@0.0.0 typecheck /srv/hatch/wt/t01/apps/web
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/domain@0.0.0 typecheck /srv/hatch/wt/t01/packages/domain
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/api@0.0.0 typecheck /srv/hatch/wt/t01/services/api
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/worker@0.0.0 typecheck /srv/hatch/wt/t01/services/worker
+> tsc -p tsconfig.json --noEmit
+
+EXIT[pnpm typecheck]=0
+== pnpm test
+
+> yravg-hatchsystem@ test /srv/hatch/wt/t01
+> vitest run
+
+
+ RUN  v3.2.7 /srv/hatch/wt/t01
+
+ ✓ tools/ticket-dispatch.test.ts (9 tests) 163ms
+ ✓ services/api/test/app.test.ts (5 tests) 44ms
+ ✓ tests/contracts/secrets.test.ts (2 tests) 6ms
+ ✓ tests/contracts/generated.test.ts (4 tests) 6ms
+ ✓ packages/domain/test/domain.test.ts (23 tests) 11ms
+ ✓ tests/contracts/protocol.test.ts (15 tests) 9ms
+ ✓ packages/ui/test/tokens.test.ts (8 tests) 6ms
+
+ Test Files  7 passed (7)
+      Tests  66 passed (66)
+   Start at  16:49:54
+   Duration  2.11s (transform 176ms, setup 0ms, collect 579ms, tests 246ms, environment 1ms, prepare 391ms)
+
+EXIT[pnpm test]=0
+== pnpm validate:spec
+
+> yravg-hatchsystem@ validate:spec /srv/hatch/wt/t01
+> node tools/validate-spec.ts
+
+{
+  "status": "PASS",
+  "scope": "Structural specification traceability only; no runtime/browser/hardware/payment tests performed",
+  "checked_at_Asia_Shanghai": "2026-11-09T00:50:18.941867+08:00",
+  "requirements": 1089,
+  "canonical_vertical_slices": 54,
+  "own_gap_requirements": 15,
+  "tickets": 54,
+  "team_tickets": 13,
+  "dispositions": {
+    "ticket": 840,
+    "deferred": 104,
+    "out-of-scope": 145
+  },
+  "checks": 16764,
+  "passed": 16764,
+  "errors": []
+}
+EXIT[pnpm validate:spec]=0
+== pnpm --filter @yravg/web build
+
+> @yravg/web@0.0.0 build /srv/hatch/wt/t01/apps/web
+> next build
+
+▲ Next.js 16.4.5 (Turbopack)
+✓ Running next.config.ts took 29ms
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 7.8s
+  Running TypeScript ...
+  Finished TypeScript in 2.5s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/4) ...
+  Generating static pages using 3 workers (1/4) 
+  Generating static pages using 3 workers (2/4) 
+  Generating static pages using 3 workers (3/4) 
+✓ Generating static pages using 3 workers (4/4) in 139ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+└ ○ /icon.svg
+
+
+○  (Static)  prerendered as static content
+
+EXIT[pnpm --filter @yravg/web build]=0
+== playwright
+
+Running 1 test using 1 worker
+
+  ✘  1 tests/e2e/ticket-01.spec.ts:5:1 › scaffold web app renders honestly in Bahasa Indonesia (2ms)
+
+
+  1) tests/e2e/ticket-01.spec.ts:5:1 › scaffold web app renders honestly in Bahasa Indonesia ───────
+
+    Error: browserType.launch: Target page, context or browser has been closed
+    Browser logs:
+
+    <launching> /srv/hatch/tools/pw-browsers/chromium-1254/chrome-linux64/chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-FzPkWk --remote-debugging-pipe --no-startup-window
+    <launched> pid=56334
+    [pid=56334][err] /srv/hatch/tools/pw-browsers/chromium-1254/chrome-linux64/chrome: error while loading shared libraries: libatk-1.0.so.0: cannot open shared object file: No such file or directory
+    Call log:
+      - <launching> /srv/hatch/tools/pw-browsers/chromium-1254/chrome-linux64/chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-FzPkWk --remote-debugging-pipe --no-startup-window
+      - <launched> pid=56334
+      - [pid=56334][err] /srv/hatch/tools/pw-browsers/chromium-1254/chrome-linux64/chrome: error while loading shared libraries: libatk-1.0.so.0: cannot open shared object file: No such file or directory
+      - [pid=56334] <gracefully close start>
+      - [pid=56334] <kill>
+      - [pid=56334] <will force kill>
+      - [pid=56334] exception while trying to kill process: Error: kill ESRCH
+      - [pid=56334] <process did exit: exitCode=127, signal=null>
+      - [pid=56334] starting temporary directories cleanup
+      - [pid=56334] finished temporary directories cleanup
+      - [pid=56334] <gracefully close end>
+
+
+    Error Context: test-results/ticket-01-scaffold-web-app-43643-onestly-in-Bahasa-Indonesia/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ticket-01-scaffold-web-app-43643-onestly-in-Bahasa-Indonesia/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/ticket-01-scaffold-web-app-43643-onestly-in-Bahasa-Indonesia/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests/e2e/ticket-01.spec.ts:5:1 › scaffold web app renders honestly in Bahasa Indonesia ────────
+EXIT[playwright]=1
+ALLDONE

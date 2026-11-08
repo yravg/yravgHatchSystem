@@ -1,0 +1,218 @@
+v26.13.0
+== pnpm install --frozen-lockfile
+Scope: all 7 workspace projects
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +224
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 224, reused 224, downloaded 0, added 224, done
+
+devDependencies:
++ @eslint/js 9.39.5
++ @playwright/test 1.65.0
++ @types/node 24.19.2
++ @yravg/contracts 0.0.0 <- packages/contracts
++ @yravg/domain 0.0.0 <- packages/domain
++ ajv 8.20.0
++ eslint 9.39.5
++ typescript 5.9.3
++ typescript-eslint 8.72.1
++ vitest 3.2.7
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│   Ignored build scripts: esbuild@0.28.2.                                     │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Done in 1.4s using pnpm v10.33.0
+EXIT[pnpm install --frozen-lockfile]=0
+== pnpm lint
+
+> yravg-hatchsystem@ lint /srv/hatch/tmp/t01-clean
+> eslint .
+
+EXIT[pnpm lint]=0
+== pnpm typecheck
+
+> yravg-hatchsystem@ typecheck /srv/hatch/tmp/t01-clean
+> tsc -p tsconfig.json --noEmit && pnpm -r --if-present typecheck
+
+Scope: 6 of 7 workspace projects
+
+> @yravg/contracts@0.0.0 typecheck /srv/hatch/tmp/t01-clean/packages/contracts
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/ui@0.0.0 typecheck /srv/hatch/tmp/t01-clean/packages/ui
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/web@0.0.0 typecheck /srv/hatch/tmp/t01-clean/apps/web
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/domain@0.0.0 typecheck /srv/hatch/tmp/t01-clean/packages/domain
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/api@0.0.0 typecheck /srv/hatch/tmp/t01-clean/services/api
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/worker@0.0.0 typecheck /srv/hatch/tmp/t01-clean/services/worker
+> tsc -p tsconfig.json --noEmit
+
+EXIT[pnpm typecheck]=0
+== pnpm test
+
+> yravg-hatchsystem@ test /srv/hatch/tmp/t01-clean
+> vitest run
+
+
+ RUN  v3.2.7 /srv/hatch/tmp/t01-clean
+
+ ✓ packages/domain/test/domain.test.ts (23 tests) 13ms
+ ✓ packages/ui/test/tokens.test.ts (8 tests) 7ms
+ ✓ tools/ticket-dispatch.test.ts (9 tests) 190ms
+ ✓ tests/contracts/protocol.test.ts (15 tests) 10ms
+ ✓ tests/contracts/generated.test.ts (4 tests) 8ms
+ ✓ services/api/test/app.test.ts (5 tests) 64ms
+ ✓ tests/contracts/secrets.test.ts (2 tests) 4ms
+
+ Test Files  7 passed (7)
+      Tests  66 passed (66)
+   Start at  16:53:36
+   Duration  2.30s (transform 171ms, setup 0ms, collect 642ms, tests 296ms, environment 1ms, prepare 407ms)
+
+EXIT[pnpm test]=0
+== pnpm test:ticket -- 01
+
+> yravg-hatchsystem@ test:ticket /srv/hatch/tmp/t01-clean
+> node tools/ticket-dispatch.ts -- 01
+
+JSON report written to /tmp/ticket-dispatch-Srkg6x/report.json
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.9.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :contracts:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :contracts:processResources NO-SOURCE
+> Task :contracts:processTestResources
+> Task :contracts:compileKotlin
+> Task :contracts:compileJava NO-SOURCE
+> Task :contracts:classes UP-TO-DATE
+> Task :contracts:jar
+> Task :contracts:compileTestKotlin
+> Task :contracts:compileTestJava NO-SOURCE
+> Task :contracts:testClasses
+> Task :contracts:test
+
+[Incubating] Problems report is available at: file:///srv/hatch/tmp/t01-clean/agents/android-tv/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.9.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 22s
+5 actionable tasks: 5 executed
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.9.0/userguide/configuration_cache_enabling.html
+  Determining projects to restore...
+  Restored /srv/hatch/tmp/t01-clean/agents/Hatch.Contracts/Hatch.Contracts.csproj (in 78 ms).
+  Restored /srv/hatch/tmp/t01-clean/agents/Hatch.Contracts.Tests/Hatch.Contracts.Tests.csproj (in 224 ms).
+  Hatch.Contracts -> /srv/hatch/tmp/t01-clean/agents/Hatch.Contracts/bin/Debug/net10.0/Hatch.Contracts.dll
+  Hatch.Contracts.Tests -> /srv/hatch/tmp/t01-clean/agents/Hatch.Contracts.Tests/bin/Debug/net10.0/Hatch.Contracts.Tests.dll
+Test run for /srv/hatch/tmp/t01-clean/agents/Hatch.Contracts.Tests/bin/Debug/net10.0/Hatch.Contracts.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:     6, Skipped:     0, Total:     6, Duration: 113 ms - Hatch.Contracts.Tests.dll (net10.0)
+
+ticket 01: Fondasi monorepo dan kontrak domain
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: lease.json canonical form equals the golden
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: command.json canonical form equals the golden
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: ack.json canonical form equals the golden
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: error.json canonical form equals the golden
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: payment.json canonical form equals the golden
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: every fixture file has a golden and a validator case
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: keeps IDR above 2^53 exact
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: sorts keys by UTF-16 code unit
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: escapes only quote, backslash and control characters
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: missing required field
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: unknown member
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: bad enum value
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: money must be a decimal string
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: timestamps must be UTC with Z
+PASS     HS-01 / AC-HS-01  tests/contracts/generated.test.ts :: committed files equal a fresh generation
+PASS     HS-01 / AC-HS-01  tests/contracts/generated.test.ts :: all three targets declare every schema type and every member name
+PASS     HS-01 / AC-HS-01  tests/contracts/generated.test.ts :: optional members are nullable in Kotlin and .NET
+PASS     HS-01 / AC-HS-01  tests/contracts/generated.test.ts :: the generator refuses schema features
+PASS     HS-01 / AC-HS-01  tests/contracts/secrets.test.ts :: detector flags each secret shape
+PASS     HS-01 / AC-HS-01  tests/contracts/secrets.test.ts :: every file under packages/contracts/fixtures is clean
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: parses decimal strings to bigint and back
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: rejects numbers, floats, negatives
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: same key + same payload replays the first result and runs the effect once
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: same key + different payload is IDEMPOTENCY_CONFLICT (409) with no new effect
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: a different key with the same payload is a separate request
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: is scoped by tenant, actor and route
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: a failed effect stores nothing
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: rejects a missing or non-UUID key
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: cross-tenant id: typed error and the mutation never runs
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: role without permission: typed error and the mutation never runs
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: stale version: typed error and the mutation never runs
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: cross-tenant denial does not leak existence
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: AUTH_FORBIDDEN maps to status 403
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: VALIDATION_FAILED maps to status 400
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: refuses details that could carry secrets or stack traces
+PASS     HS-01 / AC-HS-01  services/api/test/app.test.ts :: GET /api/v1/health returns the success envelope
+PASS     HS-01 / AC-HS-01  services/api/test/app.test.ts :: unknown route: 404 NOT_FOUND envelope
+PASS     HS-01 / AC-HS-01  services/api/test/app.test.ts :: AUTH_FORBIDDEN is 403 with code and messageKey, and no secrets
+PASS     HS-01 / AC-HS-01  services/api/test/app.test.ts :: malformed JSON body: 400 VALIDATION_FAILED
+PASS     HS-01 / AC-HS-01  services/api/test/app.test.ts :: unexpected failure: 500 INTERNAL_ERROR
+PASS     HS-01 / AC-HS-01  tools/ticket-dispatch.test.ts :: fails when a mandatory test file is missing
+PASS     HS-01 / AC-HS-01  tools/ticket-dispatch.test.ts :: fails when the named test is absent from a file that did run
+PASS     HS-01 / AC-HS-01  tools/ticket-dispatch.test.ts :: fails on failed, skipped and todo results
+PASS     HS-01 / AC-HS-01  tools/ticket-dispatch.test.ts :: exits 1 for a ticket with nothing registered
+PASS     HS-01 / AC-HS-01  tools/ticket-dispatch.test.ts :: exits 1 when the manifest points at a test file that does not exist
+PASS     HS-V02-15 / AC-HS-V02-15  packages/ui/test/tokens.test.ts :: committed tokens.css equals a fresh build
+PASS     HS-V02-15 / AC-HS-V02-15  packages/ui/test/tokens.test.ts :: every value equals the design desk's published tailwind.tokens.css
+PASS     HS-V02-15 / AC-HS-V02-15  packages/ui/test/tokens.test.ts :: only hex colours that exist in tokens.json appear
+PASS     HS-V02-15 / AC-HS-V02-15  packages/ui/test/tokens.test.ts :: text pairs used by the table and the trust strip meet WCAG AA
+PASS     HS-V02-15 / AC-HS-V02-15  packages/ui/test/tokens.test.ts :: ticket 01 is the primary owner of exactly HS-CMP-023 and HS-CMP-058
+PASS     HS-V02-15 / AC-HS-V02-15  packages/ui/test/tokens.test.ts :: brand colours are declared provisional
+PASS     HS-V02-15 / AC-HS-V02-15  packages/ui/test/tokens.test.ts :: the web scaffold uses tokens only
+PASS     HS-01 external kotlin-canonical-equality: Kotlin parses the shared fixtures through the generated models and must emit the same canonical JSON as the TypeScript golden files.
+PASS     HS-01 external dotnet-canonical-equality: .NET parses the shared fixtures through the generated models and must emit the same canonical JSON as the TypeScript golden files.
+
+OK ticket 01
+EXIT[pnpm test:ticket -- 01]=0
+Fetching distribution.
+Downloading https://services.gradle.org/distributions/gradle-9.9.0-bin.zip
+............10%.............20%.............30%.............40%.............50%.............60%.............70%............80%.............90%.............100%
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.9.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :contracts:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :contracts:compileKotlin UP-TO-DATE
+> Task :contracts:compileJava NO-SOURCE
+> Task :contracts:processResources NO-SOURCE
+> Task :contracts:classes UP-TO-DATE
+> Task :contracts:jar UP-TO-DATE
+> Task :contracts:compileTestKotlin UP-TO-DATE
+> Task :contracts:compileTestJava NO-SOURCE
+> Task :contracts:processTestResources UP-TO-DATE
+> Task :contracts:testClasses UP-TO-DATE
+> Task :contracts:test UP-TO-DATE
+
+[Incubating] Problems report is available at: file:///srv/hatch/tmp/t01-clean/agents/android-tv/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.9.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 13s
+5 actionable tasks: 5 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.9.0/userguide/configuration_cache_enabling.html
+EXIT[./gradlew :contracts:test]=0
+ALLDONE

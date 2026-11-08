@@ -1,0 +1,12 @@
+{
+  "status": "RECEIVED",
+  "verificationLevel": "COMMANDED_ONLY",
+  "observedAt": "2026-11-08T14:00:01Z",
+  "bootId": "77777777-7777-4777-8777-777777777777",
+  "desiredRevision": 12,
+  "sequence": 42,
+  "authorityEpoch": 7,
+  "deviceId": "44444444-4444-4444-8444-444444444444",
+  "commandId": "66666666-6666-4666-8666-666666666666",
+  "protocolVersion": 1
+}

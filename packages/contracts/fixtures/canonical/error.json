@@ -1,0 +1,1 @@
+{"error":{"code":"IDEMPOTENCY_CONFLICT","details":{"field":"expectedRevision","reason":"stale\"revision"},"messageKey":"error.idempotencyConflict","retryable":false},"requestId":"req-fixture-0001"}

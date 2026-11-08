@@ -1,0 +1,16 @@
+node_modules/
+.next/
+dist/
+coverage/
+test-results/
+playwright-report/
+.checkpoints/
+*.tsbuildinfo
+# .NET / Gradle build output
+bin/
+obj/
+build/
+.gradle/
+
+# Binary evidence (screenshots, traces) stays untracked; hashes are recorded in requirements-evidence.json
+specs/tickets/*/evidence/artifacts/

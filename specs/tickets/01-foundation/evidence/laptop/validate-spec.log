@@ -1,0 +1,22 @@
+
+> yravg-hatchsystem@ validate:spec E:\dev\yravgHatchSystem\.claude\worktrees\agent-a5837faecc15621c3
+> node tools/validate-spec.ts
+
+{
+  "status": "PASS",
+  "scope": "Structural specification traceability only; no runtime/browser/hardware/payment tests performed",
+  "checked_at_Asia_Shanghai": "2026-11-09T00:24:16.516364+08:00",
+  "requirements": 1089,
+  "canonical_vertical_slices": 54,
+  "own_gap_requirements": 15,
+  "tickets": 54,
+  "team_tickets": 13,
+  "dispositions": {
+    "ticket": 840,
+    "deferred": 104,
+    "out-of-scope": 145
+  },
+  "checks": 16764,
+  "passed": 16764,
+  "errors": []
+}

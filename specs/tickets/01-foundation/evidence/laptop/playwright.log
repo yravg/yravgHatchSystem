@@ -1,0 +1,6 @@
+
+Running 1 test using 1 worker
+
+  ok 1 tests\e2e\ticket-01.spec.ts:5:1 › scaffold web app renders honestly in Bahasa Indonesia (1.1s)
+
+  1 passed (5.7s)

@@ -1,0 +1,117 @@
+{
+  "01": {
+    "title": "Fondasi monorepo dan kontrak domain",
+    "requirements": {
+      "HS-01": {
+        "acceptance": "AC-HS-01",
+        "tests": [
+          {
+            "file": "tests/contracts/protocol.test.ts",
+            "names": [
+              "lease.json canonical form equals the golden",
+              "command.json canonical form equals the golden",
+              "ack.json canonical form equals the golden",
+              "error.json canonical form equals the golden",
+              "payment.json canonical form equals the golden",
+              "every fixture file has a golden and a validator case",
+              "keeps IDR above 2^53 exact",
+              "sorts keys by UTF-16 code unit",
+              "escapes only quote, backslash and control characters",
+              "missing required field",
+              "unknown member",
+              "bad enum value",
+              "money must be a decimal string",
+              "timestamps must be UTC with Z"
+            ]
+          },
+          {
+            "file": "tests/contracts/generated.test.ts",
+            "names": [
+              "committed files equal a fresh generation",
+              "all three targets declare every schema type and every member name",
+              "optional members are nullable in Kotlin and .NET",
+              "the generator refuses schema features"
+            ]
+          },
+          {
+            "file": "tests/contracts/secrets.test.ts",
+            "names": ["detector flags each secret shape", "every file under packages/contracts/fixtures is clean"]
+          },
+          {
+            "file": "packages/domain/test/domain.test.ts",
+            "names": [
+              "parses decimal strings to bigint and back",
+              "rejects numbers, floats, negatives",
+              "same key + same payload replays the first result and runs the effect once",
+              "same key + different payload is IDEMPOTENCY_CONFLICT (409) with no new effect",
+              "a different key with the same payload is a separate request",
+              "is scoped by tenant, actor and route",
+              "a failed effect stores nothing",
+              "rejects a missing or non-UUID key",
+              "cross-tenant id: typed error and the mutation never runs",
+              "role without permission: typed error and the mutation never runs",
+              "stale version: typed error and the mutation never runs",
+              "cross-tenant denial does not leak existence",
+              "AUTH_FORBIDDEN maps to status 403",
+              "VALIDATION_FAILED maps to status 400",
+              "refuses details that could carry secrets or stack traces"
+            ]
+          },
+          {
+            "file": "services/api/test/app.test.ts",
+            "names": [
+              "GET /api/v1/health returns the success envelope",
+              "unknown route: 404 NOT_FOUND envelope",
+              "AUTH_FORBIDDEN is 403 with code and messageKey, and no secrets",
+              "malformed JSON body: 400 VALIDATION_FAILED",
+              "unexpected failure: 500 INTERNAL_ERROR"
+            ]
+          },
+          {
+            "file": "tools/ticket-dispatch.test.ts",
+            "names": [
+              "fails when a mandatory test file is missing",
+              "fails when the named test is absent from a file that did run",
+              "fails on failed, skipped and todo results",
+              "exits 1 for a ticket with nothing registered",
+              "exits 1 when the manifest points at a test file that does not exist"
+            ]
+          }
+        ],
+        "external": [
+          {
+            "id": "kotlin-canonical-equality",
+            "tool": "gradle",
+            "cwd": "agents/android-tv",
+            "command": ["gradle", "--no-daemon", ":contracts:test"],
+            "note": "Kotlin parses the shared fixtures through the generated models and must emit the same canonical JSON as the TypeScript golden files."
+          },
+          {
+            "id": "dotnet-canonical-equality",
+            "tool": "dotnet",
+            "cwd": "agents",
+            "command": ["dotnet", "test", "Hatch.Contracts.Tests/Hatch.Contracts.Tests.csproj"],
+            "note": ".NET parses the shared fixtures through the generated models and must emit the same canonical JSON as the TypeScript golden files."
+          }
+        ]
+      },
+      "HS-V02-15": {
+        "acceptance": "AC-HS-V02-15",
+        "tests": [
+          {
+            "file": "packages/ui/test/tokens.test.ts",
+            "names": [
+              "committed tokens.css equals a fresh build",
+              "every value equals the design desk's published tailwind.tokens.css",
+              "only hex colours that exist in tokens.json appear",
+              "text pairs used by the table and the trust strip meet WCAG AA",
+              "ticket 01 is the primary owner of exactly HS-CMP-023 and HS-CMP-058",
+              "brand colours are declared provisional",
+              "the web scaffold uses tokens only"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

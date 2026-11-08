@@ -1,0 +1,26 @@
+10.0.403
+  Determining projects to restore...
+  Restored /srv/hatch/wt/t01/agents/windows-seat/Hatch.WindowsSeat.csproj (in 127 ms).
+  Restored /srv/hatch/wt/t01/agents/venue-edge/Hatch.VenueEdge.csproj (in 127 ms).
+  Restored /srv/hatch/wt/t01/agents/Hatch.Contracts/Hatch.Contracts.csproj (in 2 ms).
+  Restored /srv/hatch/wt/t01/agents/Hatch.Contracts.Tests/Hatch.Contracts.Tests.csproj (in 4 sec).
+  Hatch.Contracts -> /srv/hatch/wt/t01/agents/Hatch.Contracts/bin/Debug/net10.0/Hatch.Contracts.dll
+  Hatch.VenueEdge -> /srv/hatch/wt/t01/agents/venue-edge/bin/Debug/net10.0/Hatch.VenueEdge.dll
+  Hatch.WindowsSeat -> /srv/hatch/wt/t01/agents/windows-seat/bin/Debug/net10.0/Hatch.WindowsSeat.dll
+  Hatch.Contracts.Tests -> /srv/hatch/wt/t01/agents/Hatch.Contracts.Tests/bin/Debug/net10.0/Hatch.Contracts.Tests.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:11.59
+BUILD=0
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Hatch.Contracts -> /srv/hatch/wt/t01/agents/Hatch.Contracts/bin/Debug/net10.0/Hatch.Contracts.dll
+  Hatch.Contracts.Tests -> /srv/hatch/wt/t01/agents/Hatch.Contracts.Tests/bin/Debug/net10.0/Hatch.Contracts.Tests.dll
+Test run for /srv/hatch/wt/t01/agents/Hatch.Contracts.Tests/bin/Debug/net10.0/Hatch.Contracts.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:     6, Skipped:     0, Total:     6, Duration: 224 ms - Hatch.Contracts.Tests.dll (net10.0)
+DOTNET=0

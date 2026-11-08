@@ -1,0 +1,11 @@
+<!-- T01 shell only: .NET 10 venue edge (SQLite WAL authority) is built by the edge ticket. -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Hatch.Contracts/Hatch.Contracts.csproj" />
+  </ItemGroup>
+</Project>
