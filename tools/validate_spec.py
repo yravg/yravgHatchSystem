@@ -60,7 +60,9 @@ for tid,t in tickets.items():
  p=ROOT/'specs/tickets'/f'{tid}-{t["slug"]}'
  for name in ['rd.md','eval.md','results.md','evidence/README.md']:check('ticket '+tid+' '+name,(p/name).is_file())
  rd=(p/'rd.md').read_text();ev=(p/'eval.md').read_text()
- check('draft status '+tid,'Status: **draft**' in rd and re.search(r'^\| '+tid+r' \|.*\| draft \| '+t['mode']+r' \|',board,re.M))
+ # Owner promotion moves a ticket past draft; board and rd must still agree on one known status.
+ st=re.search(r'^Status: \*\*(draft|ready|in progress|blocked|done)\*\*',rd,re.M)
+ check('board+rd status agree '+tid,bool(st) and re.search(r'^\| '+tid+r' \|.*\| '+st.group(1)+r' \| '+t['mode']+r' \|',board,re.M))
  check('rd headings '+tid,all('## '+h in rd for h in rd_headers));check('eval headings '+tid,all('## '+h in ev for h in eval_headers))
  check('mode '+tid,'Mode: **'+t['mode']+'**' in rd)
  if t['mode']=='team':check('team contract '+tid,(p/'contract.md').is_file())

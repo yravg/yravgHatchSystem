@@ -1,6 +1,6 @@
 # HS-T01 — Fondasi monorepo dan kontrak domain
 
-Status: **draft**
+Status: **ready**
 Mode: **solo**
 Phase: MVP
 

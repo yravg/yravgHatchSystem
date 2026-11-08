@@ -1,7 +1,7 @@
 {
   "status": "PASS",
   "scope": "Structural specification traceability only; no runtime/browser/hardware/payment tests performed",
-  "checked_at_Asia_Shanghai": "2026-11-08T23:28:44.997098+08:00",
+  "checked_at_Asia_Shanghai": "2026-11-08T23:33:13.060120+08:00",
   "requirements": 1089,
   "canonical_vertical_slices": 54,
   "own_gap_requirements": 15,
@@ -77338,7 +77338,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 01",
+      "check": "board+rd status agree 01",
       "pass": true,
       "detail": ""
     },
@@ -77393,7 +77393,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 02",
+      "check": "board+rd status agree 02",
       "pass": true,
       "detail": ""
     },
@@ -77463,7 +77463,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 03",
+      "check": "board+rd status agree 03",
       "pass": true,
       "detail": ""
     },
@@ -77523,7 +77523,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 04",
+      "check": "board+rd status agree 04",
       "pass": true,
       "detail": ""
     },
@@ -77593,7 +77593,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 05",
+      "check": "board+rd status agree 05",
       "pass": true,
       "detail": ""
     },
@@ -77678,7 +77678,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 06",
+      "check": "board+rd status agree 06",
       "pass": true,
       "detail": ""
     },
@@ -77753,7 +77753,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 07",
+      "check": "board+rd status agree 07",
       "pass": true,
       "detail": ""
     },
@@ -77818,7 +77818,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 08",
+      "check": "board+rd status agree 08",
       "pass": true,
       "detail": ""
     },
@@ -77878,7 +77878,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 09",
+      "check": "board+rd status agree 09",
       "pass": true,
       "detail": ""
     },
@@ -77958,7 +77958,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 10",
+      "check": "board+rd status agree 10",
       "pass": true,
       "detail": ""
     },
@@ -78028,7 +78028,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 11",
+      "check": "board+rd status agree 11",
       "pass": true,
       "detail": ""
     },
@@ -78103,7 +78103,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 12",
+      "check": "board+rd status agree 12",
       "pass": true,
       "detail": ""
     },
@@ -78178,7 +78178,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 13",
+      "check": "board+rd status agree 13",
       "pass": true,
       "detail": ""
     },
@@ -78253,7 +78253,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 14",
+      "check": "board+rd status agree 14",
       "pass": true,
       "detail": ""
     },
@@ -78323,7 +78323,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 15",
+      "check": "board+rd status agree 15",
       "pass": true,
       "detail": ""
     },
@@ -78383,7 +78383,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 16",
+      "check": "board+rd status agree 16",
       "pass": true,
       "detail": ""
     },
@@ -78443,7 +78443,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 17",
+      "check": "board+rd status agree 17",
       "pass": true,
       "detail": ""
     },
@@ -78513,7 +78513,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 18",
+      "check": "board+rd status agree 18",
       "pass": true,
       "detail": ""
     },
@@ -78578,7 +78578,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 19",
+      "check": "board+rd status agree 19",
       "pass": true,
       "detail": ""
     },
@@ -78663,7 +78663,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 20",
+      "check": "board+rd status agree 20",
       "pass": true,
       "detail": ""
     },
@@ -78758,7 +78758,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 21",
+      "check": "board+rd status agree 21",
       "pass": true,
       "detail": ""
     },
@@ -78853,7 +78853,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 22",
+      "check": "board+rd status agree 22",
       "pass": true,
       "detail": ""
     },
@@ -78913,7 +78913,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 23",
+      "check": "board+rd status agree 23",
       "pass": true,
       "detail": ""
     },
@@ -78988,7 +78988,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 24",
+      "check": "board+rd status agree 24",
       "pass": true,
       "detail": ""
     },
@@ -79048,7 +79048,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 25",
+      "check": "board+rd status agree 25",
       "pass": true,
       "detail": ""
     },
@@ -79113,7 +79113,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 26",
+      "check": "board+rd status agree 26",
       "pass": true,
       "detail": ""
     },
@@ -79178,7 +79178,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 27",
+      "check": "board+rd status agree 27",
       "pass": true,
       "detail": ""
     },
@@ -79253,7 +79253,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 28",
+      "check": "board+rd status agree 28",
       "pass": true,
       "detail": ""
     },
@@ -79313,7 +79313,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 29",
+      "check": "board+rd status agree 29",
       "pass": true,
       "detail": ""
     },
@@ -79378,7 +79378,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 30",
+      "check": "board+rd status agree 30",
       "pass": true,
       "detail": ""
     },
@@ -79463,7 +79463,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 31",
+      "check": "board+rd status agree 31",
       "pass": true,
       "detail": ""
     },
@@ -79613,7 +79613,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 32",
+      "check": "board+rd status agree 32",
       "pass": true,
       "detail": ""
     },
@@ -79678,7 +79678,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 33",
+      "check": "board+rd status agree 33",
       "pass": true,
       "detail": ""
     },
@@ -79743,7 +79743,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 34",
+      "check": "board+rd status agree 34",
       "pass": true,
       "detail": ""
     },
@@ -79818,7 +79818,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 35",
+      "check": "board+rd status agree 35",
       "pass": true,
       "detail": ""
     },
@@ -79883,7 +79883,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 36",
+      "check": "board+rd status agree 36",
       "pass": true,
       "detail": ""
     },
@@ -79948,7 +79948,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 37",
+      "check": "board+rd status agree 37",
       "pass": true,
       "detail": ""
     },
@@ -80018,7 +80018,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 38",
+      "check": "board+rd status agree 38",
       "pass": true,
       "detail": ""
     },
@@ -80088,7 +80088,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 39",
+      "check": "board+rd status agree 39",
       "pass": true,
       "detail": ""
     },
@@ -80158,7 +80158,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 40",
+      "check": "board+rd status agree 40",
       "pass": true,
       "detail": ""
     },
@@ -80228,7 +80228,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 41",
+      "check": "board+rd status agree 41",
       "pass": true,
       "detail": ""
     },
@@ -80308,7 +80308,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 42",
+      "check": "board+rd status agree 42",
       "pass": true,
       "detail": ""
     },
@@ -80378,7 +80378,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 43",
+      "check": "board+rd status agree 43",
       "pass": true,
       "detail": ""
     },
@@ -80443,7 +80443,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 44",
+      "check": "board+rd status agree 44",
       "pass": true,
       "detail": ""
     },
@@ -80513,7 +80513,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 45",
+      "check": "board+rd status agree 45",
       "pass": true,
       "detail": ""
     },
@@ -80573,7 +80573,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 46",
+      "check": "board+rd status agree 46",
       "pass": true,
       "detail": ""
     },
@@ -80638,7 +80638,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 47",
+      "check": "board+rd status agree 47",
       "pass": true,
       "detail": ""
     },
@@ -80698,7 +80698,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 48",
+      "check": "board+rd status agree 48",
       "pass": true,
       "detail": ""
     },
@@ -80773,7 +80773,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 49",
+      "check": "board+rd status agree 49",
       "pass": true,
       "detail": ""
     },
@@ -80858,7 +80858,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 50",
+      "check": "board+rd status agree 50",
       "pass": true,
       "detail": ""
     },
@@ -80948,7 +80948,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 51",
+      "check": "board+rd status agree 51",
       "pass": true,
       "detail": ""
     },
@@ -81028,7 +81028,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 52",
+      "check": "board+rd status agree 52",
       "pass": true,
       "detail": ""
     },
@@ -81113,7 +81113,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 53",
+      "check": "board+rd status agree 53",
       "pass": true,
       "detail": ""
     },
@@ -81188,7 +81188,7 @@
       "detail": ""
     },
     {
-      "check": "draft status 54",
+      "check": "board+rd status agree 54",
       "pass": true,
       "detail": ""
     },
