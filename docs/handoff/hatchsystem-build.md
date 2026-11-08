@@ -18,6 +18,7 @@ Missing: .NET SDK (dotnet host present, no SDK), JDK 17+, Gradle, Android SDK, P
 ## Owner approvals (recorded)
 - 2026-11-08: install missing dev tools under E:	ools (portable, no PATH/system changes).
 - 2026-11-08: accept the Android SDK licence (`sdkmanager --licenses`) when T51 starts, not before. Covers SDK packages T51 needs; no other terms.
+- 2026-11-09: allow agent SSH to hostinger-vps for building/testing (project-local allow rules in .claude/settings.local.json, not committed). Production containers stay untouched.
 - Not approved: VPS deployment (staging later needs separate approval), any money/payment policy.
 
 ## Build host (from T01 Merger onward)
