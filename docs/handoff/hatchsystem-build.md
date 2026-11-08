@@ -15,6 +15,11 @@ Branch: spec-v0.2 (local, not pushed). Router session runs orchestration only.
 node v24.14.1, pnpm 10.33.0, Python 3.11 (`python`, no `python3` on Windows), OpenJDK 11.
 Missing: .NET SDK (dotnet host present, no SDK), JDK 17+, Gradle, Android SDK, PostgreSQL, Docker.
 
+## Owner approvals (recorded)
+- 2026-11-08: install missing dev tools under E:	ools (portable, no PATH/system changes).
+- 2026-11-08: accept the Android SDK licence (`sdkmanager --licenses`) when T51 starts, not before. Covers SDK packages T51 needs; no other terms.
+- Not approved: VPS deployment (staging later needs separate approval), any money/payment policy.
+
 ## Known failures
 - None yet.
 
