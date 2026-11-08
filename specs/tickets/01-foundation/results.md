@@ -27,3 +27,4 @@ Branch `t01-foundation`. Status is owned by the router; this file records only w
 - Domain tests were written together with the implementation, not run red first. Red-first was observed only for the contracts generated files, the ui tokens file and the protocol test.
 - Playwright uses installed Edge (`PW_CHANNEL`, CI uses chrome). First e2e run failed on a favicon 404; fixed with `apps/web/app/icon.svg`.
 - The disk on E: was at 100% during the run (ENOSPC once on test and validate:spec); the reruns above succeeded.
+- Clean-clone check (fresh git clone, frozen install, gates): NOT RUN. The sandbox guard refused `git clone` out of the worktree. Router or Checker must run it. Frozen lockfile install was exercised in the worktree only.
