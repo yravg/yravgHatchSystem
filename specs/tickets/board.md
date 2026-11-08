@@ -4,7 +4,7 @@
 
 | ID | Name | Status | Mode | Runs | Notes | Lane |
 | --- | --- | --- | --- | --- | --- | --- |
-| 01 | [Fondasi monorepo dan kontrak domain](01-foundation/rd.md) | ready | solo | alongside independent approved work only | MVP; D25, D29 | foundation-backend-first |
+| 01 | [Fondasi monorepo dan kontrak domain](01-foundation/rd.md) | done | solo | alongside independent approved work only | MVP; D25, D29 | foundation-backend-first |
 | 46 | [API identitas, tenancy dan staff 2FA](46-identity-api/rd.md) | draft | solo | waits on 01 (done artifacts) | MVP; D02, D16, D25 | backend-first |
 | 47 | [API stasiun, tarif rasional dan minimum payment](47-catalog-pricing-api/rd.md) | draft | solo | waits on 46 (done artifacts) | MVP; D01, D26 | backend-first |
 | 48 | [Ledger dan Midtrans QRIS server tanpa UI](48-ledger-payments-api/rd.md) | draft | team | waits on 46, 47 (done artifacts) | MVP; D06, D15, D17 | backend-first |

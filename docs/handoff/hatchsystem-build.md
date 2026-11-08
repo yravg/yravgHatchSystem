@@ -8,8 +8,9 @@ Branch: spec-v0.2, pushed to origin (public) on owner approval 2026-11-09. Route
 | --- | --- | --- |
 | Spec v0.2 import | done | commit afa5494; validator 16761/16761 |
 | T01 marked ready (owner launcher approval) | done | board.md row 01 + 01-foundation/rd.md Status ready |
-| T01 build | in progress | worker worktree, checkpoint .checkpoints/t01-worker.md in that worktree |
-| T01 merge + independent check | open | - |
+| T01 build | done | t01-foundation 5e2d6dc (laptop af2d076 + VPS Linux run); fixes f15270d, 4f45361 |
+| T01 merge + independent check | done | Merger e96d0fe (no conflicts); Checker PASS on fresh clone incl. forced Kotlin rerun, .NET, mutation and gate-honesty tests, Playwright in mcr.microsoft.com/playwright:v1.65.0-noble |
+| T01 status | done | board.md + 01-foundation/rd.md |
 
 ## Machine toolchain (2026-11-08)
 node v24.14.1, pnpm 10.33.0, Python 3.11 (`python`, no `python3` on Windows), OpenJDK 11.
@@ -27,8 +28,12 @@ Missing: .NET SDK (dotnet host present, no SDK), JDK 17+, Gradle, Android SDK, P
 - The VPS also runs production apps (schedmate, yraverage hub, milestone). Run every HatchSystem build/test through /srv/hatch/capped.sh (MemoryMax=3G, CPUQuota=150%, nice 10).
 - No deploy, no public port, no Coolify app for HatchSystem without separate owner approval.
 
-## Known failures
-- None yet.
+## Known failures / follow-ups
+- Validator status-check change (77deb83) pending owner confirmation.
+- CI not yet run on GitHub Actions; Playwright `chrome` channel in CI untested (Checker used bundled chromium).
+- Node CI job runs test:ticket with --allow-blocked; Kotlin/.NET proven only by their own jobs.
+- Idempotency 409 tested at domain level only, in-memory store; concurrent same-key untested (relevant from T46).
+- Kotlin/C# not linted (ESLint ignores agents/).
 
 ## Next step
-Wait for T01 worker report; run Merger and independent Checker on it.
+T46 (identity/tenancy/staff 2FA API) is the next eligible ticket. It needs explicit owner readiness in board.md and its rd.md before dispatch.
