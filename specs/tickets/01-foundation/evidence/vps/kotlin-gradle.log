@@ -1,0 +1,56 @@
+
+Welcome to Gradle 9.9.0!
+
+Here are the highlights of this release:
+ - Performance improvements for Kotlin DSL compilation
+ - Test filtering for non-method JUnit Platform tests
+ - Wrapper settings preserved on upgrade
+ - Predefined groups in the Problems API
+
+For more details see https://docs.gradle.org/9.9.0/release-notes.html
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.9.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :wrapper
+
+[Incubating] Problems report is available at: file:///srv/hatch/wt/t01/agents/android-tv/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.9.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1m 1s
+1 actionable task: 1 executed
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.9.0/userguide/configuration_cache_enabling.html
+WRAP=0
+Fetching distribution.
+Downloading https://services.gradle.org/distributions/gradle-9.9.0-bin.zip
+............10%.............20%.............30%.............40%.............50%.............60%.............70%............80%.............90%.............100%
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.9.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :contracts:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :contracts:processResources NO-SOURCE
+> Task :contracts:processTestResources
+> Task :contracts:compileKotlin
+> Task :contracts:compileJava NO-SOURCE
+> Task :contracts:classes UP-TO-DATE
+> Task :contracts:jar
+> Task :contracts:compileTestKotlin
+> Task :contracts:compileTestJava NO-SOURCE
+> Task :contracts:testClasses
+> Task :contracts:test
+
+[Incubating] Problems report is available at: file:///srv/hatch/wt/t01/agents/android-tv/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.9.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 36s
+5 actionable tasks: 5 executed
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.9.0/userguide/configuration_cache_enabling.html
+KT=0

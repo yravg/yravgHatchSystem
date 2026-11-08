@@ -1,0 +1,78 @@
+v24.21.0
+10.33.0
+Scope: all 7 workspace projects
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +224
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+   ╭───────────────────────────────────────────────╮
+   │                                               │
+   │     Update available! 10.33.0 → 12.18.0.      │
+   │     Changelog: https://pnpm.io/v/12.18.0      │
+   │   To update, run: corepack use pnpm@12.18.0   │
+   │                                               │
+   ╰───────────────────────────────────────────────╯
+
+Progress: resolved 224, reused 0, downloaded 12, added 0
+Progress: resolved 224, reused 0, downloaded 25, added 4
+Progress: resolved 224, reused 0, downloaded 28, added 8
+Progress: resolved 224, reused 0, downloaded 29, added 8
+Progress: resolved 224, reused 0, downloaded 90, added 28
+Progress: resolved 224, reused 0, downloaded 224, added 185
+Progress: resolved 224, reused 0, downloaded 224, added 224, done
+
+devDependencies:
++ @eslint/js 9.39.5
++ @playwright/test 1.65.0
++ @types/node 24.19.2
++ @yravg/contracts 0.0.0 <- packages/contracts
++ @yravg/domain 0.0.0 <- packages/domain
++ ajv 8.20.0
++ eslint 9.39.5
++ typescript 5.9.3
++ typescript-eslint 8.72.1
++ vitest 3.2.7
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│   Ignored build scripts: esbuild@0.28.2.                                     │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Done in 8.4s using pnpm v10.33.0
+INSTALL=0
+
+> yravg-hatchsystem@ lint /srv/hatch/wt/t01
+> eslint .
+
+LINT=0
+
+> yravg-hatchsystem@ typecheck /srv/hatch/wt/t01
+> tsc -p tsconfig.json --noEmit && pnpm -r --if-present typecheck
+
+sh: 1: pnpm: not found
+ ELIFECYCLE  Command failed.
+TYPECHECK=1
+
+> yravg-hatchsystem@ test /srv/hatch/wt/t01
+> vitest run
+
+
+ RUN  v3.2.7 /srv/hatch/wt/t01
+
+ ✓ packages/domain/test/domain.test.ts (23 tests) 13ms
+ ✓ packages/ui/test/tokens.test.ts (8 tests) 7ms
+ ✓ tools/ticket-dispatch.test.ts (9 tests) 176ms
+ ✓ tests/contracts/protocol.test.ts (15 tests) 11ms
+ ✓ tests/contracts/generated.test.ts (4 tests) 14ms
+ ✓ services/api/test/app.test.ts (5 tests) 60ms
+ ✓ tests/contracts/secrets.test.ts (2 tests) 15ms
+
+ Test Files  7 passed (7)
+      Tests  66 passed (66)
+   Start at  16:38:10
+   Duration  2.38s (transform 174ms, setup 0ms, collect 665ms, tests 296ms, environment 1ms, prepare 448ms)
+
+TEST=0

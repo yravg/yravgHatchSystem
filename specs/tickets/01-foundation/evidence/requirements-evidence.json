@@ -1,37 +1,37 @@
 {
   "HS-01": {
     "testPath": "tests/contracts/protocol.test.ts, tests/contracts/generated.test.ts, tests/contracts/secrets.test.ts, packages/domain/test/domain.test.ts, services/api/test/app.test.ts, tools/ticket-dispatch.test.ts",
-    "command": "pnpm test:ticket -- 01",
-    "exitCode": 3,
+    "command": "pnpm test:ticket -- 01 (node v26.13.0, Ubuntu 24.04 VPS, gradle 9.9.0, JDK 21.0.13, dotnet 10.0.403)",
+    "exitCode": 0,
     "expected": "all mandatory tests PASS and the Kotlin and .NET canonical-equality checks run and PASS",
-    "actual": "45 named HS-01 tests PASS; kotlin-canonical-equality and dotnet-canonical-equality BLOCKED (gradle and dotnet not on PATH; toolchain env file E:/tools/hatch-env.sh did not exist). Dispatcher reports INCOMPLETE, exit 3, never PASS.",
-    "artifact": "specs/tickets/01-foundation/evidence/test-ticket.log",
-    "verificationLevel": "Automated (TypeScript side); Kotlin and .NET runtime equality BLOCKED"
+    "actual": "All mandatory HS-01 tests PASS; kotlin-canonical-equality PASS (./gradlew and gradle :contracts:test, 6 tests, 0 failures); dotnet-canonical-equality PASS (dotnet test, 6 passed; dotnet build HatchAgents.slnx 0 warnings 0 errors). Same result in a fresh git clone (clean-clone.log).",
+    "artifact": "specs/tickets/01-foundation/evidence/vps/test-ticket-01.log, vps/kotlin-gradle.log, vps/dotnet.log, vps/clean-clone.log",
+    "verificationLevel": "Automated, TypeScript + Kotlin + .NET on Linux"
   },
   "AC-HS-01": {
     "testPath": "tests/contracts/protocol.test.ts",
     "command": "pnpm test",
     "exitCode": 0,
     "expected": "TypeScript canonical JSON equals hand-computed goldens; generators are in sync with the schema",
-    "actual": "7 test files, 66 tests passed (lint and typecheck exit 0). Cross-language equality in Kotlin and .NET is not run.",
-    "artifact": "specs/tickets/01-foundation/evidence/test.log",
-    "verificationLevel": "Automated (TypeScript side only)"
+    "actual": "7 test files, 66 tests passed on node 26.13.0 and node 24.21.0 (lint, typecheck, test, validate:spec 16764/16764, web build all exit 0); Kotlin and .NET parse the shared fixtures and emit canonical JSON equal to the goldens. Clean clone: install --frozen-lockfile, lint, typecheck, test, test:ticket all exit 0.",
+    "artifact": "specs/tickets/01-foundation/evidence/vps/node26-gates-and-playwright.log, vps/clean-clone.log",
+    "verificationLevel": "Automated (TypeScript, Kotlin, .NET)"
   },
   "HS-V02-15": {
     "testPath": "packages/ui/test/tokens.test.ts, tests/e2e/ticket-01.spec.ts",
-    "command": "pnpm test:ticket -- 01; pnpm exec playwright test tests/e2e/ticket-01.spec.ts",
+    "command": "pnpm test:ticket -- 01 (token tests, exit 0); Playwright smoke: PW_CHANNEL=chromium pnpm exec playwright test tests/e2e/ticket-01.spec.ts",
     "exitCode": 0,
     "expected": "HS-CMP-023 and HS-CMP-058 tokens equal specs/design tokens, AA contrast, scaffold uses tokens only",
-    "actual": "7 named HS-V02-15 tests PASS; Playwright smoke of the scaffold web app passed (1 test, Edge, trace and screenshot kept).",
-    "artifact": "specs/tickets/01-foundation/evidence/playwright.log, playwright-trace.zip, scaffold-home.svg (PNG wrapped in SVG because tools/validate_spec.py bans .png)",
-    "verificationLevel": "Automated plus real browser smoke"
+    "actual": "7 named HS-V02-15 tests PASS on Linux. Playwright smoke: PASS only on the earlier Windows laptop run (Edge, 1 test, exit 0; kept as untracked artifacts). On the VPS the bundled chromium installs but cannot launch: libatk-1.0.so.0 and 8 more shared libraries are missing and no apt change is allowed. VPS Playwright run = BLOCKED (exit 1).",
+    "artifact": "evidence/laptop/playwright.log (laptop pass); evidence/vps/node26-gates-and-playwright.log (VPS launch error); untracked, git-ignored: evidence/artifacts/laptop-scaffold-home.png sha256 9f911520d68a2849e4e5b43c5a3a3c55db0a29c966ffa2084f9e6ce4e4053180 21078 bytes 1280x720 PNG (produced by the laptop worker with pnpm exec playwright test tests/e2e/ticket-01.spec.ts, Edge); evidence/artifacts/laptop-playwright-trace.zip sha256 38d5fc615d7f282f52f80accef840a1d17ee5eab8d1c373e362551b868c8de66 31269 bytes (same run)",
+    "verificationLevel": "Automated plus a real-browser smoke on Windows; Linux browser smoke BLOCKED"
   },
   "AC-HS-V02-15": {
     "testPath": "packages/ui/test/tokens.test.ts",
     "command": "pnpm test",
     "exitCode": 0,
     "expected": "token CSS equals a fresh build and the published tailwind tokens; WCAG AA >= 4.5 for measured pairs",
-    "actual": "8 token tests PASS inside 66 passing tests. Brand.* colours are declared provisional.",
+    "actual": "8 token tests PASS inside 66 passing tests on node 26.13.0. Brand.* colours are declared provisional.",
     "artifact": "specs/tickets/01-foundation/evidence/test.log",
     "verificationLevel": "Automated"
   }
