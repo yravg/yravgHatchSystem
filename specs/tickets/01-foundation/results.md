@@ -40,5 +40,5 @@ The PNG-in-SVG wrapper is removed. The laptop run PNG and trace are untracked un
 ## Checker follow-up fixes (branch t01-fix, Linux VPS, evidence/vps/checker-fixes.log)
 - global.json pins .NET SDK 10.0.403 with rollForward disable (build did not break; dotnet --version in the repo and in agents/ prints 10.0.403). CI dotnet job uses global-json-file.
 - Every uses: in ci.yml is pinned to a full commit SHA with the tag in a comment (SHAs from git ls-remote, annotated tags peeled). Not run: the workflow itself (needs GitHub).
-- tools/validate-spec.ts comment corrected (validator changed in 77deb83).
+- tools/validate-spec.ts comment corrected (validator change in 77deb83 is a router change pending owner confirmation).
 - Rerun, all exit 0: install --frozen-lockfile, lint, typecheck, test, validate:spec, test:ticket -- 01, dotnet build (0 errors), dotnet test (6 passed), ./gradlew --rerun-tasks :contracts:test.
