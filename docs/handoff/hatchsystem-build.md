@@ -1,7 +1,7 @@
 # HatchSystem build handoff
 
 Roadmap: docs/roadmap/hatchsystem-build.md. Spec: BUILD-PROMPT.md, CLAUDE.md, specs/tickets/board.md.
-Branch: spec-v0.2 (local, not pushed). Router session runs orchestration only.
+Branch: spec-v0.2, pushed to origin (public) on owner approval 2026-11-09. Router session runs orchestration only.
 
 ## Status
 | Step | State | Evidence |
@@ -19,6 +19,12 @@ Missing: .NET SDK (dotnet host present, no SDK), JDK 17+, Gradle, Android SDK, P
 - 2026-11-08: install missing dev tools under E:	ools (portable, no PATH/system changes).
 - 2026-11-08: accept the Android SDK licence (`sdkmanager --licenses`) when T51 starts, not before. Covers SDK packages T51 needs; no other terms.
 - Not approved: VPS deployment (staging later needs separate approval), any money/payment policy.
+
+## Build host (from T01 Merger onward)
+- Hostinger VPS `hostinger-vps` (KVM 2: 2 vCPU, 8 GB, Ubuntu 24.04 + Coolify), Orca host `ssh:hostinger-vps`.
+- Checkout: /srv/hatch/repo (branch spec-v0.2). Validator there: 16764/16764.
+- The VPS also runs production apps (schedmate, yraverage hub, milestone). Run every HatchSystem build/test through /srv/hatch/capped.sh (MemoryMax=3G, CPUQuota=150%, nice 10).
+- No deploy, no public port, no Coolify app for HatchSystem without separate owner approval.
 
 ## Known failures
 - None yet.
