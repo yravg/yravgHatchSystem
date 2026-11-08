@@ -1,4 +1,4 @@
-// `pnpm validate:spec`: runs tools/validate_spec.py (unchanged) on Windows and Linux.
+// `pnpm validate:spec`: runs tools/validate_spec.py (changed in commit 77deb83 by owner-approved router change: the ticket status check now requires board.md and rd.md to agree) on Windows and Linux.
 // The validator walks every file under the repo root and bans node_modules, build output and .png outside the
 // design shots. So it runs on a temporary copy of the tracked and unignored files, which also keeps it from
 // rewriting VALIDATION.json/md in the working tree. A clean clone has no such files, so the result is identical.

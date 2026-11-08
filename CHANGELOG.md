@@ -6,3 +6,4 @@
 - T01 (foundation monorepo and domain contracts) marked ready on owner approval; roadmap and handoff added under docs/.
 - T01 foundation: pnpm workspace with strict TypeScript, lint, typecheck, vitest and a ticket dispatcher (`pnpm test:ticket -- 01` fails on missing, skipped or failing mandatory tests); one JSON Schema protocol source with generators for TypeScript, Kotlin and .NET plus a canonical-JSON equality check; domain money, envelope, idempotency and tenant/permission/revision guards; Fastify, worker and Next.js scaffolds; UI tokens for the two T01 components; Gradle and .NET shells; CI workflow. No product flow.
 - T01 verification on Linux: Kotlin and .NET canonical-equality run and pass; Gradle 9.9.0 wrapper committed; Node pinned to 26.13.0; binary evidence is git-ignored. Linux Playwright smoke is BLOCKED (missing system libraries).
+- T01 follow-up: .NET SDK pinned by global.json (10.0.403), CI actions pinned to commit SHAs.

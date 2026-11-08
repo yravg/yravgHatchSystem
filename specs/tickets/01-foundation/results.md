@@ -36,3 +36,9 @@ The PNG-in-SVG wrapper is removed. The laptop run PNG and trace are untracked un
 - Domain tests were written together with the implementation, not run red first. Red-first was observed only for the contracts generated files, the ui tokens file and the protocol test.
 - CI: kotlin job now uses ./gradlew; node job still passes `--allow-blocked` to test:ticket because gradle/dotnet are covered by their own jobs.
 - Commit identity on the VPS: git user.email was not set (a tool guard blocked the owner address), commits use a GitHub noreply address; re-author if needed.
+
+## Checker follow-up fixes (branch t01-fix, Linux VPS, evidence/vps/checker-fixes.log)
+- global.json pins .NET SDK 10.0.403 with rollForward disable (build did not break; dotnet --version in the repo and in agents/ prints 10.0.403). CI dotnet job uses global-json-file.
+- Every uses: in ci.yml is pinned to a full commit SHA with the tag in a comment (SHAs from git ls-remote, annotated tags peeled). Not run: the workflow itself (needs GitHub).
+- tools/validate-spec.ts comment corrected (validator changed in 77deb83).
+- Rerun, all exit 0: install --frozen-lockfile, lint, typecheck, test, validate:spec, test:ticket -- 01, dotnet build (0 errors), dotnet test (6 passed), ./gradlew --rerun-tasks :contracts:test.
