@@ -1,0 +1,23 @@
+{
+  "version": "0.2",
+  "checked_at_Asia_Shanghai": "2026-11-08T22:26:45.368326+08:00",
+  "changed_since_intake": [],
+  "reread": [
+    "senet/HANDOFF.md",
+    "senet/videos/INDEX.md",
+    "kulapos-rental-ps/tv-agent-emulator/INSTALL-REPORT.md",
+    "design/hatchsystem/RENDER-CHECK.md"
+  ],
+  "videos": {
+    "unique": 70,
+    "videos": 53,
+    "webinars": 17,
+    "transcripts": 17,
+    "no_captions": 4,
+    "rate_limited": 49
+  },
+  "Kula_offline": "UNVERIFIED; blocked production image, no root, Ethernet stayed online",
+  "Kula_paired_lock_HDMI": "unverified, pending trial",
+  "design": "v0.2 final layout; brand provisional;82screens58wireframed59frames58components",
+  "upload": "NOT REQUESTED; none performed"
+}

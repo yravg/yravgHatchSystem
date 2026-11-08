@@ -1,0 +1,125 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><title>Windows PC seat agent</title><style>:root{
+  /* brand.* = PROVISIONAL (logo pending) */
+  --hs-brand-primary:#B4532A;
+  --hs-brand-primary-hover:#9A4521;
+  --hs-brand-primary-ink:#FFFFFF;
+  --hs-brand-primary-tint:#F6E7DF;
+  --hs-brand-on-dark:#E8875C;
+  --hs-canvas:#FAF9F5;
+  --hs-surface:#FFFFFF;
+  --hs-surface-2:#F3F0E8;
+  --hs-line:#E6E2D8;
+  --hs-line-strong:#C9C3B5;
+  --hs-ink:#1F1F1F;
+  --hs-ink-dim:#55524C;
+  --hs-ink-faint:#76726A;
+  --hs-slate:#4A5B72;
+  --hs-ok:#2F7A4F;
+  --hs-warn:#8A5A0B;
+  --hs-danger:#8E3B24;
+  --hs-focus:#1D5FD1;
+  --hs-state-idle-fg:#3E4C60;
+  --hs-state-idle-bg:#E9EDF2;
+  --hs-state-idle-solid:#4A5B72;
+  --hs-state-idle-tv:#A9B8CC;
+  --hs-state-idle-on:#FFFFFF;
+  --hs-state-booked-fg:#5A3F8C;
+  --hs-state-booked-bg:#EEE8F7;
+  --hs-state-booked-solid:#6B4FA0;
+  --hs-state-booked-tv:#C3B0E6;
+  --hs-state-booked-on:#FFFFFF;
+  --hs-state-running-fg:#1F5E3A;
+  --hs-state-running-bg:#E3F1E8;
+  --hs-state-running-solid:#2F7A4F;
+  --hs-state-running-tv:#7FD3A0;
+  --hs-state-running-on:#FFFFFF;
+  --hs-state-ending-fg:#7A4E06;
+  --hs-state-ending-bg:#FBEFD6;
+  --hs-state-ending-solid:#C8901E;
+  --hs-state-ending-tv:#F2C063;
+  --hs-state-ending-on:#1F1F1F;
+  --hs-state-overtime-fg:#8F1D17;
+  --hs-state-overtime-bg:#FBE3E1;
+  --hs-state-overtime-solid:#B3261E;
+  --hs-state-overtime-tv:#FF8A80;
+  --hs-state-overtime-on:#FFFFFF;
+  --hs-state-paused-fg:#2C5785;
+  --hs-state-paused-bg:#E3EDF8;
+  --hs-state-paused-solid:#3A6EA5;
+  --hs-state-paused-tv:#8DB8E8;
+  --hs-state-paused-on:#FFFFFF;
+  --hs-state-offline-fg:#4D4D4D;
+  --hs-state-offline-bg:#ECECEC;
+  --hs-state-offline-solid:#6B6B6B;
+  --hs-state-offline-tv:#B5B5B5;
+  --hs-state-offline-on:#FFFFFF;
+  --hs-state-maintenance-fg:#5C4A3A;
+  --hs-state-maintenance-bg:#EFE9E3;
+  --hs-state-maintenance-solid:#7A6450;
+  --hs-state-maintenance-tv:#CDB59C;
+  --hs-state-maintenance-on:#FFFFFF;
+  --hs-font:Inter, 'Noto Sans', system-ui, sans-serif;
+  --hs-mono:'JetBrains Mono', 'DejaVu Sans Mono', ui-monospace, monospace;
+  --hs-space-0:0;
+  --hs-space-1:4px;
+  --hs-space-2:8px;
+  --hs-space-3:12px;
+  --hs-space-4:16px;
+  --hs-space-5:20px;
+  --hs-space-6:24px;
+  --hs-space-8:32px;
+  --hs-space-10:40px;
+  --hs-space-12:48px;
+  --hs-space-16:64px;
+  --hs-space-tv-safe:5%;
+  --hs-radius-sm:6px;
+  --hs-radius-md:8px;
+  --hs-radius-lg:12px;
+  --hs-radius-xl:16px;
+  --hs-radius-pill:999px;
+  --hs-elev-0:none;
+  --hs-elev-1:0 1px 2px rgba(31,31,31,.06);
+  --hs-elev-2:0 4px 12px rgba(31,31,31,.08);
+  --hs-elev-3:0 12px 32px rgba(31,31,31,.14);
+  --hs-elev-tv:0 8px 32px rgba(0,0,0,.5);
+  --hs-focus-ops:0 0 0 2px #FFFFFF, 0 0 0 4px #1D5FD1;
+  --hs-focus-tv:0 0 0 4px #121110, 0 0 0 8px #FFD54A;
+  --yr-ease-out:cubic-bezier(0.2,0,0,1);
+  --yr-ease-in:cubic-bezier(0.55,0,1,0.45);
+  --yr-ease-cross:cubic-bezier(0.4,0,0.6,1);
+  --yr-page-move-ms:400ms;
+  --yr-modal-open-ms:260ms;
+  --yr-modal-close-ms:120ms;
+  --hs-tv-focus-ms:120ms;
+}
+.hs-dark,[data-theme=tv]{--hs-canvas:#121110;--hs-surface:#1E1C1A;--hs-surface-2:#2A2724;--hs-line:#3A3632;--hs-ink:#F4F1EA;--hs-ink-dim:#C9C3B8;--hs-ink-faint:#9C968C;--hs-focus:#FFD54A;--hs-brand-primary:var(--hs-brand-on-dark);}
+@media (prefers-reduced-motion:reduce){:root{--yr-page-move-ms:0ms;--yr-modal-open-ms:120ms;--yr-modal-close-ms:0ms;--hs-tv-focus-ms:0ms}}
+
+*{box-sizing:border-box}body{margin:0;background:#E9E6DE;font-family:var(--hs-font);color:var(--hs-ink);padding:24px}
+h1.pg{font-size:20px;margin:0 0 4px}.pgsub{color:var(--hs-ink-dim);font-size:14px;margin:0 0 24px}
+.cap{font:600 13px/18px var(--hs-font);color:#3a372f;margin:28px 0 8px}.cap code{font-family:var(--hs-mono);background:#fff;padding:1px 6px;border-radius:4px}
+.frame{position:relative;overflow:hidden;background:var(--hs-canvas);border:1px solid var(--hs-line-strong);box-shadow:var(--hs-elev-2)}
+.row{display:flex;gap:12px;align-items:center}.col{display:flex;flex-direction:column;gap:8px}.grow{flex:1}.sp{justify-content:space-between}
+.card{background:var(--hs-surface);border:1px solid var(--hs-line);border-radius:var(--hs-radius-lg);padding:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:var(--hs-radius-md);font:600 15px var(--hs-font);border:1px solid var(--hs-line-strong);background:var(--hs-surface);color:var(--hs-ink);white-space:nowrap}
+.btn.p{background:var(--hs-brand-primary);border-color:var(--hs-brand-primary);color:var(--hs-brand-primary-ink)}.btn.d{background:var(--hs-danger);color:#fff;border-color:var(--hs-danger)}.btn.lg{min-height:56px;font-size:17px}
+.sheet .btn{min-width:0;padding:0 10px}.btn.f{box-shadow:var(--hs-focus-ops)}
+.chip{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border-radius:999px;font:600 13px/20px var(--hs-font);white-space:nowrap}
+.muted{color:var(--hs-ink-dim)}.faint{color:var(--hs-ink-faint)}.mono{font-family:var(--hs-mono)}.num{font:700 28px/32px var(--hs-mono)}
+.top{height:56px;background:var(--hs-surface);border-bottom:1px solid var(--hs-line);display:flex;align-items:center;gap:16px;padding:0 20px}
+.logo{width:32px;height:32px;border-radius:8px;border:2px dashed var(--hs-brand-primary);display:grid;place-items:center;font:700 8px var(--hs-font);color:var(--hs-brand-primary)}
+.banner{padding:10px 16px;font:600 14px var(--hs-font);display:flex;gap:10px;align-items:center}
+.side{width:224px;background:var(--hs-surface);border-right:1px solid var(--hs-line);padding:16px 12px;display:flex;flex-direction:column;gap:2px}
+.side a{padding:9px 12px;border-radius:8px;font:500 14px var(--hs-font);color:var(--hs-ink-dim);text-decoration:none}.side a.on{background:var(--hs-brand-primary-tint);color:var(--hs-brand-primary-hover);font-weight:700}
+table.t{width:100%;border-collapse:collapse;font-size:14px}.t th{text-align:left;font-weight:600;color:var(--hs-ink-dim);padding:8px;border-bottom:1px solid var(--hs-line)}.t td{padding:9px 8px;border-bottom:1px solid var(--hs-line)}
+.tile{border-radius:12px;background:var(--hs-surface);border:1px solid var(--hs-line);padding:12px;display:flex;flex-direction:column;gap:6px;min-height:150px;border-left-width:6px}
+.sheet{position:absolute;top:0;right:0;bottom:0;width:480px;background:var(--hs-surface);border-left:1px solid var(--hs-line);box-shadow:var(--hs-elev-3);padding:20px;display:flex;flex-direction:column;gap:12px}
+.scrim{position:absolute;inset:0;background:rgba(31,31,31,.32)}
+.seg{display:flex;background:var(--hs-surface-2);border-radius:10px;padding:3px}.seg span{flex:1;text-align:center;padding:8px 10px;border-radius:8px;font:600 14px var(--hs-font);color:var(--hs-ink-dim)}.seg span.on{background:var(--hs-surface);color:var(--hs-ink);box-shadow:var(--hs-elev-1)}
+.qr{background:repeating-conic-gradient(#1F1F1F 0 25%,#fff 0 50%) 0 0/14px 14px;border:8px solid #fff;outline:1px solid var(--hs-line)}
+.bar{height:8px;border-radius:999px;background:var(--hs-surface-2);overflow:hidden}.bar i{display:block;height:100%}
+.tv{background:#121110;color:#F4F1EA;font-size:28px;line-height:36px}.tv .tvsafe{position:absolute;inset:5%}
+.tvf{box-shadow:var(--hs-focus-tv);transform:scale(1.04)}
+.tvbtn{min-height:72px;padding:0 32px;border-radius:14px;background:#2A2724;color:#F4F1EA;font:600 28px var(--hs-font);display:inline-flex;align-items:center;border:2px solid #3A3632}
+.hatch{background-image:repeating-linear-gradient(45deg,transparent 0 8px,rgba(92,74,58,.12) 8px 16px)}
+</style></head><body><h1 class="pg">Windows PC seat agent</h1><p class="pgsub">1920×1080 · HatchSystem Design v0.2 · brand.* PROVISIONAL (logo pending)</p><div class="cap"><code>PCA-01-lock</code> · HS-SCR-PCA-01 · PC seat lock <span class="faint">(1920×1080)</span></div><section class="frame tv" id="PCA-01-lock" style="width:1920px;height:1080px"><div style="position:absolute;inset:0;background:linear-gradient(160deg,#1E1C1A,#121110)"></div><div class="tvsafe" style="color:#F4F1EA;display:flex;align-items:center;gap:96px"><div class="col" style="flex:1;gap:20px"><b style="font-size:56px;line-height:64px">PC-07 siap</b><div style="font-size:26px;color:#C9C3B8">Masuk untuk mulai main. Tarif Rp6.000/jam.</div><input style="height:64px;border-radius:12px;border:2px solid #3A3632;background:#2A2724;color:#fff;font:24px var(--hs-font);padding:0 20px;width:560px" value="0812-3456-7890"><input style="height:64px;border-radius:12px;border:2px solid #FFD54A;background:#2A2724;color:#fff;font:24px var(--hs-font);padding:0 20px;width:560px" placeholder="PIN atau kode struk"><span class="btn p lg" style="width:560px;font-size:22px">Masuk</span><div style="font-size:22px;color:#9C968C">◆ Dipesan Kevin pukul 22:00 — sisa 46 menit untuk walk-in</div></div><div class="col" style="align-items:center;gap:16px"><div class="qr" style="width:320px;height:320px"></div><span style="font-size:22px">Scan pakai HP</span></div></div></section><div class="cap"><code>PCA-02-hud</code> · HS-SCR-PCA-02 · PC in-session HUD <span class="faint">(1920×1080)</span></div><section class="frame " id="PCA-02-hud" style="width:1920px;height:1080px"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#25405e,#4a2f5e 50%,#1d4a3a)"></div><div style="position:absolute;top:24px;right:24px;width:360px;background:rgba(18,17,16,.9);border-radius:16px;padding:20px;color:#F4F1EA" class="col"><div class="row sp"><b>PC-07 · Rizky</b><span class="chip" style="background:#E3F1E8;color:#1F5E3A"><b aria-hidden="true">▶</b>Main</span></div><div class="mono" style="font:700 44px/48px var(--hs-mono)">01:22:05</div><div style="font-size:15px;color:#C9C3B8">Saldo dompet Rp12.000 · ≈ 2 j</div><div class="row"><span class="btn grow">Pesan makan</span><span class="btn grow">Chat kasir</span></div><span class="btn">Selesai & keluar</span></div></section></body></html>

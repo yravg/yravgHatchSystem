@@ -1,0 +1,194 @@
+[
+  {
+    "path": "/workspace/design/hatchsystem/hatchsystem-design-v0.2.zip",
+    "sha256": "a914efdcc6c7f33521399a36e232846a51f140fc4277f926a17e9ed476a7db24",
+    "bytes": 6559582,
+    "mtime_local": "2026-11-08T22:19:25.131083+08:00"
+  },
+  {
+    "path": "/workspace/grab/kulapos-full/APPS.md",
+    "sha256": "3afca4767406e7c6a11415f81f55d785816560ca85756099908458648823aa54",
+    "bytes": 4465,
+    "mtime_local": "2026-11-08T21:48:31.084478+08:00"
+  },
+  {
+    "path": "/workspace/grab/kulapos-full/HANDOFF.md",
+    "sha256": "cdbbcad9b8153d3ad8cb30e5bb4a81a624cea71690d3dbb70843aa2756ca6464",
+    "bytes": 3353,
+    "mtime_local": "2026-11-08T21:49:52.942679+08:00"
+  },
+  {
+    "path": "/workspace/grab/kulapos-full/INVENTORY.md",
+    "sha256": "b8ffaa929061f7e39ac81296ac24281091a31ff771a0c1182196461b54c8625f",
+    "bytes": 134947,
+    "mtime_local": "2026-11-08T21:48:49.350467+08:00"
+  },
+  {
+    "path": "/workspace/grab/kulapos-full/PRICING.md",
+    "sha256": "3972591a3614b48c1b8dfd5e683e2a636e696cc3b494b332800dc614a235f7a5",
+    "bytes": 24922,
+    "mtime_local": "2026-11-08T21:48:49.330469+08:00"
+  },
+  {
+    "path": "/workspace/grab/kulapos-full/SHARED-CORE.md",
+    "sha256": "8e1634bedd3221fc8f92be8db81faf7f8a9bcd627d5fda1676bb206b38daa697",
+    "bytes": 4306,
+    "mtime_local": "2026-11-08T21:49:22.187967+08:00"
+  },
+  {
+    "path": "/workspace/grab/kulapos-full/WORKFLOWS.md",
+    "sha256": "7e4f3dbedf14546933b16412d4531c3d0e7a8e67e76ee5c179f05278dde17d88",
+    "bytes": 27551,
+    "mtime_local": "2026-11-08T21:49:34.331351+08:00"
+  },
+  {
+    "path": "/workspace/grab/kulapos-rental-ps/HANDOFF.md",
+    "sha256": "f1cc41cc4373894c32190ef8b599068eb84b9626ecef0cea99e5a5655ac208d2",
+    "bytes": 5133,
+    "mtime_local": "2026-11-08T21:48:22.501603+08:00"
+  },
+  {
+    "path": "/workspace/grab/kulapos-rental-ps/INVENTORY.json",
+    "sha256": "af068d8b688bf5679148858a7abf75b8517e81eebca5f4cb3c3aff77c5af7993",
+    "bytes": 34204,
+    "mtime_local": "2026-11-08T21:47:22.409788+08:00"
+  },
+  {
+    "path": "/workspace/grab/kulapos-rental-ps/NOTES.md",
+    "sha256": "76eed1d65e029d3a03cb27d6029abdcf78004b7b66ffe55c263810609bdb5de0",
+    "bytes": 5914,
+    "mtime_local": "2026-11-08T21:47:22.389787+08:00"
+  },
+  {
+    "path": "/workspace/grab/kulapos-rental-ps/PARITY-CHECKLIST.md",
+    "sha256": "1259dd2042f2b9ab1e4794e8baa3c8f921557d8a0b10ec5bfd64f9190d0e82f2",
+    "bytes": 16230,
+    "mtime_local": "2026-11-08T21:47:22.385786+08:00"
+  },
+  {
+    "path": "/workspace/grab/kulapos-rental-ps/PRD.md",
+    "sha256": "956a42cbbbd03ea6c5eabcb9d6fb5524f2db3cf02ef11eb9e471829d21e963f1",
+    "bytes": 16130,
+    "mtime_local": "2026-11-08T21:47:22.385786+08:00"
+  },
+  {
+    "path": "/workspace/grab/kulapos-rental-ps/WORKFLOWS.md",
+    "sha256": "d098db0e17922f101487c8c61a7f378c85a75a5ae5aefd28c49dacadf9d68743",
+    "bytes": 5112,
+    "mtime_local": "2026-11-08T21:45:54.235961+08:00"
+  },
+  {
+    "path": "/workspace/grab/kulapos-rental-ps/tv-agent-emulator/INSTALL-REPORT.md",
+    "sha256": "1d20a0dcfc87a3b6b81eb4376fe70c358338100c1300b08d31aac7a34c6afe1c",
+    "bytes": 16789,
+    "mtime_local": "2026-11-08T22:17:07.731585+08:00"
+  },
+  {
+    "path": "/workspace/grab/ps-rental-market/MASTER-FEATURE-MATRIX.csv",
+    "sha256": "296f2dd619570ad6d7894cc50058f67a9dcf7b13889d077a42853387a29dce04",
+    "bytes": 51964,
+    "mtime_local": "2026-11-08T21:42:07.979584+08:00"
+  },
+  {
+    "path": "/workspace/grab/ps-rental-market/README.md",
+    "sha256": "d7477d57962a48e4e2f41ec2dac94f510b7206029044f6b473a576a1783f80fd",
+    "bytes": 5810,
+    "mtime_local": "2026-11-08T21:42:08.007588+08:00"
+  },
+  {
+    "path": "/workspace/grab/ps-rental-market/SOURCES.md",
+    "sha256": "ec6032b85ce1522495b72c647973c0be5f01ef8f30dc6c2e4c606a4e59c7f272",
+    "bytes": 5850,
+    "mtime_local": "2026-11-08T21:42:07.975583+08:00"
+  },
+  {
+    "path": "/workspace/grab/ps-rental-market/TV-CONSOLE-CONTROL.md",
+    "sha256": "1094acb67771bab46b204fcdea24228a044e632f8363dd939dd9c004366a00cd",
+    "bytes": 12230,
+    "mtime_local": "2026-11-08T21:41:32.223088+08:00"
+  },
+  {
+    "path": "/workspace/grab/senet/APPS.md",
+    "sha256": "f4d9581e471d9b3c3e4c4ce18b40e6784927e8a59077aeec1d0b606456f3ec54",
+    "bytes": 4190,
+    "mtime_local": "2026-11-08T21:54:35.872833+08:00"
+  },
+  {
+    "path": "/workspace/grab/senet/HANDOFF.md",
+    "sha256": "3f9d40de52d13b2dae6f06aeaae6639d9d7dad5007d720ec78164298aea0b8d7",
+    "bytes": 1963,
+    "mtime_local": "2026-11-08T22:11:26.919564+08:00"
+  },
+  {
+    "path": "/workspace/grab/senet/INVENTORY.md",
+    "sha256": "c7ed4e366f45662bfdf33f252af1e284a53ab430ae99911b30a38cca3bbd1758",
+    "bytes": 22243,
+    "mtime_local": "2026-11-08T21:48:01.624811+08:00"
+  },
+  {
+    "path": "/workspace/grab/senet/WORKFLOWS.md",
+    "sha256": "550a474efe4688cfc458a1c4a4ae394dc84590d2dc2a1b22896189b6835d3243",
+    "bytes": 4608,
+    "mtime_local": "2026-11-08T21:54:35.872833+08:00"
+  },
+  {
+    "path": "/workspace/grab/senet/docs/help/10373656174876-decimal-places-of-money-and-rounding-for-postpayment.md",
+    "sha256": "e26120e237b4999f6533443d1aeeda0a9ffc89716a38da6eb022765890298f29",
+    "bytes": 1572,
+    "mtime_local": "2026-11-08T21:44:11.309971+08:00"
+  },
+  {
+    "path": "/workspace/grab/senet/docs/help/26291453315228-booking-module-admin-guide.md",
+    "sha256": "ffd1b06f405b82f7fa739cef868cb419f97615e5f120542186266836875e09b1",
+    "bytes": 5519,
+    "mtime_local": "2026-11-08T21:44:10.910250+08:00"
+  },
+  {
+    "path": "/workspace/grab/senet/docs/help/360010819900-gaming-zone-levels-how-they-work.md",
+    "sha256": "da102505cd9f78faeb39f4313b70edc979a52f2b4af2f3958f12d2444cff2345",
+    "bytes": 891,
+    "mtime_local": "2026-11-08T21:44:11.317965+08:00"
+  },
+  {
+    "path": "/workspace/grab/senet/docs/help/360010860620-is-it-possible-to-cancel-the-reservation.md",
+    "sha256": "d0738d08866acf9ac3ed5bf1b49e7e4478d7fc6174fde479f153fdef6e78f149",
+    "bytes": 1555,
+    "mtime_local": "2026-11-08T21:44:11.329957+08:00"
+  },
+  {
+    "path": "/workspace/grab/senet/docs/help/360010904480-what-is-a-z-report.md",
+    "sha256": "8a60d0a0dea7a260b6931cb7c1cca534afd67356382579a82edfab7c58b46b71",
+    "bytes": 483,
+    "mtime_local": "2026-11-08T21:44:11.297979+08:00"
+  },
+  {
+    "path": "/workspace/grab/senet/docs/help/360010934959-how-to-set-up-rates.md",
+    "sha256": "cc0201fa5123676c3566f905f820d3b9138e0bbcb75b5da639ef70ad4c227f67",
+    "bytes": 2111,
+    "mtime_local": "2026-11-08T21:44:11.317965+08:00"
+  },
+  {
+    "path": "/workspace/grab/senet/docs/help/360011020979-what-is-an-x-report.md",
+    "sha256": "30d08118c8ff91f6bb1fac0b08d36e61e6f9f6320ff6b34164c95989d4ea6a3c",
+    "bytes": 358,
+    "mtime_local": "2026-11-08T21:44:11.297979+08:00"
+  },
+  {
+    "path": "/workspace/grab/senet/research/HARDWARE-OFFLINE.md",
+    "sha256": "644234cff7e185c0f73627b939c7bafc1370551cd8bc90554cd05081f905f3c8",
+    "bytes": 6831,
+    "mtime_local": "2026-11-08T21:47:11.009067+08:00"
+  },
+  {
+    "path": "/workspace/grab/senet/research/MATRIX-SENET.md",
+    "sha256": "39d020cf3c76411f0fb8cb994b486bb8d44b43d5d1d5a38b17def0e5953faa52",
+    "bytes": 34658,
+    "mtime_local": "2026-11-08T21:49:16.944281+08:00"
+  },
+  {
+    "path": "/workspace/grab/senet/videos/INDEX.md",
+    "sha256": "42b7f9c5f9b2a1b01e8ea422cc79aa8f3db061524efae76d9d95bee2de13b1a1",
+    "bytes": 19218,
+    "mtime_local": "2026-11-08T22:11:21.847299+08:00"
+  }
+]

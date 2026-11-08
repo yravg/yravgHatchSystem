@@ -1,0 +1,125 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><title>HatchSystem wireframes v0.2</title><style>:root{
+  /* brand.* = PROVISIONAL (logo pending) */
+  --hs-brand-primary:#B4532A;
+  --hs-brand-primary-hover:#9A4521;
+  --hs-brand-primary-ink:#FFFFFF;
+  --hs-brand-primary-tint:#F6E7DF;
+  --hs-brand-on-dark:#E8875C;
+  --hs-canvas:#FAF9F5;
+  --hs-surface:#FFFFFF;
+  --hs-surface-2:#F3F0E8;
+  --hs-line:#E6E2D8;
+  --hs-line-strong:#C9C3B5;
+  --hs-ink:#1F1F1F;
+  --hs-ink-dim:#55524C;
+  --hs-ink-faint:#76726A;
+  --hs-slate:#4A5B72;
+  --hs-ok:#2F7A4F;
+  --hs-warn:#8A5A0B;
+  --hs-danger:#8E3B24;
+  --hs-focus:#1D5FD1;
+  --hs-state-idle-fg:#3E4C60;
+  --hs-state-idle-bg:#E9EDF2;
+  --hs-state-idle-solid:#4A5B72;
+  --hs-state-idle-tv:#A9B8CC;
+  --hs-state-idle-on:#FFFFFF;
+  --hs-state-booked-fg:#5A3F8C;
+  --hs-state-booked-bg:#EEE8F7;
+  --hs-state-booked-solid:#6B4FA0;
+  --hs-state-booked-tv:#C3B0E6;
+  --hs-state-booked-on:#FFFFFF;
+  --hs-state-running-fg:#1F5E3A;
+  --hs-state-running-bg:#E3F1E8;
+  --hs-state-running-solid:#2F7A4F;
+  --hs-state-running-tv:#7FD3A0;
+  --hs-state-running-on:#FFFFFF;
+  --hs-state-ending-fg:#7A4E06;
+  --hs-state-ending-bg:#FBEFD6;
+  --hs-state-ending-solid:#C8901E;
+  --hs-state-ending-tv:#F2C063;
+  --hs-state-ending-on:#1F1F1F;
+  --hs-state-overtime-fg:#8F1D17;
+  --hs-state-overtime-bg:#FBE3E1;
+  --hs-state-overtime-solid:#B3261E;
+  --hs-state-overtime-tv:#FF8A80;
+  --hs-state-overtime-on:#FFFFFF;
+  --hs-state-paused-fg:#2C5785;
+  --hs-state-paused-bg:#E3EDF8;
+  --hs-state-paused-solid:#3A6EA5;
+  --hs-state-paused-tv:#8DB8E8;
+  --hs-state-paused-on:#FFFFFF;
+  --hs-state-offline-fg:#4D4D4D;
+  --hs-state-offline-bg:#ECECEC;
+  --hs-state-offline-solid:#6B6B6B;
+  --hs-state-offline-tv:#B5B5B5;
+  --hs-state-offline-on:#FFFFFF;
+  --hs-state-maintenance-fg:#5C4A3A;
+  --hs-state-maintenance-bg:#EFE9E3;
+  --hs-state-maintenance-solid:#7A6450;
+  --hs-state-maintenance-tv:#CDB59C;
+  --hs-state-maintenance-on:#FFFFFF;
+  --hs-font:Inter, 'Noto Sans', system-ui, sans-serif;
+  --hs-mono:'JetBrains Mono', 'DejaVu Sans Mono', ui-monospace, monospace;
+  --hs-space-0:0;
+  --hs-space-1:4px;
+  --hs-space-2:8px;
+  --hs-space-3:12px;
+  --hs-space-4:16px;
+  --hs-space-5:20px;
+  --hs-space-6:24px;
+  --hs-space-8:32px;
+  --hs-space-10:40px;
+  --hs-space-12:48px;
+  --hs-space-16:64px;
+  --hs-space-tv-safe:5%;
+  --hs-radius-sm:6px;
+  --hs-radius-md:8px;
+  --hs-radius-lg:12px;
+  --hs-radius-xl:16px;
+  --hs-radius-pill:999px;
+  --hs-elev-0:none;
+  --hs-elev-1:0 1px 2px rgba(31,31,31,.06);
+  --hs-elev-2:0 4px 12px rgba(31,31,31,.08);
+  --hs-elev-3:0 12px 32px rgba(31,31,31,.14);
+  --hs-elev-tv:0 8px 32px rgba(0,0,0,.5);
+  --hs-focus-ops:0 0 0 2px #FFFFFF, 0 0 0 4px #1D5FD1;
+  --hs-focus-tv:0 0 0 4px #121110, 0 0 0 8px #FFD54A;
+  --yr-ease-out:cubic-bezier(0.2,0,0,1);
+  --yr-ease-in:cubic-bezier(0.55,0,1,0.45);
+  --yr-ease-cross:cubic-bezier(0.4,0,0.6,1);
+  --yr-page-move-ms:400ms;
+  --yr-modal-open-ms:260ms;
+  --yr-modal-close-ms:120ms;
+  --hs-tv-focus-ms:120ms;
+}
+.hs-dark,[data-theme=tv]{--hs-canvas:#121110;--hs-surface:#1E1C1A;--hs-surface-2:#2A2724;--hs-line:#3A3632;--hs-ink:#F4F1EA;--hs-ink-dim:#C9C3B8;--hs-ink-faint:#9C968C;--hs-focus:#FFD54A;--hs-brand-primary:var(--hs-brand-on-dark);}
+@media (prefers-reduced-motion:reduce){:root{--yr-page-move-ms:0ms;--yr-modal-open-ms:120ms;--yr-modal-close-ms:0ms;--hs-tv-focus-ms:0ms}}
+
+*{box-sizing:border-box}body{margin:0;background:#E9E6DE;font-family:var(--hs-font);color:var(--hs-ink);padding:24px}
+h1.pg{font-size:20px;margin:0 0 4px}.pgsub{color:var(--hs-ink-dim);font-size:14px;margin:0 0 24px}
+.cap{font:600 13px/18px var(--hs-font);color:#3a372f;margin:28px 0 8px}.cap code{font-family:var(--hs-mono);background:#fff;padding:1px 6px;border-radius:4px}
+.frame{position:relative;overflow:hidden;background:var(--hs-canvas);border:1px solid var(--hs-line-strong);box-shadow:var(--hs-elev-2)}
+.row{display:flex;gap:12px;align-items:center}.col{display:flex;flex-direction:column;gap:8px}.grow{flex:1}.sp{justify-content:space-between}
+.card{background:var(--hs-surface);border:1px solid var(--hs-line);border-radius:var(--hs-radius-lg);padding:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:var(--hs-radius-md);font:600 15px var(--hs-font);border:1px solid var(--hs-line-strong);background:var(--hs-surface);color:var(--hs-ink);white-space:nowrap}
+.btn.p{background:var(--hs-brand-primary);border-color:var(--hs-brand-primary);color:var(--hs-brand-primary-ink)}.btn.d{background:var(--hs-danger);color:#fff;border-color:var(--hs-danger)}.btn.lg{min-height:56px;font-size:17px}
+.sheet .btn{min-width:0;padding:0 10px}.btn.f{box-shadow:var(--hs-focus-ops)}
+.chip{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border-radius:999px;font:600 13px/20px var(--hs-font);white-space:nowrap}
+.muted{color:var(--hs-ink-dim)}.faint{color:var(--hs-ink-faint)}.mono{font-family:var(--hs-mono)}.num{font:700 28px/32px var(--hs-mono)}
+.top{height:56px;background:var(--hs-surface);border-bottom:1px solid var(--hs-line);display:flex;align-items:center;gap:16px;padding:0 20px}
+.logo{width:32px;height:32px;border-radius:8px;border:2px dashed var(--hs-brand-primary);display:grid;place-items:center;font:700 8px var(--hs-font);color:var(--hs-brand-primary)}
+.banner{padding:10px 16px;font:600 14px var(--hs-font);display:flex;gap:10px;align-items:center}
+.side{width:224px;background:var(--hs-surface);border-right:1px solid var(--hs-line);padding:16px 12px;display:flex;flex-direction:column;gap:2px}
+.side a{padding:9px 12px;border-radius:8px;font:500 14px var(--hs-font);color:var(--hs-ink-dim);text-decoration:none}.side a.on{background:var(--hs-brand-primary-tint);color:var(--hs-brand-primary-hover);font-weight:700}
+table.t{width:100%;border-collapse:collapse;font-size:14px}.t th{text-align:left;font-weight:600;color:var(--hs-ink-dim);padding:8px;border-bottom:1px solid var(--hs-line)}.t td{padding:9px 8px;border-bottom:1px solid var(--hs-line)}
+.tile{border-radius:12px;background:var(--hs-surface);border:1px solid var(--hs-line);padding:12px;display:flex;flex-direction:column;gap:6px;min-height:150px;border-left-width:6px}
+.sheet{position:absolute;top:0;right:0;bottom:0;width:480px;background:var(--hs-surface);border-left:1px solid var(--hs-line);box-shadow:var(--hs-elev-3);padding:20px;display:flex;flex-direction:column;gap:12px}
+.scrim{position:absolute;inset:0;background:rgba(31,31,31,.32)}
+.seg{display:flex;background:var(--hs-surface-2);border-radius:10px;padding:3px}.seg span{flex:1;text-align:center;padding:8px 10px;border-radius:8px;font:600 14px var(--hs-font);color:var(--hs-ink-dim)}.seg span.on{background:var(--hs-surface);color:var(--hs-ink);box-shadow:var(--hs-elev-1)}
+.qr{background:repeating-conic-gradient(#1F1F1F 0 25%,#fff 0 50%) 0 0/14px 14px;border:8px solid #fff;outline:1px solid var(--hs-line)}
+.bar{height:8px;border-radius:999px;background:var(--hs-surface-2);overflow:hidden}.bar i{display:block;height:100%}
+.tv{background:#121110;color:#F4F1EA;font-size:28px;line-height:36px}.tv .tvsafe{position:absolute;inset:5%}
+.tvf{box-shadow:var(--hs-focus-tv);transform:scale(1.04)}
+.tvbtn{min-height:72px;padding:0 32px;border-radius:14px;background:#2A2724;color:#F4F1EA;font:600 28px var(--hs-font);display:inline-flex;align-items:center;border:2px solid #3A3632}
+.hatch{background-image:repeating-linear-gradient(45deg,transparent 0 8px,rgba(92,74,58,.12) 8px 16px)}
+.g{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.g img{width:100%;border:1px solid var(--hs-line);border-radius:8px}</style></head><body><h1 class="pg">HatchSystem wireframes v0.2</h1><p class="pgsub">59 frames · 13 surfaces · brand.* PROVISIONAL · design-only HS-SCR ids</p><h2 style="font-size:18px;margin:20px 0 8px">Pembeda utama / differentiators</h2><div class="g"><a href="cashier.html#CSH-02-activation"><img src="shots/CSH-02-activation.png"><div class="faint" style="font-size:13px">CSH-02-activation · activation confirm + auto-compensation</div></a><a href="tv-agent.html#TVA-07-offline"><img src="shots/TVA-07-offline.png"><div class="faint" style="font-size:13px">TVA-07-offline · signed offline lease</div></a><a href="cashier.html#CSH-05-qris"><img src="shots/CSH-05-qris.png"><div class="faint" style="font-size:13px">CSH-05-qris · QRIS first, bank-confirmed</div></a><a href="cashier.html#CSH-15-move"><img src="shots/CSH-15-move.png"><div class="faint" style="font-size:13px">CSH-15-move · console/seat move</div></a><a href="tv-agent.html#TVA-02b-permlost"><img src="shots/TVA-02b-permlost.png"><div class="faint" style="font-size:13px">TVA-02b-permlost · permission re-check after reboot</div></a><a href="tv-adapter.html#ADP-01-wizard"><img src="shots/ADP-01-wizard.png"><div class="faint" style="font-size:13px">ADP-01-wizard · LG/Samsung via adapter</div></a></div><h2 style="font-size:18px;margin:28px 0 8px"><a href="cashier.html">Cashier PWA — shared Next.js app (PRD §3, MVP)</a> <span class="faint" style="font-size:14px">Tablet 1280×800 + desktop 1440×900</span></h2><div class="g"><a href="cashier.html#CSH-01-tablet"><img src="shots/CSH-01-tablet.png" alt="CSH-01-tablet"><div class="faint" style="font-size:13px">CSH-01-tablet</div></a><a href="cashier.html#CSH-01-desktop-offline"><img src="shots/CSH-01-desktop-offline.png" alt="CSH-01-desktop-offline"><div class="faint" style="font-size:13px">CSH-01-desktop-offline</div></a><a href="cashier.html#CSH-02-start"><img src="shots/CSH-02-start.png" alt="CSH-02-start"><div class="faint" style="font-size:13px">CSH-02-start</div></a><a href="cashier.html#CSH-02-activation"><img src="shots/CSH-02-activation.png" alt="CSH-02-activation"><div class="faint" style="font-size:13px">CSH-02-activation</div></a><a href="cashier.html#CSH-03-detail"><img src="shots/CSH-03-detail.png" alt="CSH-03-detail"><div class="faint" style="font-size:13px">CSH-03-detail</div></a><a href="cashier.html#CSH-04-fnb"><img src="shots/CSH-04-fnb.png" alt="CSH-04-fnb"><div class="faint" style="font-size:13px">CSH-04-fnb</div></a><a href="cashier.html#CSH-05-cash"><img src="shots/CSH-05-cash.png" alt="CSH-05-cash"><div class="faint" style="font-size:13px">CSH-05-cash</div></a><a href="cashier.html#CSH-05-qris"><img src="shots/CSH-05-qris.png" alt="CSH-05-qris"><div class="faint" style="font-size:13px">CSH-05-qris</div></a><a href="cashier.html#CSH-06-member"><img src="shots/CSH-06-member.png" alt="CSH-06-member"><div class="faint" style="font-size:13px">CSH-06-member</div></a><a href="cashier.html#CSH-07-bookings"><img src="shots/CSH-07-bookings.png" alt="CSH-07-bookings"><div class="faint" style="font-size:13px">CSH-07-bookings</div></a><a href="cashier.html#CSH-08-shift"><img src="shots/CSH-08-shift.png" alt="CSH-08-shift"><div class="faint" style="font-size:13px">CSH-08-shift</div></a><a href="cashier.html#CSH-12-noshow"><img src="shots/CSH-12-noshow.png" alt="CSH-12-noshow"><div class="faint" style="font-size:13px">CSH-12-noshow</div></a><a href="cashier.html#CSH-13-xreport"><img src="shots/CSH-13-xreport.png" alt="CSH-13-xreport"><div class="faint" style="font-size:13px">CSH-13-xreport</div></a><a href="cashier.html#CSH-14-zreport"><img src="shots/CSH-14-zreport.png" alt="CSH-14-zreport"><div class="faint" style="font-size:13px">CSH-14-zreport</div></a><a href="cashier.html#CSH-15-move"><img src="shots/CSH-15-move.png" alt="CSH-15-move"><div class="faint" style="font-size:13px">CSH-15-move</div></a></div><h2 style="font-size:18px;margin:28px 0 8px"><a href="admin.html">Web owner/admin — Next.js (PRD §3, MVP config; V1 reports/branch/payroll/tax)</a> <span class="faint" style="font-size:14px">Desktop 1440×900</span></h2><div class="g"><a href="admin.html#ADM-01-dashboard"><img src="shots/ADM-01-dashboard.png" alt="ADM-01-dashboard"><div class="faint" style="font-size:13px">ADM-01-dashboard</div></a><a href="admin.html#ADM-02-units"><img src="shots/ADM-02-units.png" alt="ADM-02-units"><div class="faint" style="font-size:13px">ADM-02-units</div></a><a href="admin.html#ADM-04-pricing"><img src="shots/ADM-04-pricing.png" alt="ADM-04-pricing"><div class="faint" style="font-size:13px">ADM-04-pricing</div></a><a href="admin.html#ADM-08-reports"><img src="shots/ADM-08-reports.png" alt="ADM-08-reports"><div class="faint" style="font-size:13px">ADM-08-reports</div></a><a href="admin.html#ADM-09-staff"><img src="shots/ADM-09-staff.png" alt="ADM-09-staff"><div class="faint" style="font-size:13px">ADM-09-staff</div></a><a href="admin.html#ADM-10-tournament"><img src="shots/ADM-10-tournament.png" alt="ADM-10-tournament"><div class="faint" style="font-size:13px">ADM-10-tournament</div></a><a href="admin.html#ADM-11-agents"><img src="shots/ADM-11-agents.png" alt="ADM-11-agents"><div class="faint" style="font-size:13px">ADM-11-agents</div></a><a href="admin.html#ADM-12-cert"><img src="shots/ADM-12-cert.png" alt="ADM-12-cert"><div class="faint" style="font-size:13px">ADM-12-cert</div></a><a href="admin.html#ADM-14-audit"><img src="shots/ADM-14-audit.png" alt="ADM-14-audit"><div class="faint" style="font-size:13px">ADM-14-audit</div></a><a href="admin.html#ADM-20-billing"><img src="shots/ADM-20-billing.png" alt="ADM-20-billing"><div class="faint" style="font-size:13px">ADM-20-billing</div></a><a href="admin.html#ADM-21-bookingpolicy"><img src="shots/ADM-21-bookingpolicy.png" alt="ADM-21-bookingpolicy"><div class="faint" style="font-size:13px">ADM-21-bookingpolicy</div></a><a href="admin.html#ADM-22-2fa-enrol"><img src="shots/ADM-22-2fa-enrol.png" alt="ADM-22-2fa-enrol"><div class="faint" style="font-size:13px">ADM-22-2fa-enrol</div></a><a href="admin.html#ADM-23-2fa-login"><img src="shots/ADM-23-2fa-login.png" alt="ADM-23-2fa-login"><div class="faint" style="font-size:13px">ADM-23-2fa-login</div></a><a href="admin.html#ADM-24-webhooks"><img src="shots/ADM-24-webhooks.png" alt="ADM-24-webhooks"><div class="faint" style="font-size:13px">ADM-24-webhooks</div></a><a href="admin.html#ADM-25-tour-checkin"><img src="shots/ADM-25-tour-checkin.png" alt="ADM-25-tour-checkin"><div class="faint" style="font-size:13px">ADM-25-tour-checkin</div></a></div><h2 style="font-size:18px;margin:28px 0 8px"><a href="customer.html">Customer PWA: booking, member/wallet/time, QR order, receipt — iOS = this PWA in V1 (Safari tested)</a> <span class="faint" style="font-size:14px">Mobile 390×844</span></h2><div class="g"><a href="customer.html#CUS-02-book"><img src="shots/CUS-02-book.png" alt="CUS-02-book"><div class="faint" style="font-size:13px">CUS-02-book</div></a><a href="customer.html#CUS-03-confirm"><img src="shots/CUS-03-confirm.png" alt="CUS-03-confirm"><div class="faint" style="font-size:13px">CUS-03-confirm</div></a><a href="customer.html#CUS-04-qrorder"><img src="shots/CUS-04-qrorder.png" alt="CUS-04-qrorder"><div class="faint" style="font-size:13px">CUS-04-qrorder</div></a><a href="customer.html#CUS-05-status"><img src="shots/CUS-05-status.png" alt="CUS-05-status"><div class="faint" style="font-size:13px">CUS-05-status</div></a><a href="customer.html#CUS-07-member"><img src="shots/CUS-07-member.png" alt="CUS-07-member"><div class="faint" style="font-size:13px">CUS-07-member</div></a><a href="customer.html#CUS-09-tournament"><img src="shots/CUS-09-tournament.png" alt="CUS-09-tournament"><div class="faint" style="font-size:13px">CUS-09-tournament</div></a></div><h2 style="font-size:18px;margin:28px 0 8px"><a href="kitchen.html">Kitchen display (web KDS, MVP)</a> <span class="faint" style="font-size:14px">Landscape 1280×800 tablet/TV</span></h2><div class="g"><a href="kitchen.html#KDS-01-board"><img src="shots/KDS-01-board.png" alt="KDS-01-board"><div class="faint" style="font-size:13px">KDS-01-board</div></a></div><h2 style="font-size:18px;margin:28px 0 8px"><a href="lobby.html">Lobby / status / waiting-room board (read-only projection, V1, redacted)</a> <span class="faint" style="font-size:14px">1080p TV 1920×1080</span></h2><div class="g"><a href="lobby.html#LBY-01-billboard"><img src="shots/LBY-01-billboard.png" alt="LBY-01-billboard"><div class="faint" style="font-size:13px">LBY-01-billboard</div></a></div><h2 style="font-size:18px;margin:28px 0 8px"><a href="customer-display.html">Customer checkout display (read-only projection, V1)</a> <span class="faint" style="font-size:14px">Second screen 1024×600</span></h2><div class="g"><a href="customer-display.html#CFD-01-qris"><img src="shots/CFD-01-qris.png" alt="CFD-01-qris"><div class="faint" style="font-size:13px">CFD-01-qris</div></a></div><h2 style="font-size:18px;margin:28px 0 8px"><a href="kiosk.html">Self-service kiosk (hardened shared web app, V2)</a> <span class="faint" style="font-size:14px">Portrait 1080×1920 (rendered 540×960 @2x)</span></h2><div class="g"><a href="kiosk.html#KSK-01-attract"><img src="shots/KSK-01-attract.png" alt="KSK-01-attract"><div class="faint" style="font-size:13px">KSK-01-attract</div></a><a href="kiosk.html#KSK-02-topup"><img src="shots/KSK-02-topup.png" alt="KSK-02-topup"><div class="faint" style="font-size:13px">KSK-02-topup</div></a><a href="kiosk.html#KSK-04-qris"><img src="shots/KSK-04-qris.png" alt="KSK-04-qris"><div class="faint" style="font-size:13px">KSK-04-qris</div></a></div><h2 style="font-size:18px;margin:28px 0 8px"><a href="tv-agent.html">Android / Google TV agent — native Kotlin (MVP, certified devices)</a> <span class="faint" style="font-size:14px">1080p TV 1920×1080, D-pad</span></h2><div class="g"><a href="tv-agent.html#TVA-01-pairing"><img src="shots/TVA-01-pairing.png" alt="TVA-01-pairing"><div class="faint" style="font-size:13px">TVA-01-pairing</div></a><a href="tv-agent.html#TVA-02-setup"><img src="shots/TVA-02-setup.png" alt="TVA-02-setup"><div class="faint" style="font-size:13px">TVA-02-setup</div></a><a href="tv-agent.html#TVA-03-standby"><img src="shots/TVA-03-standby.png" alt="TVA-03-standby"><div class="faint" style="font-size:13px">TVA-03-standby</div></a><a href="tv-agent.html#TVA-04-running"><img src="shots/TVA-04-running.png" alt="TVA-04-running"><div class="faint" style="font-size:13px">TVA-04-running</div></a><a href="tv-agent.html#TVA-05-warning"><img src="shots/TVA-05-warning.png" alt="TVA-05-warning"><div class="faint" style="font-size:13px">TVA-05-warning</div></a><a href="tv-agent.html#TVA-06-overtime"><img src="shots/TVA-06-overtime.png" alt="TVA-06-overtime"><div class="faint" style="font-size:13px">TVA-06-overtime</div></a><a href="tv-agent.html#TVA-07-offline"><img src="shots/TVA-07-offline.png" alt="TVA-07-offline"><div class="faint" style="font-size:13px">TVA-07-offline</div></a><a href="tv-agent.html#TVA-08-override"><img src="shots/TVA-08-override.png" alt="TVA-08-override"><div class="faint" style="font-size:13px">TVA-08-override</div></a><a href="tv-agent.html#TVA-02b-permlost"><img src="shots/TVA-02b-permlost.png" alt="TVA-02b-permlost"><div class="faint" style="font-size:13px">TVA-02b-permlost</div></a><a href="tv-agent.html#TVA-10-bootrecover"><img src="shots/TVA-10-bootrecover.png" alt="TVA-10-bootrecover"><div class="faint" style="font-size:13px">TVA-10-bootrecover</div></a></div><h2 style="font-size:18px;margin:28px 0 8px"><a href="tv-adapter.html">LG / Samsung via certified external CEC/HDMI/IR adapter (edge plugin, MVP); native webOS/Tizen = V2 feasibility, no UI yet</a> <span class="faint" style="font-size:14px">1080p TV + admin 1440×900</span></h2><div class="g"><a href="tv-adapter.html#ADP-01-wizard"><img src="shots/ADP-01-wizard.png" alt="ADP-01-wizard"><div class="faint" style="font-size:13px">ADP-01-wizard</div></a><a href="tv-adapter.html#ADP-02-lockcard"><img src="shots/ADP-02-lockcard.png" alt="ADP-02-lockcard"><div class="faint" style="font-size:13px">ADP-02-lockcard</div></a></div><h2 style="font-size:18px;margin:28px 0 8px"><a href="pc-agent.html">Windows PC seat app — .NET service + UI shell (V1)</a> <span class="faint" style="font-size:14px">Desktop 1920×1080</span></h2><div class="g"><a href="pc-agent.html#PCA-01-lock"><img src="shots/PCA-01-lock.png" alt="PCA-01-lock"><div class="faint" style="font-size:13px">PCA-01-lock</div></a><a href="pc-agent.html#PCA-02-hud"><img src="shots/PCA-02-hud.png" alt="PCA-02-hud"><div class="faint" style="font-size:13px">PCA-02-hud</div></a></div><h2 style="font-size:18px;margin:28px 0 8px"><a href="gateway.html">Venue edge gateway (.NET) — PIN pairing + local health UI (MVP)</a> <span class="faint" style="font-size:14px">Desktop 1440×900 + local web</span></h2><div class="g"><a href="gateway.html#GWY-01-pair"><img src="shots/GWY-01-pair.png" alt="GWY-01-pair"><div class="faint" style="font-size:13px">GWY-01-pair</div></a></div><h2 style="font-size:18px;margin:28px 0 8px"><a href="owner.html">Owner mobile view = responsive web admin (not a separate app)</a> <span class="faint" style="font-size:14px">Mobile 390×844</span></h2><div class="g"><a href="owner.html#OWN-01-today"><img src="shots/OWN-01-today.png" alt="OWN-01-today"><div class="faint" style="font-size:13px">OWN-01-today</div></a></div><h2 style="font-size:18px;margin:28px 0 8px"><a href="mobile-agent.html">Android phone/tablet rental agent (V2 pilot)</a> <span class="faint" style="font-size:14px">Mobile 390×844</span></h2><div class="g"><a href="mobile-agent.html#MAG-01-launcher"><img src="shots/MAG-01-launcher.png" alt="MAG-01-launcher"><div class="faint" style="font-size:13px">MAG-01-launcher</div></a></div></body></html>

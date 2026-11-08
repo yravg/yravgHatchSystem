@@ -1,0 +1,4932 @@
+{
+  "tickets": [
+    {
+      "id": "01",
+      "slug": "foundation",
+      "title": "Fondasi monorepo dan kontrak domain",
+      "phase": "MVP",
+      "deps": [],
+      "mode": "solo",
+      "decisions": [
+        "D25",
+        "D29"
+      ],
+      "touches": "package.json; pnpm-workspace.yaml; packages/contracts/; packages/domain/; tests/contracts/; .github/workflows/",
+      "fixture": "Clone bersih: install terkunci, lint, typecheck, unit test dan validasi spesifikasi lulus. Generator skema menghasilkan payload identik untuk TypeScript, Kotlin dan .NET; tidak ada rahasia pada fixture.",
+      "execution_lane": "foundation-backend-first",
+      "ui_hold": false
+    },
+    {
+      "id": "02",
+      "slug": "identity-tenancy",
+      "title": "Identitas, tenant dan otorisasi per outlet",
+      "phase": "MVP",
+      "deps": [
+        "01",
+        "46"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D02",
+        "D16",
+        "D25"
+      ],
+      "touches": "services/api/src/identity/; services/api/src/tenancy/; apps/web/app/akses/; packages/domain/auth/",
+      "fixture": "Kasir outlet A menerima 403 saat meminta laporan owner atau resource tenant B, termasuk ID yang ditebak. Teknisi hanya melihat perangkat; kitchen hanya order; perangkat tidak dapat membuat pembayaran.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "03",
+      "slug": "stations-catalog",
+      "title": "Katalog stasiun, aset, zona dan denah",
+      "phase": "MVP",
+      "deps": [
+        "02",
+        "47"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D04"
+      ],
+      "touches": "services/api/src/stations/; apps/web/app/stasiun/; packages/domain/station/",
+      "fixture": "Satu meja memiliki PS4 dan PS5, satu pilihan konsol per sesi; denah menampilkan tersedia, dipesan, mulai, aktif, jeda, selesai, dibersihkan dan perawatan. Filter jenis/game bekerja; readiness berasal dari capability probe, bukan pembelian plan.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "04",
+      "slug": "rates-quotes",
+      "title": "Tarif versi, paket dan kutipan biaya",
+      "phase": "MVP",
+      "deps": [
+        "03",
+        "47"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D01",
+        "D03",
+        "D26"
+      ],
+      "touches": "services/api/src/rates/; apps/web/app/tarif/; packages/domain/pricing/",
+      "fixture": "Fixture sandbox Rp12.000/jam, sesi open 90 menit menghasilkan Rp18.000 tanpa biaya tambahan. Promo malam lintas tengah malam memakai zona outlet. Quote kedaluwarsa ditolak QUOTE_STALE; versi harga aktif tidak mengubah sesi lama.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "05",
+      "slug": "session-lifecycle",
+      "title": "Sesi fixed/open, jeda, pindah dan berhenti",
+      "phase": "MVP",
+      "deps": [
+        "03",
+        "04",
+        "20",
+        "49"
+      ],
+      "mode": "team",
+      "decisions": [
+        "D01",
+        "D06",
+        "D07"
+      ],
+      "touches": "services/api/src/sessions/; apps/web/app/kasir/; packages/domain/session/; tests/session/",
+      "fixture": "Dua kasir start bersamaan: satu sesi menang, satu STATION_BUSY tanpa debit. Tambah 60 menit pada sisa 30 = 90 tepat satu kali. Pindah ke unit terisi ditolak atomik; pindah sah mempertahankan sessionId, pembayaran dan makanan. Berhenti membekukan tagihan dan tidak langsung menandai unit bersih.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "06",
+      "slug": "cash-sales-ledger",
+      "title": "POS, kas dan buku pembayaran append-only",
+      "phase": "MVP",
+      "deps": [
+        "02",
+        "04",
+        "48"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D01",
+        "D06",
+        "D15"
+      ],
+      "touches": "services/api/src/sales/; services/api/src/ledger/; apps/web/app/pembayaran/; packages/domain/money/",
+      "fixture": "Rp50.000 kas dan Rp25.000 pembayaran terverifikasi melunasi tagihan Rp75.000. Hanya tender tunai boleh menghasilkan kembalian. Retur memakai reversal baru, tidak UPDATE saldo historis; request diulang tidak menggandakan jurnal atau stok.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "07",
+      "slug": "midtrans-qris",
+      "title": "QRIS Midtrans sandbox dan rekonsiliasi",
+      "phase": "MVP",
+      "deps": [
+        "06",
+        "48"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D06",
+        "D15"
+      ],
+      "touches": "services/api/src/payments/; services/worker/src/payments/; apps/web/app/pembayaran/qris/",
+      "fixture": "Signature salah tidak mengubah saldo. Callback sah dideduplikasi dan status dikonfirmasi melalui sandbox provider adapter. Pending/expire/fraud-deny tidak membuka stasiun. Settlement terlambat tidak menduduki unit yang sudah dialokasikan; buat refund-pending terpantau.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "08",
+      "slug": "receipts-printing",
+      "title": "Struk, cetak ulang dan jembatan printer",
+      "phase": "MVP",
+      "deps": [
+        "06",
+        "20",
+        "50"
+      ],
+      "mode": "solo",
+      "decisions": [],
+      "touches": "services/api/src/receipts/; apps/web/app/struk/; agents/venue-edge/Printing/; tests/printing/",
+      "fixture": "PDF dan ESC/POS 58/80 mm memuat item, alokasi bayar dan sisa; putus printer masuk antrean cetak. Cetak ulang 3 kali tetap satu transaksi. Bluetooth/USB/LAN ditawarkan hanya lewat bridge/perangkat yang tersertifikasi, bukan klaim browser universal.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "09",
+      "slug": "wallets-bonuses",
+      "title": "Dompet IDR, bonus dan batas belanja offline",
+      "phase": "V1",
+      "deps": [
+        "06",
+        "07",
+        "20",
+        "52"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D03",
+        "D07",
+        "D15"
+      ],
+      "touches": "services/api/src/wallets/; packages/domain/wallet/; apps/web/app/dompet/",
+      "fixture": "Saldo utama Rp50.000 dan bonus Rp5.000 tersimpan terpisah. Dua redeem Rp40.000 serentak hanya satu berhasil. Tidak ada transfer antarmember default; refund dan top-up koreksi berotorisasi. Offline allowance default nol; tidak ada double-spend lintas cabang.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "10",
+      "slug": "saved-time",
+      "title": "Tabungan waktu, penebusan dan kedaluwarsa",
+      "phase": "V1",
+      "deps": [
+        "05",
+        "06",
+        "52"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D03",
+        "D26"
+      ],
+      "touches": "services/api/src/time-credits/; packages/domain/time-credit/; apps/web/app/member/waktu/",
+      "fixture": "Paket lunas 120 menit berhenti setelah 45 memberi 75 menit sekali; redeem30 menyisakan45. Bucket belum lunas/kedaluwarsa/kategori salah ditolak. Refund tidak boleh menyisakan sekaligus uang dan hak waktu untuk pembayaran yang sama.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "11",
+      "slug": "members-loyalty",
+      "title": "Member, reward, tingkat dan voucher",
+      "phase": "V1",
+      "deps": [
+        "06",
+        "09",
+        "10"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D03",
+        "D10",
+        "D16"
+      ],
+      "touches": "services/api/src/members/; services/api/src/loyalty/; apps/web/app/member/",
+      "fixture": "Identitas member dicari tanpa URL nomor telepon. Transaksi lunas memberi poin sekali; reversal membalik poin. Reward barang/waktu terpisah dari uang bonus; diskon personal versus grup memakai maksimum, bukan stacking, pada fixture. Expiry dan rasio tetap config yang harus disetujui.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "12",
+      "slug": "bookings",
+      "title": "Reservasi, deposit, buffer dan no-show",
+      "phase": "V1",
+      "deps": [
+        "03",
+        "04",
+        "06",
+        "52"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D10",
+        "D31"
+      ],
+      "touches": "services/api/src/bookings/; apps/web/app/reservasi/; apps/web/app/pesan/",
+      "fixture": "Dua checkout slot sama menghasilkan satu konfirmasi. Interval half-open dengan buffer, hold5menit, check-in window10menit adalah fixture; walk-in menolak overlap reservasi sah. Booking terlarang tidak memblokir walk-in; deposit adalah liability sampai diterapkan/dikembalikan.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "13",
+      "slug": "customer-self-service",
+      "title": "Portal pelanggan dan akses QR/receipt",
+      "phase": "V1",
+      "deps": [
+        "05",
+        "07",
+        "09",
+        "12"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D10",
+        "D16"
+      ],
+      "touches": "services/api/src/customer-access/; apps/web/app/pelanggan/; apps/web/app/unit/",
+      "fixture": "Guest memilih durasi, mendapat quote, membayar QRIS sandbox, lalu akses hanya setelah settlement dan applied ACK. Token QR sekali pakai kedaluwarsa, terikat station/booking/tenant. Bulk start memberi hasil per unit; tidak mengulang pembayaran untuk unit yang gagal.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "14",
+      "slug": "food-kitchen",
+      "title": "Pesanan F&B, tagihan gabungan dan KDS",
+      "phase": "MVP",
+      "deps": [
+        "05",
+        "06",
+        "15",
+        "53"
+      ],
+      "mode": "team",
+      "decisions": [],
+      "touches": "services/api/src/orders/; apps/web/app/menu/; apps/web/app/dapur/; packages/domain/order/",
+      "fixture": "Dua minuman ditambahkan saat bermain tanpa reset timer; satu struk dengan sewa. Pesanan QR satu kali meski retry. Kitchen mengubah baru→diterima→diproses→siap→diantar; pembatalan/stock-out terlihat dan mengembalikan reservasi stok sekali.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "15",
+      "slug": "inventory-recipes",
+      "title": "Produk, stok, resep dan costing",
+      "phase": "MVP",
+      "deps": [
+        "06",
+        "53"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D17"
+      ],
+      "touches": "services/api/src/inventory/; apps/web/app/stok/; packages/domain/inventory/",
+      "fixture": "Jual2 minuman resep 100ml susu mengurangi200ml sekali. Retur layak stok membuat reversal; bahan terbuang memakai write-off. Opname menghitung event penjualan yang terjadi saat hitung fisik, tidak menimpa stok secara buta. Costing moving-average fixture; FIFO V1 dengan migrasi versi.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "16",
+      "slug": "procurement-transfers",
+      "title": "Supplier, PO, penerimaan dan mutasi gudang",
+      "phase": "V1",
+      "deps": [
+        "15",
+        "33"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D17"
+      ],
+      "touches": "services/api/src/procurement/; apps/web/app/pengadaan/",
+      "fixture": "PO2 karton isi24 diterima48 pcs, invoice supplier liability48 unit harga yang disetujui. Terima parsial tidak menutup sisa. Mutasi10 mengurangi sumber dan mencatat in-transit; tujuan menambah sekali saat receive, bukan saat kirim.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "17",
+      "slug": "shifts-cash",
+      "title": "Shift kasir dan serah terima sesi aktif",
+      "phase": "MVP",
+      "deps": [
+        "06",
+        "08",
+        "53"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D08",
+        "D30"
+      ],
+      "touches": "services/api/src/shifts/; apps/web/app/shift/",
+      "fixture": "Float100k + kas200k - pengeluaran20k = drawer280k; pembayaran nonkas50k tidak menambah drawer. Tutup tidak menghentikan sesi aktif; handover actor dicatat. X laporan interim, close snapshot immutable; selisih0 maupun nonzero dapat dijelaskan jujur.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "18",
+      "slug": "reports-finance",
+      "title": "Laporan owner, utilisasi dan liability",
+      "phase": "V1",
+      "deps": [
+        "15",
+        "17"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D08",
+        "D17"
+      ],
+      "touches": "services/api/src/reports/; apps/web/app/laporan/; services/worker/src/exports/",
+      "fixture": "Unit dipakai2jam dari jam tersedia10jam =20%; jam maintenance dipisahkan dan denominator ditampilkan. Revenue, deposit/wallet liability, bonus dan F&B tidak dicampur. Filter cabang/periode/shift, CSV/XLSX/PDF mengikat snapshot dan hak akses.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "19",
+      "slug": "pairing-capabilities",
+      "title": "Pairing aman dan capability probe",
+      "phase": "MVP",
+      "deps": [
+        "02",
+        "03",
+        "50"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D04",
+        "D09",
+        "D27",
+        "D28",
+        "D32"
+      ],
+      "touches": "services/api/src/devices/; agents/android-tv/app/src/main/java/id/yravg/hatch/setup/; apps/web/app/perangkat/",
+      "fixture": "Kode pairing acak8digit berlaku5menit, maksimum5 percobaan/menit/perangkat; approve staff mengikat station. Reuse ditolak, revocation menghapus otoritas. Input test gagal/izin overlay ditolak menampilkan perlu penyiapan, bukan siap.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "20",
+      "slug": "venue-edge-leases",
+      "title": "Venue edge, lease offline dan otoritas tunggal",
+      "phase": "MVP",
+      "deps": [
+        "01",
+        "02",
+        "19",
+        "50"
+      ],
+      "mode": "team",
+      "decisions": [
+        "D06",
+        "D07",
+        "D09",
+        "D27",
+        "D28"
+      ],
+      "touches": "agents/venue-edge/; services/api/src/edge/; packages/contracts/leases/; tests/faults/edge/",
+      "fixture": "SQLite WAL menyimpan event sebelum ACK. Lease bertanda tangan mengikat tenant/outlet/station/session/revision dan batas waktu. Hilang WAN sesi aktif tetap sampai deadline; reboot tanpa bukti waktu terpercaya fail-closed picture dan tampil recovery. Fencing epoch mencegah dua edge menguasai unit. Start/extension offline memakai authorisation yang eksplisit; default ditolak.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "21",
+      "slug": "android-tv-agent",
+      "title": "Agent Kotlin Android/Google TV dan expiry",
+      "phase": "MVP",
+      "deps": [
+        "19",
+        "20",
+        "51"
+      ],
+      "mode": "team",
+      "decisions": [
+        "D04",
+        "D06",
+        "D09",
+        "D27",
+        "D28",
+        "D32"
+      ],
+      "touches": "agents/android-tv/; tests/hardware/android-tv/",
+      "fixture": "Standby, mulai, aktif, jeda dan selesai berbeda; input dipilih melalui API publik yang didukung. APPLIED mengindikasikan input teramati jika API tersedia, bukan bukti optik; tingkat verifikasi dicatat. Expiry selalu mengunci gambar, bukan daya konsol. Ukur Home-return pada model tersertifikasi, tandai tidak didukung jika gagal, tanpa akses tersembunyi.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "22",
+      "slug": "tv-remote-media",
+      "title": "Remote TV aman, timer dan media sendiri",
+      "phase": "V1",
+      "deps": [
+        "21"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D04",
+        "D09"
+      ],
+      "touches": "agents/android-tv/app/src/main/java/id/yravg/hatch/remote/; services/api/src/device-commands/; apps/web/app/perangkat/remote/",
+      "fixture": "Volume/mute dapat ACK atau unsupported. Sleep hanya idle; blackout tidak disebut electrical standby. Restart/manual input perlu teknisi berotorisasi dan alasan; tidak menghapus lease. Pesan di-escape, media own-brand dibatasi ukuran/tipe dan cache aman.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "23",
+      "slug": "external-tv-adapters",
+      "title": "Adapter CEC/HDMI/IR untuk LG dan Samsung",
+      "phase": "MVP",
+      "deps": [
+        "19",
+        "20"
+      ],
+      "mode": "team",
+      "decisions": [
+        "D04",
+        "D12",
+        "D28"
+      ],
+      "touches": "agents/venue-edge/Adapters/; hardware-lab/adapters/; apps/web/app/perangkat/adaptor/",
+      "fixture": "LG dan Samsung menggunakan jalur eksternal yang tersertifikasi per firmware/topologi; HDMI switch blank-source tidak memutus konsol. CEC/IR tanpa state feedback diberi level commanded-only, bukan applied-verified. Uji4K120/HDR/VRR/HDCP; fallback manual jelas, tanpa stripping DRM.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "24",
+      "slug": "fleet-updates",
+      "title": "Kesehatan fleet, update bertanda tangan dan rollback",
+      "phase": "V1",
+      "deps": [
+        "20",
+        "21"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D12"
+      ],
+      "touches": "services/api/src/fleet/; services/worker/src/releases/; agents/venue-edge/Updates/; agents/android-tv/app/src/main/java/id/yravg/hatch/update/",
+      "fixture": "Manifest/payload signature salah ditolak UPDATE_REJECTED. Canary idle-only1% fixture; active session tidak dipaksa upgrade. Healthcheck gagal mengembalikan versi sebelumnya dengan audit. Poll fallback30detik fixture hanya saat socket terputus tetapi WAN ada; tidak dianggap offline remote control.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "25",
+      "slug": "chat-notifications",
+      "title": "Chat operator, alarm dan notifikasi berizin",
+      "phase": "V1",
+      "deps": [
+        "05",
+        "14"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D10",
+        "D16"
+      ],
+      "touches": "services/api/src/messages/; services/worker/src/notifications/; apps/web/app/bantuan/",
+      "fixture": "Pelanggan unitA tidak dapat membaca chatB. Pesan pending terlihat lalu retry sekali dengan idempotency. Browser audio ditolak memberi indikator visual dan tombol test. Push/WA/Telegram hanya sandbox sink atau manual draft sampai owner mengaktifkan connector, penerima dan consent.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "26",
+      "slug": "public-displays",
+      "title": "Billboard, customer display dan privasi",
+      "phase": "V1",
+      "deps": [
+        "05",
+        "14"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D10",
+        "D16"
+      ],
+      "touches": "apps/web/app/layar/; services/api/src/display-projections/",
+      "fixture": "Perubahan start/pause/stop tampak pada lobby sesuai revision. Tampilkan alias opt-in saja; nomorHP, saldo, biaya pribadi dan nama lengkap diredaksi. Token signage read-only dapat dicabut; customer checkout display menampilkan bill terikat kasir tanpa auth staff.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "27",
+      "slug": "windows-seat",
+      "title": "Windows seat lock dan player shell",
+      "phase": "V1",
+      "deps": [
+        "05",
+        "20"
+      ],
+      "mode": "team",
+      "decisions": [
+        "D11",
+        "D12",
+        "D16"
+      ],
+      "touches": "agents/windows-seat/; tests/windows-seat/",
+      "fixture": "Windows11 test VM: service least-privilege terpisah UI, login member/receipt, lock screen pribadi tidak menjeda billing, logout mengakhiri sesi. Restart meneruskan sisa sah; WOL/idle shutdown hanya PC, tidak konsol. Remote support memerlukan consent per sesi.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "28",
+      "slug": "game-library-licenses",
+      "title": "Katalog game dan integrasi lisensi sah",
+      "phase": "V1",
+      "deps": [
+        "03",
+        "27"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D18"
+      ],
+      "touches": "services/api/src/games/; agents/windows-seat/Launcher/; apps/web/app/game/",
+      "fixture": "Katalog per zona/stasiun/filter game dan age label menggunakan metadata sendiri/berizin. Dua seat satu lisensi tidak berjalan serentak; akun pribadi tidak disimpan pusat. Pool dinonaktifkan bila izin komersial judul tidak terbukti; tidak ada bypass DRM atau auto-login kredensial curian.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "29",
+      "slug": "pc-content-imaging",
+      "title": "Patching, image PC dan save portability",
+      "phase": "V2",
+      "deps": [
+        "27",
+        "28"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D18",
+        "D19"
+      ],
+      "touches": "integrations/pc-imaging/; agents/windows-seat/Content/; apps/web/app/teknisi/image/",
+      "fixture": "Integrasi API sistem image berlisensi, bukan implementasi PXE baru. Update dijadwalkan idle pada sandbox; rollback snapshot teruji. Cloud saves game offline hanya opt-in dengan kuota/enkripsi/retensi, tidak menyalin kredensial launcher.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "30",
+      "slug": "security-privacy-backups",
+      "title": "Keamanan, privasi, audit dan restore",
+      "phase": "MVP",
+      "deps": [
+        "02",
+        "06",
+        "20",
+        "46",
+        "50"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D09",
+        "D16",
+        "D20"
+      ],
+      "touches": "services/api/src/security/; services/api/src/privacy/; services/worker/src/backups/; packages/domain/audit/; docs/security/",
+      "fixture": "Kunci perangkat diputar/dicabut; TLS/mTLS atau identitas setara divalidasi. PIN/hash dan recovery code tidak masuk log. Restore backup terisolasi membuktikan ledger utuh. Erasure menghapus profil yang layak tetapi mempertahankan jurnal legal tersamarkan; retention belum disetujui memblokir produksi.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "31",
+      "slug": "certification-qa",
+      "title": "Sertifikasi hardware dan QA lintas alur",
+      "phase": "V1",
+      "deps": [
+        "05",
+        "07",
+        "08",
+        "14",
+        "17",
+        "18",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "30",
+        "41",
+        "54"
+      ],
+      "mode": "team",
+      "decisions": [
+        "D04",
+        "D06",
+        "D07",
+        "D12"
+      ],
+      "touches": "hardware-lab/; tests/e2e/; tests/faults/; docs/certification/",
+      "fixture": "Dua review independen pada build merge: sesi→makanan→bayar→shift plus outage, duplicate/out-of-order, proses mati, jam mundur, no-ACK, revoke izin dan restore. Setiap model/firmware punya rekaman hasil, latency dan video-mode pass/fail; emulator tidak dapat meluluskan hardware.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "32",
+      "slug": "tournaments-community",
+      "title": "Turnamen, bracket dan komunitas",
+      "phase": "V1",
+      "deps": [
+        "11",
+        "12",
+        "26"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D10"
+      ],
+      "touches": "services/api/src/events/; apps/web/app/komunitas/; apps/web/app/turnamen/",
+      "fixture": "Empat peserta, knockout dan hasil terotorisasi menempatkan match pada stasiun tanpa bentrok rental. Biaya masuk/prize memakai ledger. Liga/score/double-elimination V2; ranking opted-in, sengketa hasil tidak diubah diam-diam.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "33",
+      "slug": "branches-entitlements",
+      "title": "Multi-cabang, konfigurasi dan entitlement sendiri",
+      "phase": "V1",
+      "deps": [
+        "02",
+        "03"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D05",
+        "D07"
+      ],
+      "touches": "services/api/src/organisations/; apps/web/app/owner/; apps/web/app/pengaturan/",
+      "fixture": "Owner membandingkan outlet yang sah; konfigurasi diwariskan dengan override versi. Batas agent di sandbox dapat1untuk uji PLAN_LIMIT, tidak menyalin plan vendor. Subscription komersial disabled; konflik kuota TV vendor dicatat di D05, bukan diselesaikan dengan hardcode.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "34",
+      "slug": "take-home-assets",
+      "title": "Sewa bawa pulang dan custody aset",
+      "phase": "V2",
+      "deps": [
+        "03",
+        "06",
+        "12"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D10",
+        "D16",
+        "D21"
+      ],
+      "touches": "services/api/src/asset-rentals/; apps/web/app/aset/sewa/",
+      "fixture": "PS5 dan2controller dicatat serial/foto kondisi saat keluar/kembali; deposit liability, biaya kerusakan perlu review dan dispute. Pengiriman/overdue per kebijakan; fotoKTP/GPS kontinu disabled. Tidak mengunci handheld Switch hanya dengan TV.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "35",
+      "slug": "hris-payroll",
+      "title": "Staf, kehadiran dan payroll ekspor",
+      "phase": "V1",
+      "deps": [
+        "02",
+        "17"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D16",
+        "D22"
+      ],
+      "touches": "services/api/src/hris/; apps/web/app/staf/; services/worker/src/payroll/",
+      "fixture": "Clock-in/out manual berotorisasi, jadwal/leave/overtime dan kasbon ledger terpisah. GPS/selfie opsional memerlukan consent dan retensi approved. Formula gaji/profit share versi; ekspor draft tidak mengirim uang atau melapor pajak.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "36",
+      "slug": "indonesia-tax-accounting",
+      "title": "Akuntansi dan laporan pajak Indonesia",
+      "phase": "V1",
+      "deps": [
+        "06",
+        "18"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D17",
+        "D22"
+      ],
+      "touches": "services/api/src/accounting/; apps/web/app/akuntansi/; services/worker/src/tax-exports/",
+      "fixture": "General-ledger debit=kredit, revenue bukan wallet topup. Ekspor pajak/Coretax/SPT berlabel draft, schema/version dan tarif per bisnis approval akuntan. Tidak memakai asumsi PPN11% dari vendor sebagai hukum; tidak submit DJP otomatis.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "37",
+      "slug": "ai-assistants",
+      "title": "AI helper dengan preview dan persetujuan",
+      "phase": "V2",
+      "deps": [
+        "15",
+        "18",
+        "30"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D16",
+        "D23"
+      ],
+      "touches": "services/api/src/assistants/; apps/web/app/asisten/",
+      "fixture": "OCR invoice menghasilkan draft item/qty/harga beserta confidence, bukan posting stock. Restock/bundling/forecast/segmentasi/voice POS hanya rekomendasi; pembayaran, diskon dan pesan tidak dijalankan oleh AI. Default provider mock; biaya, data keluar dan provider perlu approval.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "38",
+      "slug": "android-mobile-kiosk",
+      "title": "Pilot agent HP/tablet rental",
+      "phase": "V2",
+      "deps": [
+        "20",
+        "30"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D04",
+        "D11",
+        "D12"
+      ],
+      "touches": "agents/android-mobile/; tests/hardware/android-mobile/",
+      "fixture": "Device milik venue provisioned sah: allowlist game, timer dan expiry lock; DPC hanya model yang mendukung. Tidak menyadap data pelanggan; pilot label tegas. Tidak menyamakan APK TV dengan mobile.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "39",
+      "slug": "native-tv-feasibility",
+      "title": "Feasibility native webOS dan Tizen",
+      "phase": "V2",
+      "deps": [
+        "23",
+        "30"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D04",
+        "D12",
+        "D19"
+      ],
+      "touches": "apps/tv-webos/; apps/tv-tizen/; hardware-lab/native-tv/",
+      "fixture": "Proof-of-concept API publik dan distribusi legal pada model bernama. LG global overlay belum dijamin; Tizen foreground PiP bukan kiosk. Jika tidak lulus tulis unsupported dengan bukti, rute eksternal tetap tersedia. Tidak rooting, mode developer abadi atau hidden API.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "40",
+      "slug": "kiosk-ios-wrapper",
+      "title": "Kios mandiri dan coverage iOS",
+      "phase": "V2",
+      "deps": [
+        "13",
+        "26",
+        "30"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D11",
+        "D19"
+      ],
+      "touches": "apps/web/app/kios/; apps/mobile-wrapper/; tests/e2e/ios/",
+      "fixture": "Customer PWA diuji Safari iPhone/iPad untuk booking/order/receipt; native iOS hanya jika push/peripheral membuktikan kebutuhan. Kios managed owned device reset token setelah transaksi; tidak menyimpan data kartu. App-store publish tetap di luar izin.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "41",
+      "slug": "migration-recovery",
+      "title": "Migrasi dry-run, rekonsiliasi dan rollback",
+      "phase": "V1",
+      "deps": [
+        "06",
+        "09",
+        "10",
+        "15",
+        "30"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D16",
+        "D20"
+      ],
+      "touches": "services/api/src/imports/; apps/web/app/impor/; tools/migrate/; tests/migration/",
+      "fixture": "CSV preview memetakan member/wallet/time-credit/produk; impor ulang hash/fileId tidak menggandakan saldo. Snapshot pra-import dan rollback menggunakan reversal berjejak. Tidak mengimpor APK, screenshot vendor atau password lawas. RPO/RTO dipraktikkan, bukan janji.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "42",
+      "slug": "api-sso-integrations",
+      "title": "API publik, SSO dan integrasi berizin",
+      "phase": "V1",
+      "deps": [
+        "02",
+        "06",
+        "30"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D16",
+        "D24"
+      ],
+      "touches": "services/api/src/public-api/; services/api/src/sso/; packages/contracts/openapi/",
+      "fixture": "Token API scoped read-only default, pagination/cursor dan audit. SSO Microsoft/Google optional PKCE/state/nonce/OIDC resmi; demo mock tanpa login di box. Webhook keluar signed, retry idempotent, tidak membuka port LAN publik.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "43",
+      "slug": "advanced-commerce",
+      "title": "B2B, konsinyasi dan unit grosir",
+      "phase": "V2",
+      "deps": [
+        "15",
+        "16",
+        "18"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D17"
+      ],
+      "touches": "services/api/src/commerce/; apps/web/app/niaga/",
+      "fixture": "Beli1dus24pcs/jual1pcs menjaga basis stok; supplier consignment settlement memisah pemilik stok dan utang. Invoice/delivery-note B2B bukan bukti pembayaran. Serial controller dan garansi menggunakan asset registry, bukan workflow bengkel.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "44",
+      "slug": "content-localisation",
+      "title": "Konten venue, feedback dan Bahasa Indonesia",
+      "phase": "V1",
+      "deps": [
+        "02",
+        "25",
+        "26"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D10",
+        "D16"
+      ],
+      "touches": "apps/web/messages/; services/api/src/content/; apps/web/app/konten/",
+      "fixture": "Bahasa Indonesia default, English pilihan; waktu outlet/IDR konsisten. News window, survey/link berizin, opt-out marketing, reduced motion dan keyboard/D-pad focus. Form eksternal dibuka tanpa auto-submit atau PII prefill; review satu per transaksi sah.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "45",
+      "slug": "operator-runbook",
+      "title": "Runbook operator, sandbox dan bantuan",
+      "phase": "MVP",
+      "deps": [
+        "01",
+        "03",
+        "19"
+      ],
+      "mode": "solo",
+      "decisions": [],
+      "touches": "docs/operator/; apps/web/app/bantuan/panduan/; tools/simulator/",
+      "fixture": "Owner/kasir/teknisi dapat menyiapkan fixture8unit, menjalankan simulator tanpa perangkat vendor, membaca kegagalan izin/network dan emergency stop yang aman. Panduan brand sendiri tidak menyalin screenshot/copy vendor. Training tidak menyentuh tenant produksi.",
+      "execution_lane": "ui-after-backend",
+      "ui_hold": false
+    },
+    {
+      "id": "46",
+      "slug": "identity-api",
+      "title": "API identitas, tenancy dan staff 2FA",
+      "phase": "MVP",
+      "deps": [
+        "01"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D02",
+        "D16",
+        "D25"
+      ],
+      "touches": "services/api/src/identity/; services/api/src/tenancy/; tests/identity/",
+      "fixture": "Role outlet+tenant enforced server-side; staff TOTP enrollment/recovery/revocation and step-up for owner/refund approvals tested without real account. 10 wrong OTP attempts rate-limited; replay rejected; recovery codes single-use/hash only. Existing T02 consumes this API after design freeze.",
+      "execution_lane": "backend-first",
+      "ui_hold": false
+    },
+    {
+      "id": "47",
+      "slug": "catalog-pricing-api",
+      "title": "API stasiun, tarif rasional dan minimum payment",
+      "phase": "MVP",
+      "deps": [
+        "46"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D01",
+        "D26"
+      ],
+      "touches": "services/api/src/stations/; services/api/src/rates/; packages/domain/pricing/; tests/pricing/",
+      "fixture": "One station reserve wins under concurrency. Rate Rp10.000/hour,61seconds gives exact rational610000/3600 then final rounding once toRp169 fixture, never repeated rounding debit. MinimumRp5.000 covers30minutes:20minutes=5.000;40minutes at12.000/hour=7.000. Rule version cannot alter old quote. APIs only, no forms.",
+      "execution_lane": "backend-first",
+      "ui_hold": false
+    },
+    {
+      "id": "48",
+      "slug": "ledger-payments-api",
+      "title": "Ledger dan Midtrans QRIS server tanpa UI",
+      "phase": "MVP",
+      "deps": [
+        "46",
+        "47"
+      ],
+      "mode": "team",
+      "decisions": [
+        "D06",
+        "D15",
+        "D17"
+      ],
+      "touches": "services/api/src/ledger/; services/api/src/payments/; services/worker/src/payments/; packages/domain/money/",
+      "fixture": "Balanced IDR journal, unique source event, immutable reversals and payment allocation. Distinct ServerKey/signature-secret fixture verifies callback plus merchant/order/amount/currency and GET status. Duplicate/out-of-order settlement credits once; provider-down remains pending. Mock/sandbox only; no frontend or real credentials.",
+      "execution_lane": "backend-first",
+      "ui_hold": false
+    },
+    {
+      "id": "49",
+      "slug": "session-api",
+      "title": "Koordinator sesi dan console-to-seat transfer API",
+      "phase": "MVP",
+      "deps": [
+        "47",
+        "48",
+        "50"
+      ],
+      "mode": "team",
+      "decisions": [
+        "D01",
+        "D06",
+        "D07",
+        "D26"
+      ],
+      "touches": "services/api/src/sessions/; packages/domain/session/; tests/session/",
+      "fixture": "Reserve→STARTING→APPLIED→ACTIVE before billing. Console moves A→B only after source revoke/lock evidence, destination capacity/quote eligibility and new bounded lease; crash recovery never grants two valid playback leases. Target no-ACK leaves recovery/locked and no duplicate charge; same sessionId/F&B/payment lineage preserved. Source protocol fence makes stale old ACK unusable.",
+      "execution_lane": "backend-first",
+      "ui_hold": false
+    },
+    {
+      "id": "50",
+      "slug": "edge-core",
+      "title": "Gateway edge dan pairing/lease core headless",
+      "phase": "MVP",
+      "deps": [
+        "46",
+        "47"
+      ],
+      "mode": "team",
+      "decisions": [
+        "D04",
+        "D07",
+        "D09",
+        "D27",
+        "D28",
+        "D32"
+      ],
+      "touches": "agents/venue-edge/; services/api/src/devices/; services/api/src/edge/; packages/contracts/leases/; tests/faults/edge/",
+      "fixture": "Windows/Linux .NET10 SQLite WAL persists before ACK; challenge8digits/5minutes fixture, device keys/revoke, one outlet epoch. WAN drop valid lease expires locally; reboot without trusted time locks picture. Offline new start/extend/spend zero. CEC is optional; adapter path continues with CEC off at TV+console. No settings UI or real console power operation.",
+      "execution_lane": "backend-first",
+      "ui_hold": false
+    },
+    {
+      "id": "51",
+      "slug": "android-tv-core",
+      "title": "Kotlin TV provisioning, reboot dan offline core",
+      "phase": "MVP",
+      "deps": [
+        "50"
+      ],
+      "mode": "team",
+      "decisions": [
+        "D04",
+        "D09",
+        "D27",
+        "D28",
+        "D32"
+      ],
+      "touches": "agents/android-tv/; tests/hardware/android-tv/; tests/faults/android-tv/",
+      "fixture": "Venue-owned supported provisioned-unpaired profile shows neutral locked setup, Home/Back/input cannot reach console; UNPROVISIONED ordinary app never claims kiosk security. Managed supported setup survives3cold reboots with normal overlay permission retained or supported adapter keeps picture gated. Revoked permission => not-ready/repair, never force grant. WAN expiry and replay/reboot tested with Ethernet also blocked. CEC off on both TV+console, no HDMI-CEC dependency. Functional neutral test harness only, final UI held.",
+      "execution_lane": "backend-first",
+      "ui_hold": false
+    },
+    {
+      "id": "52",
+      "slug": "booking-wallet-api",
+      "title": "Booking, deposit, wallet dan pass eligibility API",
+      "phase": "V1",
+      "deps": [
+        "47",
+        "48",
+        "49"
+      ],
+      "mode": "team",
+      "decisions": [
+        "D03",
+        "D10",
+        "D26",
+        "D31"
+      ],
+      "touches": "services/api/src/bookings/; services/api/src/wallets/; services/api/src/time-credits/; packages/domain/booking/",
+      "fixture": "Concurrent slot allocation wins once. Basic-zone pass cannot start VIP; VIP pass can start basic only with explicit compatible console/category and time seconds unchanged. Group deposit percent of per-seat hourly quote:Rp12.000 andRp18.000 at25%=Rp3.000+Rp4.500; checkout quote displays basis and rounding. Arrival releases hold once; no-show conversion disabled by default. Source-setting parity is configurable, not automatically enabled policy.",
+      "execution_lane": "backend-first",
+      "ui_hold": false
+    },
+    {
+      "id": "53",
+      "slug": "operations-api",
+      "title": "API stok, pesanan dan X/Z shift close",
+      "phase": "MVP",
+      "deps": [
+        "48",
+        "49"
+      ],
+      "mode": "team",
+      "decisions": [
+        "D08",
+        "D17",
+        "D30"
+      ],
+      "touches": "services/api/src/inventory/; services/api/src/orders/; services/api/src/shifts/; packages/domain/order/",
+      "fixture": "Two drinks using100ml recipe consume200ml once. X repeated3times does not close shift or mutate ledger. Z atomically snapshots scoped register/business-day only after approved open-shift policy; active sessions carry forward, QRIS pending reported separate, duplicate Z returns same closeId. Cash drawer ignores QRIS, refund/transfer conflict is audited. No final KDS/POS UI.",
+      "execution_lane": "backend-first",
+      "ui_hold": false
+    },
+    {
+      "id": "54",
+      "slug": "backend-contract-check",
+      "title": "Kontrak, simulator dan fault-check headless",
+      "phase": "MVP",
+      "deps": [
+        "46",
+        "47",
+        "48",
+        "49",
+        "50",
+        "51",
+        "53"
+      ],
+      "mode": "solo",
+      "decisions": [
+        "D04",
+        "D06",
+        "D07",
+        "D29"
+      ],
+      "touches": "packages/contracts/; tests/contracts/; tests/faults/; tools/simulator/",
+      "fixture": "Fresh clone generates TS/Kotlin/.NET payload schemas; contract fixtures and fault scenarios run twice with expected/actual evidence. No fake browser/UI pass. API/auth/payment/session/edge/TV/shift accepted artifacts and signed version manifest are consumed by original UI tickets after final design; missing physical test means uncertified/blocked, not simulated pass.",
+      "execution_lane": "backend-first",
+      "ui_hold": false
+    }
+  ],
+  "topological_order": [
+    "01",
+    "46",
+    "47",
+    "48",
+    "50",
+    "49",
+    "51",
+    "52",
+    "53",
+    "54",
+    "02",
+    "03",
+    "04",
+    "06",
+    "07",
+    "12",
+    "15",
+    "19",
+    "20",
+    "05",
+    "08",
+    "09",
+    "10",
+    "11",
+    "13",
+    "14",
+    "17",
+    "18",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+    "28",
+    "29",
+    "30",
+    "32",
+    "33",
+    "16",
+    "34",
+    "35",
+    "36",
+    "37",
+    "38",
+    "39",
+    "40",
+    "41",
+    "31",
+    "42",
+    "43",
+    "44",
+    "45"
+  ],
+  "components": [
+    [
+      "HS-C01",
+      "01",
+      "Fondasi monorepo dan kontrak domain"
+    ],
+    [
+      "HS-C02",
+      "02",
+      "Identitas, tenant dan otorisasi per outlet"
+    ],
+    [
+      "HS-C03",
+      "03",
+      "Katalog stasiun, aset, zona dan denah"
+    ],
+    [
+      "HS-C04",
+      "04",
+      "Tarif versi, paket dan kutipan biaya"
+    ],
+    [
+      "HS-C05",
+      "05",
+      "Sesi fixed/open, jeda, pindah dan berhenti"
+    ],
+    [
+      "HS-C06",
+      "06",
+      "POS, kas dan buku pembayaran append-only"
+    ],
+    [
+      "HS-C07",
+      "07",
+      "QRIS Midtrans sandbox dan rekonsiliasi"
+    ],
+    [
+      "HS-C08",
+      "08",
+      "Struk, cetak ulang dan jembatan printer"
+    ],
+    [
+      "HS-C09",
+      "09",
+      "Dompet IDR, bonus dan batas belanja offline"
+    ],
+    [
+      "HS-C10",
+      "10",
+      "Tabungan waktu, penebusan dan kedaluwarsa"
+    ],
+    [
+      "HS-C11",
+      "11",
+      "Member, reward, tingkat dan voucher"
+    ],
+    [
+      "HS-C12",
+      "12",
+      "Reservasi, deposit, buffer dan no-show"
+    ],
+    [
+      "HS-C13",
+      "13",
+      "Portal pelanggan dan akses QR/receipt"
+    ],
+    [
+      "HS-C14",
+      "14",
+      "Pesanan F&B, tagihan gabungan dan KDS"
+    ],
+    [
+      "HS-C15",
+      "15",
+      "Produk, stok, resep dan costing"
+    ],
+    [
+      "HS-C16",
+      "16",
+      "Supplier, PO, penerimaan dan mutasi gudang"
+    ],
+    [
+      "HS-C17",
+      "17",
+      "Shift kasir dan serah terima sesi aktif"
+    ],
+    [
+      "HS-C18",
+      "18",
+      "Laporan owner, utilisasi dan liability"
+    ],
+    [
+      "HS-C19",
+      "19",
+      "Pairing aman dan capability probe"
+    ],
+    [
+      "HS-C20",
+      "20",
+      "Venue edge, lease offline dan otoritas tunggal"
+    ],
+    [
+      "HS-C21",
+      "21",
+      "Agent Kotlin Android/Google TV dan expiry"
+    ],
+    [
+      "HS-C22",
+      "22",
+      "Remote TV aman, timer dan media sendiri"
+    ],
+    [
+      "HS-C23",
+      "23",
+      "Adapter CEC/HDMI/IR untuk LG dan Samsung"
+    ],
+    [
+      "HS-C24",
+      "24",
+      "Kesehatan fleet, update bertanda tangan dan rollback"
+    ],
+    [
+      "HS-C25",
+      "25",
+      "Chat operator, alarm dan notifikasi berizin"
+    ],
+    [
+      "HS-C26",
+      "26",
+      "Billboard, customer display dan privasi"
+    ],
+    [
+      "HS-C27",
+      "27",
+      "Windows seat lock dan player shell"
+    ],
+    [
+      "HS-C28",
+      "28",
+      "Katalog game dan integrasi lisensi sah"
+    ],
+    [
+      "HS-C29",
+      "29",
+      "Patching, image PC dan save portability"
+    ],
+    [
+      "HS-C30",
+      "30",
+      "Keamanan, privasi, audit dan restore"
+    ],
+    [
+      "HS-C31",
+      "31",
+      "Sertifikasi hardware dan QA lintas alur"
+    ],
+    [
+      "HS-C32",
+      "32",
+      "Turnamen, bracket dan komunitas"
+    ],
+    [
+      "HS-C33",
+      "33",
+      "Multi-cabang, konfigurasi dan entitlement sendiri"
+    ],
+    [
+      "HS-C34",
+      "34",
+      "Sewa bawa pulang dan custody aset"
+    ],
+    [
+      "HS-C35",
+      "35",
+      "Staf, kehadiran dan payroll ekspor"
+    ],
+    [
+      "HS-C36",
+      "36",
+      "Akuntansi dan laporan pajak Indonesia"
+    ],
+    [
+      "HS-C37",
+      "37",
+      "AI helper dengan preview dan persetujuan"
+    ],
+    [
+      "HS-C38",
+      "38",
+      "Pilot agent HP/tablet rental"
+    ],
+    [
+      "HS-C39",
+      "39",
+      "Feasibility native webOS dan Tizen"
+    ],
+    [
+      "HS-C40",
+      "40",
+      "Kios mandiri dan coverage iOS"
+    ],
+    [
+      "HS-C41",
+      "41",
+      "Migrasi dry-run, rekonsiliasi dan rollback"
+    ],
+    [
+      "HS-C42",
+      "42",
+      "API publik, SSO dan integrasi berizin"
+    ],
+    [
+      "HS-C43",
+      "43",
+      "B2B, konsinyasi dan unit grosir"
+    ],
+    [
+      "HS-C44",
+      "44",
+      "Konten venue, feedback dan Bahasa Indonesia"
+    ],
+    [
+      "HS-C45",
+      "45",
+      "Runbook operator, sandbox dan bantuan"
+    ],
+    [
+      "KPS-C01",
+      "02",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C02",
+      "03",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C03",
+      "05",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C04",
+      "06",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C05",
+      "04",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C06",
+      "14",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C07",
+      "10",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C08",
+      "12",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C09",
+      "17",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C10",
+      "19",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C11",
+      "21",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C12",
+      "22",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C13",
+      "24",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C14",
+      "25",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C15",
+      "26",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C16",
+      "32",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C17",
+      "27",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "KPS-C18",
+      "31",
+      "Legacy proposed component alias; no extra visual specification"
+    ],
+    [
+      "HS-C46",
+      "46",
+      "API identitas, tenancy dan staff 2FA"
+    ],
+    [
+      "HS-C47",
+      "47",
+      "API stasiun, tarif rasional dan minimum payment"
+    ],
+    [
+      "HS-C48",
+      "48",
+      "Ledger dan Midtrans QRIS server tanpa UI"
+    ],
+    [
+      "HS-C49",
+      "49",
+      "Koordinator sesi dan console-to-seat transfer API"
+    ],
+    [
+      "HS-C50",
+      "50",
+      "Gateway edge dan pairing/lease core headless"
+    ],
+    [
+      "HS-C51",
+      "51",
+      "Kotlin TV provisioning, reboot dan offline core"
+    ],
+    [
+      "HS-C52",
+      "52",
+      "Booking, deposit, wallet dan pass eligibility API"
+    ],
+    [
+      "HS-C53",
+      "53",
+      "API stok, pesanan dan X/Z shift close"
+    ],
+    [
+      "HS-C54",
+      "54",
+      "Kontrak, simulator dan fault-check headless"
+    ]
+  ],
+  "gates": [
+    [
+      "AUTH_FORBIDDEN",
+      403,
+      2
+    ],
+    [
+      "PLAN_LIMIT",
+      409,
+      33
+    ],
+    [
+      "STATION_BUSY",
+      409,
+      5
+    ],
+    [
+      "INVALID_TRANSITION",
+      409,
+      5
+    ],
+    [
+      "PAYMENT_UNCONFIRMED",
+      409,
+      7
+    ],
+    [
+      "QUOTE_STALE",
+      409,
+      4
+    ],
+    [
+      "CREDIT_INELIGIBLE",
+      409,
+      10
+    ],
+    [
+      "BOOKING_CONFLICT",
+      409,
+      12
+    ],
+    [
+      "DEVICE_UNSUPPORTED",
+      422,
+      19
+    ],
+    [
+      "DEVICE_PERMISSION_REQUIRED",
+      422,
+      19
+    ],
+    [
+      "ACTIVATION_TIMEOUT",
+      202,
+      21
+    ],
+    [
+      "UPDATE_REJECTED",
+      422,
+      24
+    ],
+    [
+      "OFFLINE_ACTION_UNAVAILABLE",
+      409,
+      20
+    ],
+    [
+      "LEASE_EXPIRED",
+      409,
+      20
+    ],
+    [
+      "COMMAND_STALE",
+      409,
+      20
+    ],
+    [
+      "PAIRING_EXPIRED",
+      410,
+      19
+    ],
+    [
+      "INSUFFICIENT_BALANCE",
+      409,
+      9
+    ],
+    [
+      "IDEMPOTENCY_CONFLICT",
+      409,
+      6
+    ],
+    [
+      "REFUND_PENDING",
+      202,
+      7
+    ],
+    [
+      "DATA_RETENTION_UNAPPROVED",
+      409,
+      30
+    ]
+  ],
+  "non_goals": [
+    [
+      "NG01",
+      "Tidak ada brand/logo/copy/code/APK/assets vendor dalam produk"
+    ],
+    [
+      "NG02",
+      "Tidak ada live payment keys, pembayaran nyata, deployment atau store publish"
+    ],
+    [
+      "NG03",
+      "Tidak pernah memutus listrik konsol, rooting/hidden API/DRM bypass"
+    ],
+    [
+      "NG04",
+      "Tidak ada modul apotek/medis/pet/laundry/barber/bengkel/craft literal"
+    ],
+    [
+      "NG05",
+      "Tidak ada klaim universal TV lock/native webOS/Tizen/iOS agent tanpa bukti"
+    ],
+    [
+      "NG06",
+      "Tidak ada auto-message, payroll transfer, DJP submit, AI autonomous mutation"
+    ]
+  ],
+  "version": "0.2",
+  "design_items": [
+    {
+      "id": "HS-SCR-CSH-01",
+      "kind": "screen",
+      "primary_ticket": "03",
+      "consumers": [
+        "03",
+        "05",
+        "12",
+        "13",
+        "14",
+        "19",
+        "20",
+        "21",
+        "24",
+        "25",
+        "26",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F007",
+        "F008",
+        "F009",
+        "F011",
+        "F208",
+        "FR-KPS-02",
+        "FR-KPS-03",
+        "FR-KPS-04",
+        "FR-KPS-05",
+        "FR-KPS-08",
+        "FR-KPS-09",
+        "FR-KPS-11",
+        "FR-KPS-51",
+        "FR-KPS-55",
+        "FR-KPS-57",
+        "FR-KPS-65",
+        "FR-KPS-66",
+        "FR-KULA-046",
+        "FR-KULA-049",
+        "FR-KULA-147",
+        "FR-KULA-156",
+        "FR-KULA-157",
+        "FR-KULA-164",
+        "FR-KULA-167",
+        "FR-KULA-209",
+        "FR-KULA-296",
+        "FR-KULA-312",
+        "FR-KULA-378",
+        "FR-KULA-502",
+        "FR-SENET-06",
+        "FR-SENET-08",
+        "FR-SENET-113",
+        "FR-SENET-16",
+        "FR-SENET-59"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CSH-02",
+      "kind": "screen",
+      "primary_ticket": "05",
+      "consumers": [
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "11",
+        "13",
+        "21",
+        "27"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F012",
+        "F015",
+        "F016",
+        "F017",
+        "F018",
+        "F019",
+        "F020",
+        "F021",
+        "F022",
+        "F023",
+        "F037",
+        "F038",
+        "F042",
+        "F044",
+        "F046",
+        "F047",
+        "FR-KPS-01",
+        "FR-KPS-03",
+        "FR-KPS-04",
+        "FR-KPS-05",
+        "FR-KPS-06",
+        "FR-KPS-07",
+        "FR-KPS-12",
+        "FR-KPS-14",
+        "FR-KPS-21",
+        "FR-KPS-40",
+        "FR-KPS-66",
+        "FR-KULA-209",
+        "FR-KULA-250",
+        "FR-KULA-251",
+        "FR-KULA-254",
+        "FR-SENET-126",
+        "FR-SENET-14",
+        "FR-SENET-15",
+        "FR-SENET-83",
+        "FR-SENET-85",
+        "FR-SENET-86"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CSH-03",
+      "kind": "screen",
+      "primary_ticket": "05",
+      "consumers": [
+        "04",
+        "05",
+        "06",
+        "10",
+        "14",
+        "22"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F024",
+        "F025",
+        "F026",
+        "F027",
+        "F031",
+        "F045",
+        "F199",
+        "FR-KPS-08",
+        "FR-KPS-09",
+        "FR-KPS-10",
+        "FR-KPS-11",
+        "FR-KPS-15",
+        "FR-KPS-16",
+        "FR-KPS-46",
+        "FR-KPS-47",
+        "FR-KPS-48",
+        "FR-KULA-211",
+        "FR-KULA-212",
+        "FR-KULA-213",
+        "FR-KULA-222",
+        "FR-KULA-257",
+        "FR-KULA-263",
+        "FR-SENET-07",
+        "FR-SENET-56",
+        "FR-SENET-82",
+        "FR-SENET-84"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CSH-04",
+      "kind": "screen",
+      "primary_ticket": "14",
+      "consumers": [
+        "14",
+        "15"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F114",
+        "F115",
+        "F120",
+        "FR-KPS-16",
+        "FR-KPS-17",
+        "FR-KPS-20",
+        "FR-KULA-212",
+        "FR-KULA-253",
+        "FR-KULA-329",
+        "FR-SENET-41",
+        "FR-SENET-43"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CSH-05",
+      "kind": "screen",
+      "primary_ticket": "06",
+      "consumers": [
+        "05",
+        "06",
+        "07",
+        "08",
+        "11",
+        "13",
+        "14",
+        "20",
+        "36",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F043",
+        "F048",
+        "F049",
+        "F050",
+        "F051",
+        "F052",
+        "F056",
+        "F057",
+        "F060",
+        "F064",
+        "F068",
+        "F069",
+        "F070",
+        "F167",
+        "F168",
+        "FR-KPS-07",
+        "FR-KPS-17",
+        "FR-KPS-18",
+        "FR-KPS-34",
+        "FR-KPS-35",
+        "FR-KPS-36",
+        "FR-KULA-065",
+        "FR-KULA-151",
+        "FR-KULA-159",
+        "FR-KULA-168",
+        "FR-KULA-199",
+        "FR-KULA-200",
+        "FR-KULA-201",
+        "FR-KULA-253",
+        "FR-SENET-12",
+        "FR-SENET-21",
+        "FR-SENET-23",
+        "FR-SENET-98"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CSH-06",
+      "kind": "screen",
+      "primary_ticket": "11",
+      "consumers": [
+        "09",
+        "10",
+        "11"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F033",
+        "F034",
+        "F035",
+        "F053",
+        "F054",
+        "F055",
+        "F066",
+        "F067",
+        "F122",
+        "F123",
+        "F124",
+        "F125",
+        "F130",
+        "F258",
+        "FR-KPS-21",
+        "FR-KPS-22",
+        "FR-KPS-23",
+        "FR-KPS-24",
+        "FR-KPS-25",
+        "FR-KULA-205",
+        "FR-KULA-206",
+        "FR-KULA-208",
+        "FR-KULA-211",
+        "FR-KULA-261",
+        "FR-SENET-103",
+        "FR-SENET-19",
+        "FR-SENET-26",
+        "FR-SENET-27",
+        "FR-SENET-92",
+        "FR-SENET-94"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CSH-07",
+      "kind": "screen",
+      "primary_ticket": "12",
+      "consumers": [
+        "12",
+        "13",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F082",
+        "F083",
+        "F084",
+        "F085",
+        "FR-KPS-27",
+        "FR-KPS-28",
+        "FR-KULA-147",
+        "FR-KULA-156",
+        "FR-SENET-107",
+        "FR-SENET-30",
+        "FR-SENET-33",
+        "FR-SENET-34",
+        "FR-SENET-35"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CSH-08",
+      "kind": "screen",
+      "primary_ticket": "17",
+      "consumers": [
+        "17",
+        "25"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F159",
+        "F160",
+        "F161",
+        "F162",
+        "FR-KPS-29",
+        "FR-KPS-30",
+        "FR-KULA-015",
+        "FR-KULA-195",
+        "FR-KULA-227",
+        "FR-KULA-262",
+        "FR-KULA-413",
+        "FR-KULA-512",
+        "FR-SENET-13",
+        "FR-SENET-95",
+        "FR-SENET-96"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CSH-09",
+      "kind": "screen",
+      "primary_ticket": "06",
+      "consumers": [
+        "06"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F058",
+        "F059",
+        "F158",
+        "FR-KULA-202",
+        "FR-SENET-97"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CSH-10",
+      "kind": "screen",
+      "primary_ticket": "25",
+      "consumers": [
+        "25"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F094",
+        "F095",
+        "FR-KPS-55",
+        "FR-KPS-56",
+        "FR-SENET-44"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CSH-11",
+      "kind": "screen",
+      "primary_ticket": "20",
+      "consumers": [
+        "05",
+        "20"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F068",
+        "F069",
+        "F234",
+        "F235",
+        "F236",
+        "FR-KPS-64",
+        "FR-KPS-66"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CSH-12",
+      "kind": "screen",
+      "primary_ticket": "12",
+      "consumers": [
+        "12"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F081",
+        "F082",
+        "F085",
+        "FR-KPS-27",
+        "FR-KPS-28",
+        "FR-SENET-106",
+        "FR-SENET-32",
+        "FR-SENET-34"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CSH-13",
+      "kind": "screen",
+      "primary_ticket": "17",
+      "consumers": [
+        "08",
+        "17",
+        "18"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F160",
+        "F167",
+        "F175",
+        "FR-KPS-29",
+        "FR-KPS-30",
+        "FR-KULA-015",
+        "FR-KULA-227",
+        "FR-SENET-96",
+        "FR-SENET-98"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CSH-14",
+      "kind": "screen",
+      "primary_ticket": "17",
+      "consumers": [
+        "03",
+        "07",
+        "12",
+        "17",
+        "36"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F003",
+        "F063",
+        "F160",
+        "F183",
+        "FR-KULA-195",
+        "FR-KULA-413",
+        "FR-SENET-122",
+        "FR-SENET-95",
+        "FR-SENET-96"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CSH-15",
+      "kind": "screen",
+      "primary_ticket": "05",
+      "consumers": [
+        "05",
+        "21"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F026",
+        "F027",
+        "F046",
+        "FR-KPS-10",
+        "FR-KPS-40",
+        "FR-SENET-82"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-01",
+      "kind": "screen",
+      "primary_ticket": "18",
+      "consumers": [
+        "02",
+        "12",
+        "18",
+        "33"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F073",
+        "F172",
+        "F173",
+        "F174",
+        "FR-KPS-31",
+        "FR-KPS-32",
+        "FR-KULA-001",
+        "FR-KULA-191",
+        "FR-KULA-193",
+        "FR-SENET-01",
+        "FR-SENET-128",
+        "FR-SENET-48"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-02",
+      "kind": "screen",
+      "primary_ticket": "03",
+      "consumers": [
+        "03",
+        "04",
+        "12",
+        "13",
+        "19",
+        "28",
+        "33",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F002",
+        "F003",
+        "F004",
+        "F005",
+        "F006",
+        "F010",
+        "F012",
+        "F013",
+        "F014",
+        "F072",
+        "FR-KPS-01",
+        "FR-KPS-02",
+        "FR-KPS-03",
+        "FR-KPS-67",
+        "FR-KPS-69",
+        "FR-KULA-150",
+        "FR-KULA-214",
+        "FR-KULA-382",
+        "FR-SENET-06",
+        "FR-SENET-08",
+        "FR-SENET-113",
+        "FR-SENET-116",
+        "FR-SENET-49",
+        "FR-SENET-62",
+        "FR-SENET-72",
+        "FR-SENET-74"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-03",
+      "kind": "screen",
+      "primary_ticket": "19",
+      "consumers": [
+        "19",
+        "20",
+        "21",
+        "23",
+        "24",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F014",
+        "F189",
+        "F190",
+        "F191",
+        "F198",
+        "F205",
+        "F206",
+        "F281",
+        "FR-KPS-39",
+        "FR-KPS-52",
+        "FR-KPS-53",
+        "FR-KPS-54",
+        "FR-KPS-65",
+        "FR-KULA-385",
+        "FR-KULA-386",
+        "FR-KULA-466",
+        "FR-SENET-59",
+        "FR-SENET-79"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-04",
+      "kind": "screen",
+      "primary_ticket": "04",
+      "consumers": [
+        "04",
+        "05",
+        "06",
+        "10",
+        "11",
+        "12",
+        "13",
+        "35",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F019",
+        "F020",
+        "F021",
+        "F022",
+        "F023",
+        "F030",
+        "F039",
+        "F040",
+        "F041",
+        "F042",
+        "FR-KPS-06",
+        "FR-KPS-12",
+        "FR-KPS-13",
+        "FR-KPS-14",
+        "FR-KPS-15",
+        "FR-KULA-148",
+        "FR-KULA-155",
+        "FR-KULA-250",
+        "FR-KULA-257",
+        "FR-KULA-258",
+        "FR-SENET-09",
+        "FR-SENET-10",
+        "FR-SENET-11",
+        "FR-SENET-121",
+        "FR-SENET-122",
+        "FR-SENET-87",
+        "FR-SENET-88",
+        "FR-SENET-89",
+        "FR-SENET-90"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-05",
+      "kind": "screen",
+      "primary_ticket": "11",
+      "consumers": [
+        "04",
+        "09",
+        "10",
+        "11",
+        "13",
+        "37"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F122",
+        "F123",
+        "F124",
+        "F125",
+        "F126",
+        "F127",
+        "F128",
+        "F129",
+        "F130",
+        "F131",
+        "F132",
+        "F133",
+        "F134",
+        "F135",
+        "F136",
+        "F137",
+        "F138",
+        "F139",
+        "F140",
+        "FR-KPS-14",
+        "FR-KPS-21",
+        "FR-KPS-24",
+        "FR-KPS-25",
+        "FR-KULA-021",
+        "FR-KULA-038",
+        "FR-KULA-094",
+        "FR-KULA-099",
+        "FR-KULA-205",
+        "FR-KULA-206",
+        "FR-KULA-207",
+        "FR-KULA-244",
+        "FR-KULA-368",
+        "FR-KULA-369",
+        "FR-KULA-370",
+        "FR-KULA-400",
+        "FR-KULA-434",
+        "FR-KULA-490",
+        "FR-KULA-491",
+        "FR-SENET-102",
+        "FR-SENET-104",
+        "FR-SENET-120",
+        "FR-SENET-17",
+        "FR-SENET-27",
+        "FR-SENET-28",
+        "FR-SENET-29",
+        "FR-SENET-46",
+        "FR-SENET-91",
+        "FR-SENET-92",
+        "FR-SENET-93",
+        "FR-SENET-94"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-06",
+      "kind": "screen",
+      "primary_ticket": "12",
+      "consumers": [
+        "12",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F074",
+        "F075",
+        "F076",
+        "F077",
+        "F078",
+        "F079",
+        "F080",
+        "F081",
+        "F082",
+        "F086",
+        "F087",
+        "F088",
+        "F089",
+        "FR-KPS-26",
+        "FR-KPS-27",
+        "FR-KPS-28",
+        "FR-KPS-69",
+        "FR-KULA-048",
+        "FR-KULA-147",
+        "FR-KULA-156",
+        "FR-KULA-276",
+        "FR-KULA-278",
+        "FR-SENET-105",
+        "FR-SENET-106",
+        "FR-SENET-107",
+        "FR-SENET-30",
+        "FR-SENET-31",
+        "FR-SENET-32",
+        "FR-SENET-34",
+        "FR-SENET-35",
+        "FR-SENET-36"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-07",
+      "kind": "screen",
+      "primary_ticket": "15",
+      "consumers": [
+        "08",
+        "14",
+        "15",
+        "16",
+        "18"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F096",
+        "F097",
+        "F098",
+        "F099",
+        "F100",
+        "F101",
+        "F102",
+        "F103",
+        "F104",
+        "F105",
+        "F106",
+        "F107",
+        "F108",
+        "F109",
+        "F110",
+        "F111",
+        "FR-KPS-20",
+        "FR-KULA-053",
+        "FR-KULA-054",
+        "FR-KULA-055",
+        "FR-KULA-188",
+        "FR-KULA-218",
+        "FR-SENET-101",
+        "FR-SENET-42",
+        "FR-SENET-43"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-08",
+      "kind": "screen",
+      "primary_ticket": "18",
+      "consumers": [
+        "07",
+        "11",
+        "17",
+        "18",
+        "30",
+        "33",
+        "36",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F063",
+        "F172",
+        "F173",
+        "F174",
+        "F175",
+        "F176",
+        "F177",
+        "F178",
+        "F179",
+        "F180",
+        "F181",
+        "F182",
+        "FR-KPS-29",
+        "FR-KPS-31",
+        "FR-KPS-68",
+        "FR-KULA-001",
+        "FR-KULA-006",
+        "FR-KULA-015",
+        "FR-KULA-021",
+        "FR-KULA-152",
+        "FR-KULA-162",
+        "FR-KULA-225",
+        "FR-KULA-400",
+        "FR-KULA-407",
+        "FR-KULA-413",
+        "FR-KULA-501",
+        "FR-KULA-512",
+        "FR-SENET-127",
+        "FR-SENET-129",
+        "FR-SENET-47",
+        "FR-SENET-60",
+        "FR-SENET-96"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-09",
+      "kind": "screen",
+      "primary_ticket": "35",
+      "consumers": [
+        "02",
+        "06",
+        "30",
+        "35",
+        "42"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F156",
+        "F157",
+        "F158",
+        "F163",
+        "F164",
+        "F165",
+        "F166",
+        "F245",
+        "FR-KPS-33",
+        "FR-KULA-070",
+        "FR-KULA-074",
+        "FR-KULA-075",
+        "FR-KULA-077",
+        "FR-KULA-078",
+        "FR-KULA-229",
+        "FR-KULA-300",
+        "FR-KULA-304",
+        "FR-KULA-305",
+        "FR-KULA-306",
+        "FR-SENET-119",
+        "FR-SENET-45",
+        "FR-SENET-67"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-10",
+      "kind": "screen",
+      "primary_ticket": "32",
+      "consumers": [
+        "32"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F141",
+        "F142",
+        "F143",
+        "F144",
+        "F145",
+        "F146",
+        "F147",
+        "F148",
+        "F149",
+        "F150",
+        "F151",
+        "F152",
+        "F153",
+        "F154",
+        "F155",
+        "FR-KPS-59",
+        "FR-KULA-260",
+        "FR-KULA-383",
+        "FR-KULA-384",
+        "FR-SENET-69"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-11",
+      "kind": "screen",
+      "primary_ticket": "19",
+      "consumers": [
+        "19",
+        "20",
+        "21",
+        "24",
+        "27",
+        "33",
+        "38"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F184",
+        "F185",
+        "F186",
+        "F206",
+        "F254",
+        "FR-KPS-37",
+        "FR-KPS-38",
+        "FR-KPS-50",
+        "FR-KPS-54",
+        "FR-KPS-60",
+        "FR-KPS-61",
+        "FR-KPS-67",
+        "FR-KULA-047",
+        "FR-KULA-210",
+        "FR-KULA-247",
+        "FR-KULA-264",
+        "FR-KULA-267",
+        "FR-KULA-268",
+        "FR-KULA-291",
+        "FR-KULA-337",
+        "FR-KULA-338",
+        "FR-KULA-464",
+        "FR-KULA-465",
+        "FR-SENET-03",
+        "FR-SENET-63",
+        "FR-SENET-73"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-12",
+      "kind": "screen",
+      "primary_ticket": "31",
+      "consumers": [
+        "19",
+        "23",
+        "31",
+        "39"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F204",
+        "F279",
+        "FR-KPS-62",
+        "FR-KPS-63",
+        "FR-KPS-65"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-13",
+      "kind": "screen",
+      "primary_ticket": "33",
+      "consumers": [
+        "03",
+        "08",
+        "13",
+        "14",
+        "22",
+        "25",
+        "26",
+        "27",
+        "30",
+        "33",
+        "36",
+        "44"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F003",
+        "F071",
+        "F169",
+        "F170",
+        "F171",
+        "F183",
+        "F249",
+        "F250",
+        "F251",
+        "F275",
+        "F276",
+        "F277",
+        "F278",
+        "FR-KPS-34",
+        "FR-KPS-49",
+        "FR-KPS-57",
+        "FR-SENET-02",
+        "FR-SENET-125",
+        "FR-SENET-24",
+        "FR-SENET-25",
+        "FR-SENET-39",
+        "FR-SENET-53",
+        "FR-SENET-76",
+        "FR-SENET-98",
+        "FR-SENET-99"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-14",
+      "kind": "screen",
+      "primary_ticket": "30",
+      "consumers": [
+        "30",
+        "41"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F163",
+        "F246",
+        "F247",
+        "F248",
+        "F255",
+        "F256",
+        "FR-KPS-68",
+        "FR-SENET-109"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-15",
+      "kind": "screen",
+      "primary_ticket": "33",
+      "consumers": [
+        "33"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "FR-KPS-67"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-16",
+      "kind": "screen",
+      "primary_ticket": "42",
+      "consumers": [
+        "07",
+        "25",
+        "36",
+        "41",
+        "42",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F271",
+        "F272",
+        "F273",
+        "F274",
+        "F280",
+        "F284",
+        "FR-SENET-110",
+        "FR-SENET-23",
+        "FR-SENET-24",
+        "FR-SENET-25",
+        "FR-SENET-64"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-17",
+      "kind": "screen",
+      "primary_ticket": "34",
+      "consumers": [
+        "03",
+        "08",
+        "12",
+        "17",
+        "34",
+        "45"
+      ],
+      "disposition": "deferred",
+      "phase": "V2",
+      "source_ids": [
+        "F260",
+        "F261",
+        "F262",
+        "F263",
+        "F264",
+        "F265",
+        "F266",
+        "F267",
+        "F268",
+        "F283",
+        "FR-KULA-149",
+        "FR-KULA-153",
+        "FR-KULA-154",
+        "FR-KULA-176",
+        "FR-KULA-183"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-18",
+      "kind": "screen",
+      "primary_ticket": "33",
+      "consumers": [
+        "02",
+        "09",
+        "16",
+        "18",
+        "33"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F111",
+        "F157",
+        "F177",
+        "F259",
+        "F269",
+        "F270",
+        "F282",
+        "FR-KPS-32",
+        "FR-SENET-02"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-19",
+      "kind": "screen",
+      "primary_ticket": "44",
+      "consumers": [
+        "11",
+        "22",
+        "26",
+        "44"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F137",
+        "FR-KPS-45",
+        "FR-KPS-57",
+        "FR-SENET-114",
+        "FR-SENET-40",
+        "FR-SENET-66",
+        "FR-SENET-75"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-20",
+      "kind": "screen",
+      "primary_ticket": "04",
+      "consumers": [
+        "04",
+        "05",
+        "10",
+        "11",
+        "36"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F019",
+        "F020",
+        "F021",
+        "F022",
+        "F023",
+        "F030",
+        "F038",
+        "FR-KPS-12",
+        "FR-KPS-14",
+        "FR-KPS-15",
+        "FR-SENET-09",
+        "FR-SENET-12",
+        "FR-SENET-121",
+        "FR-SENET-86",
+        "FR-SENET-87",
+        "FR-SENET-89",
+        "FR-SENET-90"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-21",
+      "kind": "screen",
+      "primary_ticket": "12",
+      "consumers": [
+        "12"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F079",
+        "F080",
+        "F081",
+        "F082",
+        "F085",
+        "FR-KPS-26",
+        "FR-KPS-28",
+        "FR-SENET-105",
+        "FR-SENET-106",
+        "FR-SENET-32",
+        "FR-SENET-36"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-22",
+      "kind": "screen",
+      "primary_ticket": "02",
+      "consumers": [
+        "02",
+        "30",
+        "42"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F245",
+        "FR-KPS-33",
+        "FR-SENET-45",
+        "FR-SENET-67"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-23",
+      "kind": "screen",
+      "primary_ticket": "02",
+      "consumers": [
+        "02",
+        "30"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F245",
+        "F246",
+        "FR-KPS-33"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-24",
+      "kind": "screen",
+      "primary_ticket": "42",
+      "consumers": [
+        "07",
+        "42"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F061",
+        "F062",
+        "F271",
+        "F272",
+        "FR-SENET-110"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADM-25",
+      "kind": "screen",
+      "primary_ticket": "32",
+      "consumers": [
+        "32"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F141",
+        "F142",
+        "F147",
+        "F148",
+        "F149",
+        "F154",
+        "FR-KPS-59",
+        "FR-KULA-260",
+        "FR-KULA-383",
+        "FR-KULA-384",
+        "FR-SENET-69"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CUS-01",
+      "kind": "screen",
+      "primary_ticket": "13",
+      "consumers": [
+        "03",
+        "12",
+        "13"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F071",
+        "F072",
+        "F073",
+        "F229",
+        "FR-KPS-26",
+        "FR-KPS-69",
+        "FR-KULA-048",
+        "FR-KULA-276",
+        "FR-KULA-278",
+        "FR-SENET-123",
+        "FR-SENET-38"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CUS-02",
+      "kind": "screen",
+      "primary_ticket": "12",
+      "consumers": [
+        "12",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F074",
+        "F075",
+        "F076",
+        "F077",
+        "F078",
+        "F087",
+        "FR-KPS-26",
+        "FR-KPS-69",
+        "FR-KULA-093",
+        "FR-KULA-147",
+        "FR-KULA-156",
+        "FR-KULA-214",
+        "FR-SENET-105",
+        "FR-SENET-107",
+        "FR-SENET-37"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CUS-03",
+      "kind": "screen",
+      "primary_ticket": "13",
+      "consumers": [
+        "07",
+        "12",
+        "13"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F079",
+        "F080",
+        "F081",
+        "F086",
+        "F088",
+        "F089",
+        "F090",
+        "FR-KPS-26",
+        "FR-KPS-35",
+        "FR-SENET-106",
+        "FR-SENET-32",
+        "FR-SENET-33"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CUS-04",
+      "kind": "screen",
+      "primary_ticket": "14",
+      "consumers": [
+        "14",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F112",
+        "F113",
+        "F120",
+        "F121",
+        "FR-KPS-19",
+        "FR-KULA-052",
+        "FR-KULA-053",
+        "FR-KULA-161",
+        "FR-KULA-263",
+        "FR-KULA-329",
+        "FR-KULA-334",
+        "FR-SENET-41",
+        "FR-SENET-43"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CUS-05",
+      "kind": "screen",
+      "primary_ticket": "14",
+      "consumers": [
+        "14"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F117",
+        "F118",
+        "FR-KPS-19",
+        "FR-KULA-051",
+        "FR-KULA-241",
+        "FR-SENET-100"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CUS-06",
+      "kind": "screen",
+      "primary_ticket": "13",
+      "consumers": [
+        "05",
+        "13",
+        "25"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F032",
+        "F091",
+        "F092",
+        "F093",
+        "F094",
+        "F095",
+        "FR-KPS-56",
+        "FR-KULA-381",
+        "FR-SENET-20"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CUS-07",
+      "kind": "screen",
+      "primary_ticket": "11",
+      "consumers": [
+        "09",
+        "10",
+        "11",
+        "12",
+        "13",
+        "30"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F053",
+        "F090",
+        "F122",
+        "F124",
+        "F125",
+        "F131",
+        "F132",
+        "F133",
+        "F136",
+        "F139",
+        "F140",
+        "F250",
+        "FR-KPS-22",
+        "FR-KPS-23",
+        "FR-KPS-25",
+        "FR-KULA-094",
+        "FR-KULA-208",
+        "FR-KULA-261",
+        "FR-SENET-124",
+        "FR-SENET-26",
+        "FR-SENET-27",
+        "FR-SENET-29",
+        "FR-SENET-38"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CUS-08",
+      "kind": "screen",
+      "primary_ticket": "08",
+      "consumers": [
+        "08"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F168",
+        "FR-KPS-34"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CUS-09",
+      "kind": "screen",
+      "primary_ticket": "32",
+      "consumers": [
+        "11",
+        "32"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F134",
+        "F141",
+        "F142",
+        "F152",
+        "FR-KPS-58",
+        "FR-KPS-59",
+        "FR-KULA-260"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-KDS-01",
+      "kind": "screen",
+      "primary_ticket": "45",
+      "consumers": [
+        "08",
+        "14",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F116",
+        "F117",
+        "F118",
+        "F119",
+        "FR-KPS-19",
+        "FR-KULA-050",
+        "FR-KULA-051",
+        "FR-KULA-158",
+        "FR-KULA-166",
+        "FR-KULA-223",
+        "FR-KULA-241",
+        "FR-KULA-295",
+        "FR-SENET-100",
+        "FR-SENET-99"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-KDS-02",
+      "kind": "screen",
+      "primary_ticket": "45",
+      "consumers": [
+        "14",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F118",
+        "F120",
+        "FR-KULA-050"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-LBY-01",
+      "kind": "screen",
+      "primary_ticket": "26",
+      "consumers": [
+        "03",
+        "12",
+        "26"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F073",
+        "F232",
+        "F278",
+        "FR-KPS-57",
+        "FR-KULA-259",
+        "FR-KULA-379",
+        "FR-KULA-380",
+        "FR-SENET-06"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-LBY-02",
+      "kind": "screen",
+      "primary_ticket": "26",
+      "consumers": [
+        "12",
+        "14",
+        "26"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F083",
+        "FR-KULA-051",
+        "FR-KULA-241"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-LBY-03",
+      "kind": "screen",
+      "primary_ticket": "26",
+      "consumers": [
+        "11",
+        "26",
+        "32"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F134",
+        "F152",
+        "F153",
+        "FR-KPS-58",
+        "FR-KPS-59",
+        "FR-KULA-260"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-CFD-01",
+      "kind": "screen",
+      "primary_ticket": "26",
+      "consumers": [
+        "07",
+        "26"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F050",
+        "F051",
+        "FR-KULA-285"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-KSK-01",
+      "kind": "screen",
+      "primary_ticket": "40",
+      "consumers": [
+        "13",
+        "40"
+      ],
+      "disposition": "deferred",
+      "phase": "V2",
+      "source_ids": [
+        "F231",
+        "FR-KULA-315",
+        "FR-SENET-18",
+        "FR-SENET-20",
+        "FR-SENET-70"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-KSK-02",
+      "kind": "screen",
+      "primary_ticket": "40",
+      "consumers": [
+        "09",
+        "40"
+      ],
+      "disposition": "deferred",
+      "phase": "V2",
+      "source_ids": [
+        "F054",
+        "F130",
+        "FR-SENET-120",
+        "FR-SENET-22",
+        "FR-SENET-26",
+        "FR-SENET-27",
+        "FR-SENET-94"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-KSK-03",
+      "kind": "screen",
+      "primary_ticket": "40",
+      "consumers": [
+        "04",
+        "05",
+        "06",
+        "12",
+        "13",
+        "40"
+      ],
+      "disposition": "deferred",
+      "phase": "V2",
+      "source_ids": [
+        "F017",
+        "F073",
+        "F083",
+        "F091",
+        "FR-KPS-06",
+        "FR-SENET-10",
+        "FR-SENET-21"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-KSK-04",
+      "kind": "screen",
+      "primary_ticket": "40",
+      "consumers": [
+        "05",
+        "07",
+        "40"
+      ],
+      "disposition": "deferred",
+      "phase": "V2",
+      "source_ids": [
+        "F046",
+        "F047",
+        "F050",
+        "F051",
+        "F060",
+        "FR-KPS-35"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-KSK-05",
+      "kind": "screen",
+      "primary_ticket": "40",
+      "consumers": [
+        "08",
+        "13",
+        "26",
+        "40"
+      ],
+      "disposition": "deferred",
+      "phase": "V2",
+      "source_ids": [
+        "F168",
+        "F227",
+        "FR-SENET-14",
+        "FR-SENET-83"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-TVA-01",
+      "kind": "screen",
+      "primary_ticket": "19",
+      "consumers": [
+        "19",
+        "21"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F184",
+        "F185",
+        "FR-KPS-37",
+        "FR-KPS-38",
+        "FR-KULA-210",
+        "FR-SENET-73"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-TVA-02",
+      "kind": "screen",
+      "primary_ticket": "19",
+      "consumers": [
+        "19",
+        "21"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F189",
+        "F190",
+        "F191",
+        "F192",
+        "F205",
+        "FR-KPS-39",
+        "FR-KPS-65"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-TVA-03",
+      "kind": "screen",
+      "primary_ticket": "21",
+      "consumers": [
+        "13",
+        "21",
+        "22",
+        "27",
+        "39"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F187",
+        "FR-KPS-41",
+        "FR-KPS-49",
+        "FR-KULA-247",
+        "FR-KULA-255",
+        "FR-SENET-108",
+        "FR-SENET-20",
+        "FR-SENET-55",
+        "FR-SENET-57",
+        "FR-SENET-76",
+        "FR-SENET-78"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-TVA-04",
+      "kind": "screen",
+      "primary_ticket": "21",
+      "consumers": [
+        "05",
+        "21",
+        "27"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F190",
+        "FR-KPS-40",
+        "FR-KPS-42",
+        "FR-KPS-44",
+        "FR-KULA-252",
+        "FR-KULA-254",
+        "FR-SENET-54",
+        "FR-SENET-56"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-TVA-05",
+      "kind": "screen",
+      "primary_ticket": "22",
+      "consumers": [
+        "21",
+        "22",
+        "25"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F028",
+        "FR-KPS-45",
+        "FR-KPS-55",
+        "FR-SENET-58"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-TVA-06",
+      "kind": "screen",
+      "primary_ticket": "21",
+      "consumers": [
+        "04",
+        "05",
+        "21"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F029",
+        "F030",
+        "FR-KPS-15",
+        "FR-KPS-41",
+        "FR-KULA-257"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-TVA-07",
+      "kind": "screen",
+      "primary_ticket": "20",
+      "consumers": [
+        "20",
+        "21",
+        "24"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F036",
+        "F193",
+        "F194",
+        "F195",
+        "F196",
+        "F197",
+        "FR-KPS-51",
+        "FR-KPS-52",
+        "FR-KPS-53",
+        "FR-SENET-77"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-TVA-08",
+      "kind": "screen",
+      "primary_ticket": "30",
+      "consumers": [
+        "21",
+        "30"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F188",
+        "F208",
+        "F256",
+        "FR-KPS-43",
+        "FR-KULA-255"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-TVA-09",
+      "kind": "screen",
+      "primary_ticket": "22",
+      "consumers": [
+        "11",
+        "14",
+        "22",
+        "32",
+        "44"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F135",
+        "FR-KPS-45",
+        "FR-KPS-58",
+        "FR-KULA-263",
+        "FR-SENET-40",
+        "FR-SENET-75"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-TVA-10",
+      "kind": "screen",
+      "primary_ticket": "21",
+      "consumers": [
+        "20",
+        "21",
+        "24"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F193",
+        "F206",
+        "FR-KPS-50",
+        "FR-KPS-54"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADP-01",
+      "kind": "screen",
+      "primary_ticket": "23",
+      "consumers": [
+        "20",
+        "21",
+        "23",
+        "30",
+        "39"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F200",
+        "F201",
+        "F202",
+        "F203",
+        "F207",
+        "F224",
+        "F225",
+        "F226",
+        "F228",
+        "F242",
+        "FR-KPS-62",
+        "FR-KPS-63",
+        "FR-SENET-61",
+        "FR-SENET-71",
+        "FR-SENET-79",
+        "FR-SENET-80",
+        "FR-SENET-81"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-ADP-02",
+      "kind": "screen",
+      "primary_ticket": "23",
+      "consumers": [
+        "23"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F202",
+        "FR-KPS-62"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-PCA-01",
+      "kind": "screen",
+      "primary_ticket": "27",
+      "consumers": [
+        "13",
+        "27"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F209",
+        "FR-KPS-60",
+        "FR-KULA-264",
+        "FR-KULA-337",
+        "FR-KULA-338",
+        "FR-SENET-03",
+        "FR-SENET-04",
+        "FR-SENET-05",
+        "FR-SENET-108",
+        "FR-SENET-18",
+        "FR-SENET-20",
+        "FR-SENET-53",
+        "FR-SENET-54"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-PCA-02",
+      "kind": "screen",
+      "primary_ticket": "27",
+      "consumers": [
+        "13",
+        "27",
+        "28",
+        "29"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F210",
+        "F211",
+        "F216",
+        "F217",
+        "F218",
+        "F219",
+        "FR-KPS-60",
+        "FR-SENET-04",
+        "FR-SENET-11",
+        "FR-SENET-115",
+        "FR-SENET-116",
+        "FR-SENET-117",
+        "FR-SENET-49",
+        "FR-SENET-50",
+        "FR-SENET-51"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-PCA-03",
+      "kind": "screen",
+      "primary_ticket": "27",
+      "consumers": [
+        "14",
+        "25",
+        "27"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F212",
+        "F213",
+        "FR-SENET-118",
+        "FR-SENET-41",
+        "FR-SENET-44"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-PCA-04",
+      "kind": "screen",
+      "primary_ticket": "27",
+      "consumers": [
+        "22",
+        "27",
+        "30"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F214",
+        "F215",
+        "F220",
+        "F253",
+        "FR-KPS-60",
+        "FR-SENET-07",
+        "FR-SENET-111",
+        "FR-SENET-112"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-GWY-01",
+      "kind": "screen",
+      "primary_ticket": "20",
+      "consumers": [
+        "20",
+        "30"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F228",
+        "F240",
+        "FR-KPS-52",
+        "FR-KPS-64"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-GWY-02",
+      "kind": "screen",
+      "primary_ticket": "20",
+      "consumers": [
+        "20"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [
+        "F233",
+        "F234",
+        "F235",
+        "F257",
+        "FR-KPS-51",
+        "FR-KPS-64"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-OWN-01",
+      "kind": "screen",
+      "primary_ticket": "18",
+      "consumers": [
+        "18",
+        "25",
+        "33"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F230",
+        "FR-KPS-32",
+        "FR-KULA-262",
+        "FR-SENET-48"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-OWN-02",
+      "kind": "screen",
+      "primary_ticket": "18",
+      "consumers": [
+        "06",
+        "17",
+        "18",
+        "25"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [
+        "F158",
+        "F160",
+        "FR-KPS-29",
+        "FR-KPS-30",
+        "FR-KULA-262"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-MAG-01",
+      "kind": "screen",
+      "primary_ticket": "38",
+      "consumers": [
+        "38"
+      ],
+      "disposition": "deferred",
+      "phase": "V2",
+      "source_ids": [
+        "F222",
+        "FR-KPS-61"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-SCR-MAG-02",
+      "kind": "screen",
+      "primary_ticket": "38",
+      "consumers": [
+        "38"
+      ],
+      "disposition": "deferred",
+      "phase": "V2",
+      "source_ids": [
+        "F223",
+        "FR-KPS-61"
+      ],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-001",
+      "kind": "component",
+      "primary_ticket": "03",
+      "consumers": [
+        "03",
+        "05",
+        "12",
+        "13",
+        "14",
+        "19",
+        "20",
+        "21",
+        "24",
+        "25",
+        "26",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-002",
+      "kind": "component",
+      "primary_ticket": "03",
+      "consumers": [
+        "03",
+        "05",
+        "12",
+        "13",
+        "14",
+        "19",
+        "20",
+        "21",
+        "24",
+        "25",
+        "26",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-003",
+      "kind": "component",
+      "primary_ticket": "05",
+      "consumers": [
+        "03",
+        "04",
+        "05",
+        "06",
+        "10",
+        "12",
+        "13",
+        "14",
+        "19",
+        "20",
+        "21",
+        "22",
+        "24",
+        "25",
+        "26",
+        "27",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-004",
+      "kind": "component",
+      "primary_ticket": "05",
+      "consumers": [
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "11",
+        "13",
+        "21",
+        "27"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-005",
+      "kind": "component",
+      "primary_ticket": "05",
+      "consumers": [
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "11",
+        "13",
+        "21",
+        "27"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-006",
+      "kind": "component",
+      "primary_ticket": "05",
+      "consumers": [
+        "04",
+        "05",
+        "06",
+        "10",
+        "14",
+        "22"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-007",
+      "kind": "component",
+      "primary_ticket": "14",
+      "consumers": [
+        "08",
+        "14",
+        "15",
+        "16",
+        "18",
+        "25",
+        "27",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-008",
+      "kind": "component",
+      "primary_ticket": "06",
+      "consumers": [
+        "05",
+        "06",
+        "07",
+        "08",
+        "11",
+        "13",
+        "14",
+        "20",
+        "36",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-009",
+      "kind": "component",
+      "primary_ticket": "07",
+      "consumers": [
+        "05",
+        "06",
+        "07",
+        "08",
+        "11",
+        "12",
+        "13",
+        "14",
+        "20",
+        "26",
+        "36",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-010",
+      "kind": "component",
+      "primary_ticket": "06",
+      "consumers": [
+        "05",
+        "06",
+        "07",
+        "08",
+        "11",
+        "13",
+        "14",
+        "20",
+        "36",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-011",
+      "kind": "component",
+      "primary_ticket": "09",
+      "consumers": [
+        "09",
+        "10",
+        "11",
+        "12",
+        "13",
+        "30"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-012",
+      "kind": "component",
+      "primary_ticket": "11",
+      "consumers": [
+        "04",
+        "09",
+        "10",
+        "11",
+        "12",
+        "13",
+        "30",
+        "37"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-013",
+      "kind": "component",
+      "primary_ticket": "11",
+      "consumers": [
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "09",
+        "10",
+        "11",
+        "13",
+        "21",
+        "27"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-014",
+      "kind": "component",
+      "primary_ticket": "12",
+      "consumers": [
+        "12",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-015",
+      "kind": "component",
+      "primary_ticket": "12",
+      "consumers": [
+        "07",
+        "12",
+        "13"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-016",
+      "kind": "component",
+      "primary_ticket": "12",
+      "consumers": [
+        "12",
+        "13",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-017",
+      "kind": "component",
+      "primary_ticket": "17",
+      "consumers": [
+        "06",
+        "17",
+        "25"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-018",
+      "kind": "component",
+      "primary_ticket": "06",
+      "consumers": [
+        "06",
+        "17",
+        "25"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-019",
+      "kind": "component",
+      "primary_ticket": "20",
+      "consumers": [
+        "03",
+        "05",
+        "12",
+        "13",
+        "14",
+        "19",
+        "20",
+        "21",
+        "24",
+        "25",
+        "26",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-020",
+      "kind": "component",
+      "primary_ticket": "25",
+      "consumers": [
+        "05",
+        "13",
+        "14",
+        "25",
+        "27"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-021",
+      "kind": "component",
+      "primary_ticket": "18",
+      "consumers": [
+        "02",
+        "07",
+        "09",
+        "11",
+        "12",
+        "16",
+        "17",
+        "18",
+        "25",
+        "30",
+        "33",
+        "36",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-022",
+      "kind": "component",
+      "primary_ticket": "18",
+      "consumers": [
+        "02",
+        "03",
+        "12",
+        "13",
+        "18",
+        "25",
+        "33"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-023",
+      "kind": "component",
+      "primary_ticket": "01",
+      "consumers": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "30",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37",
+        "41",
+        "42",
+        "43",
+        "44",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-024",
+      "kind": "component",
+      "primary_ticket": "04",
+      "consumers": [
+        "04",
+        "05",
+        "06",
+        "10",
+        "11",
+        "12",
+        "13",
+        "35",
+        "36",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-025",
+      "kind": "component",
+      "primary_ticket": "32",
+      "consumers": [
+        "11",
+        "32"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-026",
+      "kind": "component",
+      "primary_ticket": "24",
+      "consumers": [
+        "19",
+        "20",
+        "21",
+        "23",
+        "24",
+        "27",
+        "33",
+        "38",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-027",
+      "kind": "component",
+      "primary_ticket": "31",
+      "consumers": [
+        "19",
+        "23",
+        "31",
+        "39"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-028",
+      "kind": "component",
+      "primary_ticket": "30",
+      "consumers": [
+        "30",
+        "41"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-029",
+      "kind": "component",
+      "primary_ticket": "23",
+      "consumers": [
+        "20",
+        "21",
+        "23",
+        "30",
+        "39"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-030",
+      "kind": "component",
+      "primary_ticket": "19",
+      "consumers": [
+        "19",
+        "20",
+        "21",
+        "30"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-031",
+      "kind": "component",
+      "primary_ticket": "19",
+      "consumers": [
+        "19",
+        "20",
+        "21",
+        "23",
+        "24",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-032",
+      "kind": "component",
+      "primary_ticket": "21",
+      "consumers": [
+        "13",
+        "21",
+        "22",
+        "23",
+        "27",
+        "39"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-033",
+      "kind": "component",
+      "primary_ticket": "21",
+      "consumers": [
+        "05",
+        "20",
+        "21",
+        "24",
+        "27"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-034",
+      "kind": "component",
+      "primary_ticket": "22",
+      "consumers": [
+        "13",
+        "21",
+        "22",
+        "25",
+        "27",
+        "28",
+        "29"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-035",
+      "kind": "component",
+      "primary_ticket": "21",
+      "consumers": [
+        "04",
+        "05",
+        "21"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-036",
+      "kind": "component",
+      "primary_ticket": "20",
+      "consumers": [
+        "20",
+        "21",
+        "24"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-037",
+      "kind": "component",
+      "primary_ticket": "30",
+      "consumers": [
+        "21",
+        "30"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-038",
+      "kind": "component",
+      "primary_ticket": "22",
+      "consumers": [
+        "11",
+        "14",
+        "22",
+        "26",
+        "32",
+        "44"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-039",
+      "kind": "component",
+      "primary_ticket": "40",
+      "consumers": [
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "12",
+        "13",
+        "26",
+        "40"
+      ],
+      "disposition": "deferred",
+      "phase": "V2",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-040",
+      "kind": "component",
+      "primary_ticket": "26",
+      "consumers": [
+        "03",
+        "11",
+        "12",
+        "14",
+        "26",
+        "32"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-041",
+      "kind": "component",
+      "primary_ticket": "14",
+      "consumers": [
+        "08",
+        "14"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-042",
+      "kind": "component",
+      "primary_ticket": "26",
+      "consumers": [
+        "07",
+        "26"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-043",
+      "kind": "component",
+      "primary_ticket": "27",
+      "consumers": [
+        "13",
+        "14",
+        "22",
+        "25",
+        "27",
+        "28",
+        "29",
+        "30"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-044",
+      "kind": "component",
+      "primary_ticket": "38",
+      "consumers": [
+        "38"
+      ],
+      "disposition": "deferred",
+      "phase": "V2",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-045",
+      "kind": "component",
+      "primary_ticket": "20",
+      "consumers": [
+        "20",
+        "30"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-046",
+      "kind": "component",
+      "primary_ticket": "04",
+      "consumers": [
+        "04",
+        "05",
+        "10",
+        "11",
+        "36"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-047",
+      "kind": "component",
+      "primary_ticket": "12",
+      "consumers": [
+        "12"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-048",
+      "kind": "component",
+      "primary_ticket": "12",
+      "consumers": [
+        "12"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-049",
+      "kind": "component",
+      "primary_ticket": "17",
+      "consumers": [
+        "03",
+        "07",
+        "08",
+        "12",
+        "17",
+        "18",
+        "36"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-050",
+      "kind": "component",
+      "primary_ticket": "17",
+      "consumers": [
+        "03",
+        "07",
+        "12",
+        "17",
+        "36"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-051",
+      "kind": "component",
+      "primary_ticket": "05",
+      "consumers": [
+        "05",
+        "21"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-052",
+      "kind": "component",
+      "primary_ticket": "02",
+      "consumers": [
+        "02",
+        "30",
+        "42"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-053",
+      "kind": "component",
+      "primary_ticket": "02",
+      "consumers": [
+        "02",
+        "30",
+        "42"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-054",
+      "kind": "component",
+      "primary_ticket": "42",
+      "consumers": [
+        "07",
+        "42"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-055",
+      "kind": "component",
+      "primary_ticket": "32",
+      "consumers": [
+        "32"
+      ],
+      "disposition": "ticket",
+      "phase": "V1",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-056",
+      "kind": "component",
+      "primary_ticket": "21",
+      "consumers": [
+        "19",
+        "21"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-057",
+      "kind": "component",
+      "primary_ticket": "21",
+      "consumers": [
+        "20",
+        "21",
+        "24"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    },
+    {
+      "id": "HS-CMP-058",
+      "kind": "component",
+      "primary_ticket": "01",
+      "consumers": [
+        "01",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "11",
+        "13",
+        "14",
+        "19",
+        "20",
+        "21",
+        "24",
+        "27",
+        "36",
+        "45"
+      ],
+      "disposition": "ticket",
+      "phase": "MVP",
+      "source_ids": [],
+      "reason": "Final Design v0.2 accepted by owner steering; brand colours provisional only. Single primary owner, other tickets consumers."
+    }
+  ],
+  "design_gate": {
+    "id": "DS-GATE-FINAL",
+    "disposition": "owned by Design Desk (not Build)",
+    "status": "ACCEPTED",
+    "version": "v0.2 final layout; brand provisional"
+  }
+}

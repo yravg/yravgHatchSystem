@@ -1,0 +1,130 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><title>Android / Google TV agent</title><style>:root{
+  /* brand.* = PROVISIONAL (logo pending) */
+  --hs-brand-primary:#B4532A;
+  --hs-brand-primary-hover:#9A4521;
+  --hs-brand-primary-ink:#FFFFFF;
+  --hs-brand-primary-tint:#F6E7DF;
+  --hs-brand-on-dark:#E8875C;
+  --hs-canvas:#FAF9F5;
+  --hs-surface:#FFFFFF;
+  --hs-surface-2:#F3F0E8;
+  --hs-line:#E6E2D8;
+  --hs-line-strong:#C9C3B5;
+  --hs-ink:#1F1F1F;
+  --hs-ink-dim:#55524C;
+  --hs-ink-faint:#76726A;
+  --hs-slate:#4A5B72;
+  --hs-ok:#2F7A4F;
+  --hs-warn:#8A5A0B;
+  --hs-danger:#8E3B24;
+  --hs-focus:#1D5FD1;
+  --hs-state-idle-fg:#3E4C60;
+  --hs-state-idle-bg:#E9EDF2;
+  --hs-state-idle-solid:#4A5B72;
+  --hs-state-idle-tv:#A9B8CC;
+  --hs-state-idle-on:#FFFFFF;
+  --hs-state-booked-fg:#5A3F8C;
+  --hs-state-booked-bg:#EEE8F7;
+  --hs-state-booked-solid:#6B4FA0;
+  --hs-state-booked-tv:#C3B0E6;
+  --hs-state-booked-on:#FFFFFF;
+  --hs-state-running-fg:#1F5E3A;
+  --hs-state-running-bg:#E3F1E8;
+  --hs-state-running-solid:#2F7A4F;
+  --hs-state-running-tv:#7FD3A0;
+  --hs-state-running-on:#FFFFFF;
+  --hs-state-ending-fg:#7A4E06;
+  --hs-state-ending-bg:#FBEFD6;
+  --hs-state-ending-solid:#C8901E;
+  --hs-state-ending-tv:#F2C063;
+  --hs-state-ending-on:#1F1F1F;
+  --hs-state-overtime-fg:#8F1D17;
+  --hs-state-overtime-bg:#FBE3E1;
+  --hs-state-overtime-solid:#B3261E;
+  --hs-state-overtime-tv:#FF8A80;
+  --hs-state-overtime-on:#FFFFFF;
+  --hs-state-paused-fg:#2C5785;
+  --hs-state-paused-bg:#E3EDF8;
+  --hs-state-paused-solid:#3A6EA5;
+  --hs-state-paused-tv:#8DB8E8;
+  --hs-state-paused-on:#FFFFFF;
+  --hs-state-offline-fg:#4D4D4D;
+  --hs-state-offline-bg:#ECECEC;
+  --hs-state-offline-solid:#6B6B6B;
+  --hs-state-offline-tv:#B5B5B5;
+  --hs-state-offline-on:#FFFFFF;
+  --hs-state-maintenance-fg:#5C4A3A;
+  --hs-state-maintenance-bg:#EFE9E3;
+  --hs-state-maintenance-solid:#7A6450;
+  --hs-state-maintenance-tv:#CDB59C;
+  --hs-state-maintenance-on:#FFFFFF;
+  --hs-font:Inter, 'Noto Sans', system-ui, sans-serif;
+  --hs-mono:'JetBrains Mono', 'DejaVu Sans Mono', ui-monospace, monospace;
+  --hs-space-0:0;
+  --hs-space-1:4px;
+  --hs-space-2:8px;
+  --hs-space-3:12px;
+  --hs-space-4:16px;
+  --hs-space-5:20px;
+  --hs-space-6:24px;
+  --hs-space-8:32px;
+  --hs-space-10:40px;
+  --hs-space-12:48px;
+  --hs-space-16:64px;
+  --hs-space-tv-safe:5%;
+  --hs-radius-sm:6px;
+  --hs-radius-md:8px;
+  --hs-radius-lg:12px;
+  --hs-radius-xl:16px;
+  --hs-radius-pill:999px;
+  --hs-elev-0:none;
+  --hs-elev-1:0 1px 2px rgba(31,31,31,.06);
+  --hs-elev-2:0 4px 12px rgba(31,31,31,.08);
+  --hs-elev-3:0 12px 32px rgba(31,31,31,.14);
+  --hs-elev-tv:0 8px 32px rgba(0,0,0,.5);
+  --hs-focus-ops:0 0 0 2px #FFFFFF, 0 0 0 4px #1D5FD1;
+  --hs-focus-tv:0 0 0 4px #121110, 0 0 0 8px #FFD54A;
+  --yr-ease-out:cubic-bezier(0.2,0,0,1);
+  --yr-ease-in:cubic-bezier(0.55,0,1,0.45);
+  --yr-ease-cross:cubic-bezier(0.4,0,0.6,1);
+  --yr-page-move-ms:400ms;
+  --yr-modal-open-ms:260ms;
+  --yr-modal-close-ms:120ms;
+  --hs-tv-focus-ms:120ms;
+}
+.hs-dark,[data-theme=tv]{--hs-canvas:#121110;--hs-surface:#1E1C1A;--hs-surface-2:#2A2724;--hs-line:#3A3632;--hs-ink:#F4F1EA;--hs-ink-dim:#C9C3B8;--hs-ink-faint:#9C968C;--hs-focus:#FFD54A;--hs-brand-primary:var(--hs-brand-on-dark);}
+@media (prefers-reduced-motion:reduce){:root{--yr-page-move-ms:0ms;--yr-modal-open-ms:120ms;--yr-modal-close-ms:0ms;--hs-tv-focus-ms:0ms}}
+
+*{box-sizing:border-box}body{margin:0;background:#E9E6DE;font-family:var(--hs-font);color:var(--hs-ink);padding:24px}
+h1.pg{font-size:20px;margin:0 0 4px}.pgsub{color:var(--hs-ink-dim);font-size:14px;margin:0 0 24px}
+.cap{font:600 13px/18px var(--hs-font);color:#3a372f;margin:28px 0 8px}.cap code{font-family:var(--hs-mono);background:#fff;padding:1px 6px;border-radius:4px}
+.frame{position:relative;overflow:hidden;background:var(--hs-canvas);border:1px solid var(--hs-line-strong);box-shadow:var(--hs-elev-2)}
+.row{display:flex;gap:12px;align-items:center}.col{display:flex;flex-direction:column;gap:8px}.grow{flex:1}.sp{justify-content:space-between}
+.card{background:var(--hs-surface);border:1px solid var(--hs-line);border-radius:var(--hs-radius-lg);padding:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:var(--hs-radius-md);font:600 15px var(--hs-font);border:1px solid var(--hs-line-strong);background:var(--hs-surface);color:var(--hs-ink);white-space:nowrap}
+.btn.p{background:var(--hs-brand-primary);border-color:var(--hs-brand-primary);color:var(--hs-brand-primary-ink)}.btn.d{background:var(--hs-danger);color:#fff;border-color:var(--hs-danger)}.btn.lg{min-height:56px;font-size:17px}
+.sheet .btn{min-width:0;padding:0 10px}.btn.f{box-shadow:var(--hs-focus-ops)}
+.chip{display:inline-flex;gap:6px;align-items:center;padding:3px 10px;border-radius:999px;font:600 13px/20px var(--hs-font);white-space:nowrap}
+.muted{color:var(--hs-ink-dim)}.faint{color:var(--hs-ink-faint)}.mono{font-family:var(--hs-mono)}.num{font:700 28px/32px var(--hs-mono)}
+.top{height:56px;background:var(--hs-surface);border-bottom:1px solid var(--hs-line);display:flex;align-items:center;gap:16px;padding:0 20px}
+.logo{width:32px;height:32px;border-radius:8px;border:2px dashed var(--hs-brand-primary);display:grid;place-items:center;font:700 8px var(--hs-font);color:var(--hs-brand-primary)}
+.banner{padding:10px 16px;font:600 14px var(--hs-font);display:flex;gap:10px;align-items:center}
+.side{width:224px;background:var(--hs-surface);border-right:1px solid var(--hs-line);padding:16px 12px;display:flex;flex-direction:column;gap:2px}
+.side a{padding:9px 12px;border-radius:8px;font:500 14px var(--hs-font);color:var(--hs-ink-dim);text-decoration:none}.side a.on{background:var(--hs-brand-primary-tint);color:var(--hs-brand-primary-hover);font-weight:700}
+table.t{width:100%;border-collapse:collapse;font-size:14px}.t th{text-align:left;font-weight:600;color:var(--hs-ink-dim);padding:8px;border-bottom:1px solid var(--hs-line)}.t td{padding:9px 8px;border-bottom:1px solid var(--hs-line)}
+.tile{border-radius:12px;background:var(--hs-surface);border:1px solid var(--hs-line);padding:12px;display:flex;flex-direction:column;gap:6px;min-height:150px;border-left-width:6px}
+.sheet{position:absolute;top:0;right:0;bottom:0;width:480px;background:var(--hs-surface);border-left:1px solid var(--hs-line);box-shadow:var(--hs-elev-3);padding:20px;display:flex;flex-direction:column;gap:12px}
+.scrim{position:absolute;inset:0;background:rgba(31,31,31,.32)}
+.seg{display:flex;background:var(--hs-surface-2);border-radius:10px;padding:3px}.seg span{flex:1;text-align:center;padding:8px 10px;border-radius:8px;font:600 14px var(--hs-font);color:var(--hs-ink-dim)}.seg span.on{background:var(--hs-surface);color:var(--hs-ink);box-shadow:var(--hs-elev-1)}
+.qr{background:repeating-conic-gradient(#1F1F1F 0 25%,#fff 0 50%) 0 0/14px 14px;border:8px solid #fff;outline:1px solid var(--hs-line)}
+.bar{height:8px;border-radius:999px;background:var(--hs-surface-2);overflow:hidden}.bar i{display:block;height:100%}
+.tv{background:#121110;color:#F4F1EA;font-size:28px;line-height:36px}.tv .tvsafe{position:absolute;inset:5%}
+.tvf{box-shadow:var(--hs-focus-tv);transform:scale(1.04)}
+.tvbtn{min-height:72px;padding:0 32px;border-radius:14px;background:#2A2724;color:#F4F1EA;font:600 28px var(--hs-font);display:inline-flex;align-items:center;border:2px solid #3A3632}
+.hatch{background-image:repeating-linear-gradient(45deg,transparent 0 8px,rgba(92,74,58,.12) 8px 16px)}
+</style></head><body><h1 class="pg">Android / Google TV agent</h1><p class="pgsub">1080p, D-pad, 10-ft · HatchSystem Design v0.2 · brand.* PROVISIONAL (logo pending)</p><div class="cap"><code>TVA-01-pairing</code> · HS-SCR-TVA-01 · Pairing code (10-min expiry) <span class="faint">(1920×1080)</span></div><section class="frame tv" id="TVA-01-pairing" style="width:1920px;height:1080px"><div style="position:absolute;inset:0;background:#121110"></div><div class="tvsafe"><div style="display:flex;height:100%;gap:80px;align-items:center"><div class="col" style="flex:1;gap:24px"><div class="logo" style="width:72px;height:72px;font-size:14px">LOGO</div><b style="font-size:56px;line-height:64px">Pasangkan TV ini</b><div style="font-size:32px;line-height:44px;color:#C9C3B8">Buka Admin → Agent & perangkat → Pasangkan, lalu masukkan kode ini.</div><div class="row" style="gap:16px"><div style='width:120px;height:150px;border-radius:16px;background:#2A2724;display:grid;place-items:center;font:700 88px/1 var(--hs-mono)'>7</div><div style='width:120px;height:150px;border-radius:16px;background:#2A2724;display:grid;place-items:center;font:700 88px/1 var(--hs-mono)'>H</div><div style='width:120px;height:150px;border-radius:16px;background:#2A2724;display:grid;place-items:center;font:700 88px/1 var(--hs-mono)'>4</div><div style='width:120px;height:150px;border-radius:16px;background:#2A2724;display:grid;place-items:center;font:700 88px/1 var(--hs-mono)'>Q</div><div style='width:120px;height:150px;border-radius:16px;background:#2A2724;display:grid;place-items:center;font:700 88px/1 var(--hs-mono)'>2</div><div style='width:120px;height:150px;border-radius:16px;background:#2A2724;display:grid;place-items:center;font:700 88px/1 var(--hs-mono)'>K</div></div><div style="font-size:28px;color:#C9C3B8"><div class="row" style="gap:16px"><div style="width:420px;height:12px;border-radius:6px;background:#2A2724;overflow:hidden"><i style="display:block;width:87%;height:100%;background:#F2C063"></i></div><span class="mono">08:42</span></div><div>Kode berlaku 08:42 lagi · kode baru muncul otomatis saat habis</div></div><div class="row" style="gap:24px"><span class="tvbtn tvf">Kode baru</span><span class="tvbtn">Cek pengaturan</span></div></div><div class="col" style="width:520px;align-items:center;gap:20px"><div class="qr" style="width:400px;height:400px"></div><span style="font-size:28px">atau scan dari HP kasir</span></div></div><div style="position:absolute;left:0;right:0;bottom:0;font-size:24px;color:#9C968C;display:flex;justify-content:space-between"><span>Jaringan: SentosaWiFi · Versi 1.4.2 · ID agent hs-tv-7f3a</span><span>Terkunci sampai dipasangkan · HOME & KEMBALI tidak keluar</span></div></div></section><div class="cap"><code>TVA-02-setup</code> · HS-SCR-TVA-02 · Setup check (overlay, HDMI, test lock) <span class="faint">(1920×1080)</span></div><section class="frame tv" id="TVA-02-setup" style="width:1920px;height:1080px"><div style="position:absolute;inset:0;background:#121110"></div><div class="tvsafe"><b style="font-size:56px;line-height:64px">Cek perangkat · PS5-01</b><div class="col" style="gap:20px;margin-top:40px;width:1300px"><div class='row' style='background:#1E1C1A;border-radius:16px;padding:24px 32px;gap:28px;'><b style='font-size:40px;width:48px;color:#7FD3A0'>✓</b><div class='grow'><b style='font-size:32px'>Izin tampil di atas aplikasi lain</b><div style='color:#C9C3B8;font-size:26px'>Aktif</div></div></div><div class='row' style='background:#1E1C1A;border-radius:16px;padding:24px 32px;gap:28px;'><b style='font-size:40px;width:48px;color:#7FD3A0'>✓</b><div class='grow'><b style='font-size:32px'>Port HDMI konsol</b><div style='color:#C9C3B8;font-size:26px'>HDMI 2 · terdeteksi PlayStation 5</div></div></div><div class='row' style='background:#1E1C1A;border-radius:16px;padding:24px 32px;gap:28px;box-shadow:var(--hs-focus-tv)'><b style='font-size:40px;width:48px;color:#FF8A80'>!</b><div class='grow'><b style='font-size:32px'>Tes kunci layar</b><div style='color:#C9C3B8;font-size:26px'>Tombol Home masih bisa keluar. Aktifkan mode perangkat terkunci.</div></div><span class="tvbtn tvf">Perbaiki</span></div><div class='row' style='background:#1E1C1A;border-radius:16px;padding:24px 32px;gap:28px;'><b style='font-size:40px;width:48px;color:#B5B5B5'>○</b><div class='grow'><b style='font-size:32px'>Tes buka kunci</b><div style='color:#C9C3B8;font-size:26px'>Menunggu tes kunci berhasil</div></div><span class="tvbtn">Tes</span></div><div class='row' style='background:#1E1C1A;border-radius:16px;padding:24px 32px;gap:28px;'><b style='font-size:40px;width:48px;color:#F2C063'>!</b><div class='grow'><b style='font-size:32px'>Matikan HDMI-CEC di TV dan konsol</b><div style='color:#C9C3B8;font-size:26px'>CEC membuat konsol bisa merebut input HDMI. Opsional: biarkan nyala hanya jika adaptor CEC dipakai.</div></div><span class="tvbtn">Cara</span></div></div></div></section><div class="cap"><code>TVA-02b-permlost</code> · HS-SCR-TVA-02 · Overlay permission lost after reboot (recovery guide) <span class="faint">(1920×1080) · from emulator finding</span></div><section class="frame tv" id="TVA-02b-permlost" style="width:1920px;height:1080px"><div style="position:absolute;inset:0;background:#121110"></div><div class="tvsafe"><div style="display:flex;height:100%;gap:80px;align-items:center"><div class="col" style="flex:1;gap:24px"><b style="font-size:56px;line-height:64px;color:#F2C063">◔ Izin tampilan perlu diaktifkan lagi</b><div style="font-size:32px;line-height:44px;color:#C9C3B8">TV baru restart dan mematikan izin “Tampil di atas aplikasi lain”. Tanpa izin ini layar tidak bisa dikunci.</div>
+<div class="col" style="gap:12px;font-size:30px;line-height:40px"><div class="row" style="gap:20px"><b style="width:56px;height:56px;border-radius:28px;background:#2A2724;display:grid;place-items:center">1</b><span>Tekan OK untuk membuka pengaturan</span></div><div class="row" style="gap:20px"><b style="width:56px;height:56px;border-radius:28px;background:#2A2724;display:grid;place-items:center">2</b><span>Tekan BAWAH sampai <b>HatchSystem</b></span></div><div class="row" style="gap:20px"><b style="width:56px;height:56px;border-radius:28px;background:#2A2724;display:grid;place-items:center">3</b><span>Tekan OK hingga tertulis <b>Diizinkan</b>, lalu KEMBALI</span></div></div>
+<div class="row" style="gap:24px"><span class="tvbtn tvf">Buka pengaturan</span><span class="tvbtn">Lapor ke kasir</span></div></div>
+<div class="col" style="width:520px;gap:16px;background:#1E1C1A;border-radius:20px;padding:32px"><b style="font-size:28px">Status unit</b><span class="chip" style="background:#6B6B6B;color:#FFFFFF;font-size:24px;line-height:32px;padding:6px 16px"><b aria-hidden="true">⊘</b>Tidak terkunci</span><div style="font-size:26px;color:#C9C3B8">Kasir sudah diberi tahu. Sesi tidak bisa dimulai di unit ini sampai izin aktif.</div></div></div></div></section><div class="cap"><code>TVA-03-standby</code> · HS-SCR-TVA-03 · Standby lock <span class="faint">(1920×1080)</span></div><section class="frame tv" id="TVA-03-standby" style="width:1920px;height:1080px"><div style="position:absolute;inset:0;background:linear-gradient(160deg,#1E1C1A,#121110 60%,#2a1a12)"></div><div class="tvsafe"><div style="display:flex;flex-direction:column;height:100%"><div class="row sp"><div class="logo" style="width:72px;height:72px;font-size:14px">LOGO</div><span style="font-size:32px">PS5-01 · 21:14</span></div><div class="grow" style="display:flex;align-items:center;gap:96px"><div class="col" style="flex:1;gap:24px"><span style="width:96px;height:96px;border-radius:24px;background:#2A2724;display:grid;place-items:center;font-size:56px">🔒</span><b style="font-size:72px;line-height:80px">Unit terkunci</b><div style="font-size:36px;line-height:48px;color:#C9C3B8">Datang ke kasir untuk mulai main, atau scan untuk bayar sendiri.</div><div style="background:#2A2724;border-radius:16px;padding:20px 28px;font-size:30px">◆ Booking berikutnya 22:00 · Andi</div></div><div class="col" style="align-items:center;gap:16px"><div class="qr" style="width:360px;height:360px"></div><span style="font-size:28px">Scan & main</span></div></div><div style="font-size:24px;color:#9C968C">Gambar latar bisa diganti pemilik di Admin → Pengaturan → Layar TV</div></div></div></section><div class="cap"><code>TVA-04-running</code> · HS-SCR-TVA-04 · Running — timer corner (opacity 82%) <span class="faint">(1920×1080)</span></div><section class="frame tv" id="TVA-04-running" style="width:1920px;height:1080px"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#25405e,#4a2f5e 50%,#1d4a3a)"></div><div style="position:absolute;left:5%;bottom:5%;font-size:28px;color:rgba(255,255,255,.6)">[ gameplay PS5 di HDMI 2 ]</div><div style="position:absolute;top:5%;right:5%;background:rgba(18,17,16,.82);border:3px solid #2F7A4F;border-radius:16px;padding:12px 24px;display:flex;align-items:center;gap:16px"><b style="color:#7FD3A0;font-size:32px">▶</b><span class="mono" style="font:700 40px/44px var(--hs-mono);color:#F4F1EA">01:12:40</span></div></section><div class="cap"><code>TVA-05-warning</code> · HS-SCR-TVA-05 · 5-minute warning <span class="faint">(1920×1080)</span></div><section class="frame tv" id="TVA-05-warning" style="width:1920px;height:1080px"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#25405e,#4a2f5e 50%,#1d4a3a)"></div><div style="position:absolute;top:5%;right:5%;background:rgba(18,17,16,.82);border:3px solid #C8901E;border-radius:16px;padding:12px 24px;display:flex;align-items:center;gap:16px"><b style="color:#F2C063;font-size:32px">◔</b><span class="mono" style="font:700 40px/44px var(--hs-mono);color:#F4F1EA">04:59</span></div><div style="position:absolute;left:5%;right:5%;bottom:5%;background:rgba(18,17,16,.92);border:3px solid #C8901E;border-radius:20px;padding:28px 40px;display:flex;align-items:center;gap:32px"><b style="font-size:56px;color:#F2C063">◔</b><div class="grow"><b style="font-size:40px;line-height:48px">Sisa 5 menit</b><div style="font-size:30px;color:#C9C3B8">Simpan game kamu sekarang. Mau tambah? Scan QR atau panggil kasir.</div></div><div class="qr" style="width:160px;height:160px;border-width:6px"></div></div></section><div class="cap"><code>TVA-06-overtime</code> · HS-SCR-TVA-06 · Overtime / finished lock <span class="faint">(1920×1080)</span></div><section class="frame tv" id="TVA-06-overtime" style="width:1920px;height:1080px"><div style="position:absolute;inset:0;background:#1a1110"></div><div class="tvsafe"><div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:28px;text-align:center"><span style="font-size:96px;color:#FF8A80">!</span><b style="font-size:72px;line-height:80px">Waktu main habis</b><span class="chip" style="background:#B3261E;color:#FFFFFF;font-size:24px;line-height:32px;padding:6px 16px"><b aria-hidden="true">!</b>Lewat waktu</span><div class="mono" style="font:700 96px/100px var(--hs-mono);color:#FF8A80">+00:06:12</div><div style="font-size:36px;color:#C9C3B8">Denda berjalan Rp2.500 per 5 menit. Silakan ke kasir.</div><span style="font-size:28px;color:#9C968C">Konsol tetap menyala — game kamu aman.</span></div></div></section><div class="cap"><code>TVA-07-offline</code> · HS-SCR-TVA-07 · Offline lease mode <span class="faint">(1920×1080) · gap F196</span></div><section class="frame tv" id="TVA-07-offline" style="width:1920px;height:1080px"><div style="position:absolute;inset:0;background:linear-gradient(135deg,#25405e,#4a2f5e 50%,#1d4a3a)"></div><div style="position:absolute;top:5%;right:5%;background:rgba(18,17,16,.82);border:3px solid #2F7A4F;border-radius:16px;padding:12px 24px;display:flex;align-items:center;gap:16px"><b style="color:#7FD3A0;font-size:32px">▶</b><span class="mono" style="font:700 40px/44px var(--hs-mono);color:#F4F1EA">00:41:08</span><span style="font-size:24px;color:#B5B5B5">⊘ Offline</span></div><div style="position:absolute;left:5%;bottom:5%;background:rgba(18,17,16,.9);border-radius:16px;padding:20px 28px;font-size:28px;line-height:36px;max-width:1100px;border:2px solid #6B6B6B"><b>⊘ Internet putus · timer tetap jalan di TV</b><div style="color:#C9C3B8">Izin main ditandatangani sampai 21:56. Setelah itu layar terkunci walau internet belum kembali.</div></div></section><div class="cap"><code>TVA-08-override</code> · HS-SCR-TVA-08 · Emergency override (D-pad PIN) <span class="faint">(1920×1080) · gap F256</span></div><section class="frame tv" id="TVA-08-override" style="width:1920px;height:1080px"><div style="position:absolute;inset:0;background:#1a1110"></div><div class="tvsafe"><div style="display:flex;height:100%;align-items:center;gap:96px"><div class="col" style="flex:1;gap:24px"><b style="font-size:56px;line-height:64px;color:#FF8A80">! Override darurat</b><div style="font-size:32px;line-height:44px;color:#C9C3B8">Buka kunci tanpa server. Hanya manajer. Dicatat di audit dengan nama dan alasan.</div><div class="row" style="gap:16px"><div style='width:96px;height:120px;border-radius:16px;background:#2A2724;display:grid;place-items:center;font-size:64px'>•</div><div style='width:96px;height:120px;border-radius:16px;background:#2A2724;display:grid;place-items:center;font-size:64px'>•</div><div style='width:96px;height:120px;border-radius:16px;background:#2A2724;display:grid;place-items:center;font-size:64px'>•</div><div style='width:96px;height:120px;border-radius:16px;background:#2A2724;display:grid;place-items:center;font-size:64px'>•</div><div style='width:96px;height:120px;border-radius:16px;background:#2A2724;border:2px solid #3A3632'></div><div style='width:96px;height:120px;border-radius:16px;background:#2A2724;border:2px solid #3A3632'></div></div><div style="font-size:28px">Alasan: <b>Server down, pelanggan bayar tunai</b></div><div style="font-size:26px;color:#9C968C">Salah 3 kali → tunggu 5 menit</div></div><div style="display:grid;grid-template-columns:repeat(3,120px);gap:16px"><div class='tvbtn' style='justify-content:center;padding:0;height:100px;'>1</div><div class='tvbtn' style='justify-content:center;padding:0;height:100px;'>2</div><div class='tvbtn' style='justify-content:center;padding:0;height:100px;'>3</div><div class='tvbtn' style='justify-content:center;padding:0;height:100px;'>4</div><div class='tvbtn' style='justify-content:center;padding:0;height:100px;box-shadow:var(--hs-focus-tv)'>5</div><div class='tvbtn' style='justify-content:center;padding:0;height:100px;'>6</div><div class='tvbtn' style='justify-content:center;padding:0;height:100px;'>7</div><div class='tvbtn' style='justify-content:center;padding:0;height:100px;'>8</div><div class='tvbtn' style='justify-content:center;padding:0;height:100px;'>9</div><div class='tvbtn' style='justify-content:center;padding:0;height:100px;'>⌫</div><div class='tvbtn' style='justify-content:center;padding:0;height:100px;'>0</div><div class='tvbtn' style='justify-content:center;padding:0;height:100px;'>OK</div></div></div></div></section><div class="cap"><code>TVA-10-bootrecover</code> · HS-SCR-TVA-10 · Boot recovery (paired) <span class="faint">(1920×1080)</span></div><section class="frame tv" id="TVA-10-bootrecover" style="width:1920px;height:1080px"><div style="position:absolute;inset:0;background:#121110"></div><div class="tvsafe"><div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:28px;text-align:center"><div class="logo" style="width:96px;height:96px;font-size:16px">LOGO</div><b style="font-size:64px;line-height:72px">Memulihkan sesi PS5-01…</b>
+<div class="col" style="gap:14px;font-size:30px;text-align:left"><div class="row" style="gap:20px"><b style="width:40px;color:#7FD3A0">✓</b>Agent menyala otomatis setelah TV restart</div><div class="row" style="gap:20px"><b style="width:40px;color:#7FD3A0">✓</b>Izin kunci layar aktif</div><div class="row" style="gap:20px"><b style="width:40px;color:#F2C063">◔</b>Mengambil sisa waktu dari gateway (lokal)</div></div>
+<div style="font-size:28px;color:#C9C3B8">Sisa waktu terakhir tercatat <b class="mono" style="color:#F4F1EA">00:41:08</b>. Waktu restart tidak ditagih.</div></div></div></section></body></html>

@@ -1,0 +1,24 @@
+{
+  "source_counts": {
+    "FR-KPS": 69,
+    "FR-SENET": 129,
+    "FR-KULA": 520,
+    "market_F": 284
+  },
+  "total_traceability_rows": 1089,
+  "canonical_vertical_slices": 54,
+  "own_gap_requirements": 15,
+  "dispositions": {
+    "ticket": 840,
+    "deferred": 104,
+    "out-of-scope": 145
+  },
+  "starred_kula_rows": 144,
+  "version": "0.2",
+  "own_v02_requirements": 18,
+  "design_screens": 82,
+  "design_components": 58,
+  "tickets": 54,
+  "wireframed_screens": 58,
+  "design_status": "v0.2 final layout; brand provisional"
+}

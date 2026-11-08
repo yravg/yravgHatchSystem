@@ -1,0 +1,10 @@
+# Matriks sertifikasi awal — TIDAK ADA MODEL CERTIFIED
+
+CSV adalah candidate test plan, bukan daftar compatibility yang disetujui. Ganti GENERIC dengan manufacturer+exact model/firmware/agent+driver build+topology+video mode. Setiap result evidence berisi date, tester, steps, expected/actual, latency min/p50/p95/max, Home/input bypass, permission revoke, WAN/LAN loss, process death, reboot/clock rollback, stale command/revoke, HDMI mode, cold boot/wake/remote conflicts, audio/eARC, picture lock/release and console power unchanged. Critical failure=unsupported atau explicitly limited, tidak marketing certified.
+
+Mandatory independent check T21/T23 for MVP surface; T31 integrated V1 regression. Simulator/emulator tidak certifies physical device. Tidak membeli hardware/sertifikat dari build prompt. Android OS8 candidate minimum, availability DPC/input API must be tested per model; Windows11 and .NET10 target. Google-certified consumer TV does not by itself imply venue-control certified.
+
+External adapter tests: PS4/PS5/Xbox Series/Switch dock → adapter → LG/Samsung; include HDMI2.1 chain at4K120/HDR/VRR/ALLM/HDCP. A switch incapable4K120 must label supported mode and fail higher mode, not strip DRM or silently downgrade. CEC/IR lacking feedback is commanded-only. TV-only relay optional last resort approved electrician, never console outlet. No electrical instructions here.
+
+## v0.2 baseline setup / pass gates
+Record CEC OFF on BOTH TV and console. HDMI-CEC optional, never required for lock. Test start/pause/expire/stop/boot/Home/input protection with CEC disabled; optional CEC power feature may report unsupported while independent native/HDMI/IR lock remains valid. Three cold boots on legitimately managed provisioned-unpaired topology, normal permission retained or supported fail-closed fallback; revoke permission -> repair/not-ready, no forced grant. Actual WAN/LAN/Ethernet loss proof required before offline assertions. Source emulator true-offline test was BLOCKED, not a model certification result.
