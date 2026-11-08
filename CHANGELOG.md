@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Tailscale-only preview of the T01 web scaffold and API health probe on the build VPS (ports 3100/3101, not public); recorded in docs/handoff.
 - T01 marked done after Merger (e96d0fe) and independent Checker PASS; spec-v0.2 now contains the T01 foundation.
 - Imported HatchSystem specification v0.2 (363 files) into the repo root; README and MIT LICENSE unchanged.
 - tools/validate_spec.py: Windows path fix for the design-shots allow-list, the repo's own .git is no longer reported as a packaged artifact, and the ticket status check now requires board.md and rd.md to agree instead of requiring draft.

@@ -27,6 +27,10 @@ Missing: .NET SDK (dotnet host present, no SDK), JDK 17+, Gradle, Android SDK, P
 - Checkout: /srv/hatch/repo (branch spec-v0.2). Validator there: 16764/16764.
 - The VPS also runs production apps (schedmate, yraverage hub, milestone). Run every HatchSystem build/test through /srv/hatch/capped.sh (MemoryMax=3G, CPUQuota=150%, nice 10).
 - No deploy, no public port, no Coolify app for HatchSystem without separate owner approval.
+- 2026-11-09 owner asked for a Tailscale-only preview. Worktree /srv/hatch/wt/preview (c035189), both bound to the Tailscale IP only, run via capped.sh with setsid nohup (no systemd unit, so they stop on VPS reboot):
+  - web `next start` http://100.108.253.30:3100/ (log /srv/hatch/out/preview-web.log)
+  - API health http://100.108.253.30:3101/api/v1/health (/srv/hatch/out/preview-api.mjs, log preview-api.log)
+  - Stop: `pkill -f "next start -H 100.108.253.30"; pkill -f preview-api.mjs`. Update: `git -C /srv/hatch/wt/preview checkout --detach origin/spec-v0.2`, rebuild, restart.
 
 ## Known failures / follow-ups
 - Validator status-check change (77deb83) pending owner confirmation.
