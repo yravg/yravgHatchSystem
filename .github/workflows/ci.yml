@@ -15,7 +15,7 @@ jobs:
       - uses: pnpm/action-setup@v4 # version comes from package.json packageManager
       - uses: actions/setup-node@v4
         with:
-          node-version: "24.14.1" # shortcut: spec says Node 26 LTS candidate; move when 26 is LTS and verified
+          node-version: "26.13.0"
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
@@ -36,10 +36,8 @@ jobs:
         with:
           distribution: temurin
           java-version: "21"
-      - uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: "8.10.2"
-      - run: gradle --no-daemon :contracts:test
+      - uses: gradle/actions/setup-gradle@v4 # uses the committed wrapper (Gradle 9.9.0, checksum pinned)
+      - run: ./gradlew --no-daemon :contracts:test
         working-directory: agents/android-tv
 
   dotnet:
