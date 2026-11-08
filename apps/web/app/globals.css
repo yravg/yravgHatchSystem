@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  background: var(--hs-canvas);
+  color: var(--hs-ink);
+  font-family: var(--hs-font);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--hs-space-4);
+}
+
+.scaffold-note {
+  margin-top: var(--hs-space-4);
+  padding: var(--hs-space-3) var(--hs-space-4);
+  background: var(--hs-brand-primary-tint);
+  border: 1px solid var(--hs-line-strong);
+  border-radius: var(--hs-radius-md);
+  color: var(--hs-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--hs-focus);
+  outline-offset: 2px;
+}

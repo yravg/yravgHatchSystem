@@ -1,0 +1,17 @@
+
+> yravg-hatchsystem@ typecheck E:\dev\yravgHatchSystem\.claude\worktrees\agent-a5837faecc15621c3
+> tsc -p tsconfig.json --noEmit && pnpm -r --if-present typecheck
+
+Scope: 6 of 7 workspace projects
+packages/contracts typecheck$ tsc -p tsconfig.json --noEmit
+packages/ui typecheck$ tsc -p tsconfig.json --noEmit
+packages/ui typecheck: Done
+packages/contracts typecheck: Done
+apps/web typecheck$ tsc -p tsconfig.json --noEmit
+packages/domain typecheck$ tsc -p tsconfig.json --noEmit
+packages/domain typecheck: Done
+apps/web typecheck: Done
+services/api typecheck$ tsc -p tsconfig.json --noEmit
+services/worker typecheck$ tsc -p tsconfig.json --noEmit
+services/worker typecheck: Done
+services/api typecheck: Done

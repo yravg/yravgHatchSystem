@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yravg.id/hatch/protocol.schema.json",
+  "title": "yravg HatchSystem protocol v1 (single source for TypeScript, Kotlin and .NET)",
+  "$comment": "Source of truth. Generators: packages/contracts/scripts/generate.ts. Subset supported by the generators: object/properties/required, string(+enum,pattern), integer, boolean, array of $ref/string, $ref, additionalProperties of string. Anything else makes the generator fail.",
+  "$defs": {
+    "Uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "UtcTimestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "Money": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)$"
+    },
+    "PaymentAmount": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amountIDR", "currency"],
+      "properties": {
+        "amountIDR": { "$ref": "#/$defs/Money" },
+        "currency": { "$ref": "#/$defs/Currency" }
+      }
+    },
+    "Currency": { "type": "string", "enum": ["IDR"] },
+    "ErrorBody": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "messageKey", "retryable", "details"],
+      "properties": {
+        "code": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" },
+        "messageKey": { "type": "string", "pattern": "^[a-z][a-zA-Z0-9.]*$" },
+        "retryable": { "type": "boolean" },
+        "details": { "type": "object", "additionalProperties": { "type": "string" } }
+      }
+    },
+    "ErrorEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["error", "requestId"],
+      "properties": {
+        "error": { "$ref": "#/$defs/ErrorBody" },
+        "requestId": { "type": "string" }
+      }
+    },
+    "LeaseMode": { "type": "string", "enum": ["FIXED", "OPEN"] },
+    "LeasePermission": { "type": "string", "enum": ["DISPLAY_GAME"] },
+    "SessionLease": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocolVersion", "leaseId", "tenantId", "outletId", "stationId", "deviceId", "sessionId",
+        "authorityEpoch", "revision", "mode", "remainingSecondsAtIssue", "issuedAt", "notAfter",
+        "permissions", "keyId", "signature"
+      ],
+      "properties": {
+        "protocolVersion": { "type": "integer" },
+        "leaseId": { "$ref": "#/$defs/Uuid" },
+        "tenantId": { "$ref": "#/$defs/Uuid" },
+        "outletId": { "$ref": "#/$defs/Uuid" },
+        "stationId": { "$ref": "#/$defs/Uuid" },
+        "deviceId": { "$ref": "#/$defs/Uuid" },
+        "sessionId": { "$ref": "#/$defs/Uuid" },
+        "authorityEpoch": { "type": "integer" },
+        "revision": { "type": "integer" },
+        "mode": { "$ref": "#/$defs/LeaseMode" },
+        "remainingSecondsAtIssue": { "type": "integer" },
+        "issuedAt": { "$ref": "#/$defs/UtcTimestamp" },
+        "notAfter": { "$ref": "#/$defs/UtcTimestamp" },
+        "permissions": { "type": "array", "items": { "$ref": "#/$defs/LeasePermission" } },
+        "keyId": { "type": "string" },
+        "signature": { "type": "string" }
+      }
+    },
+    "CommandAction": {
+      "type": "string",
+      "enum": ["PREPARE", "START", "PAUSE", "RESUME", "EXTEND", "END", "LOCK", "SAFE_CONTROL"]
+    },
+    "SessionCommand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocolVersion", "commandId", "stationId", "deviceId", "authorityEpoch", "sequence",
+        "expectedRevision", "desiredRevision", "action", "issuedAt", "expiresAt", "actorRef"
+      ],
+      "properties": {
+        "protocolVersion": { "type": "integer" },
+        "commandId": { "$ref": "#/$defs/Uuid" },
+        "stationId": { "$ref": "#/$defs/Uuid" },
+        "deviceId": { "$ref": "#/$defs/Uuid" },
+        "authorityEpoch": { "type": "integer" },
+        "sequence": { "type": "integer" },
+        "expectedRevision": { "type": "integer" },
+        "desiredRevision": { "type": "integer" },
+        "action": { "$ref": "#/$defs/CommandAction" },
+        "lease": { "$ref": "#/$defs/SessionLease" },
+        "issuedAt": { "$ref": "#/$defs/UtcTimestamp" },
+        "expiresAt": { "$ref": "#/$defs/UtcTimestamp" },
+        "actorRef": { "type": "string" }
+      }
+    },
+    "AckStatus": { "type": "string", "enum": ["RECEIVED", "APPLIED", "FAILED"] },
+    "VerificationLevel": {
+      "type": "string",
+      "enum": ["SIMULATED", "COMMANDED_ONLY", "API_OBSERVED", "OPERATOR_ATTESTED", "LAB_VERIFIED"]
+    },
+    "DeviceAck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocolVersion", "commandId", "deviceId", "authorityEpoch", "sequence", "desiredRevision",
+        "status", "verificationLevel", "bootId", "observedAt"
+      ],
+      "properties": {
+        "protocolVersion": { "type": "integer" },
+        "commandId": { "$ref": "#/$defs/Uuid" },
+        "deviceId": { "$ref": "#/$defs/Uuid" },
+        "authorityEpoch": { "type": "integer" },
+        "sequence": { "type": "integer" },
+        "desiredRevision": { "type": "integer" },
+        "status": { "$ref": "#/$defs/AckStatus" },
+        "verificationLevel": { "$ref": "#/$defs/VerificationLevel" },
+        "observedInput": { "type": "string" },
+        "bootId": { "$ref": "#/$defs/Uuid" },
+        "observedAt": { "$ref": "#/$defs/UtcTimestamp" },
+        "errorCode": { "type": "string" }
+      }
+    }
+  }
+}

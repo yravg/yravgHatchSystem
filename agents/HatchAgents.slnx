@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Hatch.Contracts/Hatch.Contracts.csproj" />
+  <Project Path="Hatch.Contracts.Tests/Hatch.Contracts.Tests.csproj" />
+  <Project Path="venue-edge/Hatch.VenueEdge.csproj" />
+  <Project Path="windows-seat/Hatch.WindowsSeat.csproj" />
+</Solution>

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Single source: generated from packages/contracts/schema/protocol.schema.json. -->
+    <Compile Include="../../packages/contracts/generated/dotnet/Protocol.cs" Link="Generated/Protocol.cs" />
+  </ItemGroup>
+</Project>

@@ -1,2 +1,4 @@
 * text=auto eol=lf
 *.png binary
+packages/contracts/** text eol=lf
+packages/ui/src/tokens.css text eol=lf

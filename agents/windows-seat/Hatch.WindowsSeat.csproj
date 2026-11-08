@@ -1,0 +1,11 @@
+<!-- T01 shell only. shortcut: net10.0 not net10.0-windows so Linux CI can restore it; switch when the seat ticket adds Windows APIs. -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Hatch.Contracts/Hatch.Contracts.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,9 @@
+{
+  "requestId": "req-fixture-0001",
+  "error": {
+    "retryable": false,
+    "details": { "reason": "stale\"revision", "field": "expectedRevision" },
+    "messageKey": "error.idempotencyConflict",
+    "code": "IDEMPOTENCY_CONFLICT"
+  }
+}

@@ -1,1 +1,1 @@
-Evidence belum ada. Tidak ada screenshot/test result palsu.
+Evidence from the T01 worker run: full stdout logs (lint, typecheck, test, validate-spec, test-ticket, playwright), the Playwright trace, and the screenshot as SVG (validator bans .png). See requirements-evidence.json and ../results.md. Kotlin and .NET runs are BLOCKED, not passed.

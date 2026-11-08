@@ -1,0 +1,38 @@
+{
+  "HS-01": {
+    "testPath": "tests/contracts/protocol.test.ts, tests/contracts/generated.test.ts, tests/contracts/secrets.test.ts, packages/domain/test/domain.test.ts, services/api/test/app.test.ts, tools/ticket-dispatch.test.ts",
+    "command": "pnpm test:ticket -- 01",
+    "exitCode": 3,
+    "expected": "all mandatory tests PASS and the Kotlin and .NET canonical-equality checks run and PASS",
+    "actual": "45 named HS-01 tests PASS; kotlin-canonical-equality and dotnet-canonical-equality BLOCKED (gradle and dotnet not on PATH; toolchain env file E:/tools/hatch-env.sh did not exist). Dispatcher reports INCOMPLETE, exit 3, never PASS.",
+    "artifact": "specs/tickets/01-foundation/evidence/test-ticket.log",
+    "verificationLevel": "Automated (TypeScript side); Kotlin and .NET runtime equality BLOCKED"
+  },
+  "AC-HS-01": {
+    "testPath": "tests/contracts/protocol.test.ts",
+    "command": "pnpm test",
+    "exitCode": 0,
+    "expected": "TypeScript canonical JSON equals hand-computed goldens; generators are in sync with the schema",
+    "actual": "7 test files, 66 tests passed (lint and typecheck exit 0). Cross-language equality in Kotlin and .NET is not run.",
+    "artifact": "specs/tickets/01-foundation/evidence/test.log",
+    "verificationLevel": "Automated (TypeScript side only)"
+  },
+  "HS-V02-15": {
+    "testPath": "packages/ui/test/tokens.test.ts, tests/e2e/ticket-01.spec.ts",
+    "command": "pnpm test:ticket -- 01; pnpm exec playwright test tests/e2e/ticket-01.spec.ts",
+    "exitCode": 0,
+    "expected": "HS-CMP-023 and HS-CMP-058 tokens equal specs/design tokens, AA contrast, scaffold uses tokens only",
+    "actual": "7 named HS-V02-15 tests PASS; Playwright smoke of the scaffold web app passed (1 test, Edge, trace and screenshot kept).",
+    "artifact": "specs/tickets/01-foundation/evidence/playwright.log, playwright-trace.zip, scaffold-home.svg (PNG wrapped in SVG because tools/validate_spec.py bans .png)",
+    "verificationLevel": "Automated plus real browser smoke"
+  },
+  "AC-HS-V02-15": {
+    "testPath": "packages/ui/test/tokens.test.ts",
+    "command": "pnpm test",
+    "exitCode": 0,
+    "expected": "token CSS equals a fresh build and the published tailwind tokens; WCAG AA >= 4.5 for measured pairs",
+    "actual": "8 token tests PASS inside 66 passing tests. Brand.* colours are declared provisional.",
+    "artifact": "specs/tickets/01-foundation/evidence/test.log",
+    "verificationLevel": "Automated"
+  }
+}
