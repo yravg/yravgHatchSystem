@@ -20,6 +20,8 @@ Missing: .NET SDK (dotnet host present, no SDK), JDK 17+, Gradle, Android SDK, P
 - 2026-11-08: install missing dev tools under E:	ools (portable, no PATH/system changes).
 - 2026-11-08: accept the Android SDK licence (`sdkmanager --licenses`) when T51 starts, not before. Covers SDK packages T51 needs; no other terms.
 - 2026-11-09: allow agent SSH to hostinger-vps for building/testing (project-local allow rules in .claude/settings.local.json, not committed). Production containers stay untouched.
+- 2026-11-09: owner marked T46, T47, T48, T50, T49, T51, T53, T54 ready (backend chain). Money rules for T47/T48 (D01, D15, D26): DECISIONS.md sandbox defaults as labelled fixtures only; production money policy stays unapproved. UI tickets stay draft.
+- 2026-11-09: owner approved `claude update` on the VPS (2.1.283 to 2.1.319); owner logs in interactively.
 - Not approved: VPS deployment (staging later needs separate approval), any money/payment policy.
 
 ## Build host (from T01 Merger onward)
@@ -40,4 +42,4 @@ Missing: .NET SDK (dotnet host present, no SDK), JDK 17+, Gradle, Android SDK, P
 - Kotlin/C# not linted (ESLint ignores agents/).
 
 ## Next step
-T46 (identity/tenancy/staff 2FA API) is the next eligible ticket. It needs explicit owner readiness in board.md and its rd.md before dispatch.
+Dispatch T46 (ready). Then T47; then T48 and T50 in parallel; then T49 and T51; then T53; then T54. Each needs its dependencies done (Merger + independent Checker) first.

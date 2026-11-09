@@ -1,6 +1,6 @@
 # HS-T54 — Kontrak, simulator dan fault-check headless
 
-Status: **draft**
+Status: **ready**
 Mode: **solo**
 Phase: MVP
 

@@ -1,6 +1,6 @@
 # HS-T49 — Koordinator sesi dan console-to-seat transfer API
 
-Status: **draft**
+Status: **ready**
 Mode: **team**
 Phase: MVP
 

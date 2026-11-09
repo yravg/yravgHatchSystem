@@ -5,15 +5,15 @@
 | ID | Name | Status | Mode | Runs | Notes | Lane |
 | --- | --- | --- | --- | --- | --- | --- |
 | 01 | [Fondasi monorepo dan kontrak domain](01-foundation/rd.md) | done | solo | alongside independent approved work only | MVP; D25, D29 | foundation-backend-first |
-| 46 | [API identitas, tenancy dan staff 2FA](46-identity-api/rd.md) | draft | solo | waits on 01 (done artifacts) | MVP; D02, D16, D25 | backend-first |
-| 47 | [API stasiun, tarif rasional dan minimum payment](47-catalog-pricing-api/rd.md) | draft | solo | waits on 46 (done artifacts) | MVP; D01, D26 | backend-first |
-| 48 | [Ledger dan Midtrans QRIS server tanpa UI](48-ledger-payments-api/rd.md) | draft | team | waits on 46, 47 (done artifacts) | MVP; D06, D15, D17 | backend-first |
-| 50 | [Gateway edge dan pairing/lease core headless](50-edge-core/rd.md) | draft | team | waits on 46, 47 (done artifacts) | MVP; D04, D07, D09, D27, D28, D32 | backend-first |
-| 49 | [Koordinator sesi dan console-to-seat transfer API](49-session-api/rd.md) | draft | team | waits on 47, 48, 50 (done artifacts) | MVP; D01, D06, D07, D26 | backend-first |
-| 51 | [Kotlin TV provisioning, reboot dan offline core](51-android-tv-core/rd.md) | draft | team | waits on 50 (done artifacts) | MVP; D04, D09, D27, D28, D32 | backend-first |
+| 46 | [API identitas, tenancy dan staff 2FA](46-identity-api/rd.md) | ready | solo | waits on 01 (done artifacts) | MVP; D02, D16, D25 | backend-first |
+| 47 | [API stasiun, tarif rasional dan minimum payment](47-catalog-pricing-api/rd.md) | ready | solo | waits on 46 (done artifacts) | MVP; D01, D26 | backend-first |
+| 48 | [Ledger dan Midtrans QRIS server tanpa UI](48-ledger-payments-api/rd.md) | ready | team | waits on 46, 47 (done artifacts) | MVP; D06, D15, D17 | backend-first |
+| 50 | [Gateway edge dan pairing/lease core headless](50-edge-core/rd.md) | ready | team | waits on 46, 47 (done artifacts) | MVP; D04, D07, D09, D27, D28, D32 | backend-first |
+| 49 | [Koordinator sesi dan console-to-seat transfer API](49-session-api/rd.md) | ready | team | waits on 47, 48, 50 (done artifacts) | MVP; D01, D06, D07, D26 | backend-first |
+| 51 | [Kotlin TV provisioning, reboot dan offline core](51-android-tv-core/rd.md) | ready | team | waits on 50 (done artifacts) | MVP; D04, D09, D27, D28, D32 | backend-first |
 | 52 | [Booking, deposit, wallet dan pass eligibility API](52-booking-wallet-api/rd.md) | draft | team | waits on 47, 48, 49 (done artifacts) | V1; D03, D10, D26, D31 | backend-first |
-| 53 | [API stok, pesanan dan X/Z shift close](53-operations-api/rd.md) | draft | team | waits on 48, 49 (done artifacts) | MVP; D08, D17, D30 | backend-first |
-| 54 | [Kontrak, simulator dan fault-check headless](54-backend-contract-check/rd.md) | draft | solo | waits on 46, 47, 48, 49, 50, 51, 53 (done artifacts) | MVP; D04, D06, D07, D29 | backend-first |
+| 53 | [API stok, pesanan dan X/Z shift close](53-operations-api/rd.md) | ready | team | waits on 48, 49 (done artifacts) | MVP; D08, D17, D30 | backend-first |
+| 54 | [Kontrak, simulator dan fault-check headless](54-backend-contract-check/rd.md) | ready | solo | waits on 46, 47, 48, 49, 50, 51, 53 (done artifacts) | MVP; D04, D06, D07, D29 | backend-first |
 | 02 | [Identitas, tenant dan otorisasi per outlet](02-identity-tenancy/rd.md) | draft | solo | waits on 01, 46 (done artifacts) | MVP; D02, D16, D25 | ui-after-backend |
 | 03 | [Katalog stasiun, aset, zona dan denah](03-stations-catalog/rd.md) | draft | solo | waits on 02, 47 (done artifacts) | MVP; D04 | ui-after-backend |
 | 04 | [Tarif versi, paket dan kutipan biaya](04-rates-quotes/rd.md) | draft | solo | waits on 03, 47 (done artifacts) | MVP; D01, D03, D26 | ui-after-backend |

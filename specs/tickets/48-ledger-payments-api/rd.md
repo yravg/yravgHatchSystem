@@ -1,6 +1,6 @@
 # HS-T48 — Ledger dan Midtrans QRIS server tanpa UI
 
-Status: **draft**
+Status: **ready**
 Mode: **team**
 Phase: MVP
 

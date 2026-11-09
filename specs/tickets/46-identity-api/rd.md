@@ -1,6 +1,6 @@
 # HS-T46 — API identitas, tenancy dan staff 2FA
 
-Status: **draft**
+Status: **ready**
 Mode: **solo**
 Phase: MVP
 

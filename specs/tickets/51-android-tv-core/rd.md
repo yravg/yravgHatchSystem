@@ -1,6 +1,6 @@
 # HS-T51 — Kotlin TV provisioning, reboot dan offline core
 
-Status: **draft**
+Status: **ready**
 Mode: **team**
 Phase: MVP
 

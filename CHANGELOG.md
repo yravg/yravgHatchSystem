@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Owner marked the backend chain ready: T46, T47, T48, T50, T49, T51, T53, T54 (board.md and rd.md). T47/T48 money values are sandbox fixtures only.
 - Tailscale-only preview of the T01 web scaffold and API health probe on the build VPS (ports 3100/3101, not public); recorded in docs/handoff.
 - T01 marked done after Merger (e96d0fe) and independent Checker PASS; spec-v0.2 now contains the T01 foundation.
 - Imported HatchSystem specification v0.2 (363 files) into the repo root; README and MIT LICENSE unchanged.
