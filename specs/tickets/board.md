@@ -9,7 +9,7 @@
 | 47 | [API stasiun, tarif rasional dan minimum payment](47-catalog-pricing-api/rd.md) | done | solo | waits on 46 (done artifacts) | MVP; D01, D26 | backend-first |
 | 48 | [Ledger dan Midtrans QRIS server tanpa UI](48-ledger-payments-api/rd.md) | done | team | waits on 46, 47 (done artifacts) | MVP; D06, D15, D17 | backend-first |
 | 50 | [Gateway edge dan pairing/lease core headless](50-edge-core/rd.md) | done | team | waits on 46, 47 (done artifacts) | MVP; D04, D07, D09, D27, D28, D32 | backend-first |
-| 49 | [Koordinator sesi dan console-to-seat transfer API](49-session-api/rd.md) | ready | team | waits on 47, 48, 50 (done artifacts) | MVP; D01, D06, D07, D26 | backend-first |
+| 49 | [Koordinator sesi dan console-to-seat transfer API](49-session-api/rd.md) | done | team | waits on 47, 48, 50 (done artifacts) | MVP; D01, D06, D07, D26 | backend-first |
 | 51 | [Kotlin TV provisioning, reboot dan offline core](51-android-tv-core/rd.md) | ready | team | waits on 50 (done artifacts) | MVP; D04, D09, D27, D28, D32 | backend-first |
 | 52 | [Booking, deposit, wallet dan pass eligibility API](52-booking-wallet-api/rd.md) | draft | team | waits on 47, 48, 49 (done artifacts) | V1; D03, D10, D26, D31 | backend-first |
 | 53 | [API stok, pesanan dan X/Z shift close](53-operations-api/rd.md) | ready | team | waits on 48, 49 (done artifacts) | MVP; D08, D17, D30 | backend-first |
