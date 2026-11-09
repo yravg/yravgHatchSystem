@@ -26,6 +26,7 @@ Missing: .NET SDK (dotnet host present, no SDK), JDK 17+, Gradle, Android SDK, P
 - 2026-11-09: allow agent SSH to hostinger-vps for building/testing (project-local allow rules in .claude/settings.local.json, not committed). Production containers stay untouched.
 - 2026-11-09: owner marked T46, T47, T48, T50, T49, T51, T53, T54 ready (backend chain). Money rules for T47/T48 (D01, D15, D26): DECISIONS.md sandbox defaults as labelled fixtures only; production money policy stays unapproved. UI tickets stay draft.
 - 2026-11-09: owner approved `claude update` on the VPS (2.1.283 to 2.1.319); owner logs in interactively.
+- 2026-11-09: owner keeps both validator changes: 77deb83 (board+rd status agree instead of draft-only) and ci-fix 2871108 (scan git-tracked files in a checkout).
 - Not approved: VPS deployment (staging later needs separate approval), any money/payment policy.
 
 ## Build host (from T01 Merger onward)
@@ -39,7 +40,6 @@ Missing: .NET SDK (dotnet host present, no SDK), JDK 17+, Gradle, Android SDK, P
   - Stop: `pkill -f "next start -H 100.108.253.30"; pkill -f preview-api.mjs`. Update: `git -C /srv/hatch/wt/preview checkout --detach origin/spec-v0.2`, rebuild, restart.
 
 ## Known failures / follow-ups
-- Validator status-check change (77deb83) pending owner confirmation.
 - CI not yet run on GitHub Actions; Playwright `chrome` channel in CI untested (Checker used bundled chromium).
 - Node CI job runs test:ticket with --allow-blocked; Kotlin/.NET proven only by their own jobs.
 - Idempotency 409 tested at domain level only, in-memory store; concurrent same-key untested (relevant from T46).
