@@ -6,7 +6,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | 01 | [Fondasi monorepo dan kontrak domain](01-foundation/rd.md) | done | solo | alongside independent approved work only | MVP; D25, D29 | foundation-backend-first |
 | 46 | [API identitas, tenancy dan staff 2FA](46-identity-api/rd.md) | done | solo | waits on 01 (done artifacts) | MVP; D02, D16, D25 | backend-first |
-| 47 | [API stasiun, tarif rasional dan minimum payment](47-catalog-pricing-api/rd.md) | ready | solo | waits on 46 (done artifacts) | MVP; D01, D26 | backend-first |
+| 47 | [API stasiun, tarif rasional dan minimum payment](47-catalog-pricing-api/rd.md) | done | solo | waits on 46 (done artifacts) | MVP; D01, D26 | backend-first |
 | 48 | [Ledger dan Midtrans QRIS server tanpa UI](48-ledger-payments-api/rd.md) | ready | team | waits on 46, 47 (done artifacts) | MVP; D06, D15, D17 | backend-first |
 | 50 | [Gateway edge dan pairing/lease core headless](50-edge-core/rd.md) | ready | team | waits on 46, 47 (done artifacts) | MVP; D04, D07, D09, D27, D28, D32 | backend-first |
 | 49 | [Koordinator sesi dan console-to-seat transfer API](49-session-api/rd.md) | ready | team | waits on 47, 48, 50 (done artifacts) | MVP; D01, D06, D07, D26 | backend-first |

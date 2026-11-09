@@ -1,6 +1,6 @@
 # HS-T47 — API stasiun, tarif rasional dan minimum payment
 
-Status: **ready**
+Status: **done**
 Mode: **solo**
 Phase: MVP
 
