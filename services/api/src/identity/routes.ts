@@ -1,5 +1,5 @@
 import { DomainError, success } from "@yravg/domain";
-import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import type { FastifyInstance, FastifyRequest } from "fastify";
 import { ROLES, type Role } from "../tenancy/permissions.ts";
 import type { Tx } from "./db.ts";
 import { IdentityError } from "./errors.ts";
@@ -145,5 +145,3 @@ const header = (req: FastifyRequest, name: string): string | undefined => {
   const v = req.headers[name];
   return Array.isArray(v) ? v[0] : v;
 };
-
-export type { FastifyReply };
