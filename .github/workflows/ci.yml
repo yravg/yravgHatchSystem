@@ -10,6 +10,23 @@ permissions:
 jobs:
   node:
     runs-on: ubuntu-24.04
+    services:
+      postgres:
+        # PostgreSQL 18.6, pinned by digest, same as the dev DB. Ephemeral CI container, published on localhost only.
+        image: postgres@sha256:e3d24f6906d0760bf4da0dae872415391ededefad23fd471c47dc53b0ddf3c42
+        env:
+          # CI-ONLY throwaway password for this ephemeral container; not used anywhere else.
+          POSTGRES_PASSWORD: ci-only-throwaway
+        ports:
+          - 127.0.0.1:5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      # CI-ONLY connection string for the service container above.
+      HATCH_PG_URL: postgres://postgres:ci-only-throwaway@127.0.0.1:5432/postgres
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4 (version comes from package.json packageManager)
@@ -23,7 +40,12 @@ jobs:
       - run: pnpm test
       - run: pnpm validate:spec
       - run: node packages/contracts/scripts/generate.ts --check
-      - run: pnpm test:ticket -- 01 --allow-blocked # native equality runs in the jobs below
+      # 01 has Gradle/.NET externals that run in the kotlin and dotnet jobs, so BLOCKED is allowed here only.
+      - run: pnpm test:ticket -- 01 --allow-blocked
+      # 46, 47, 48 have no external checks: no --allow-blocked. T50 is not in spec-v0.2 (no manifest entry) so it has no gate yet.
+      - run: pnpm test:ticket -- 46
+      - run: pnpm test:ticket -- 47
+      - run: pnpm test:ticket -- 48
       - run: pnpm test:e2e
         env:
           PW_CHANNEL: chrome

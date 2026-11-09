@@ -88,10 +88,18 @@ for p in ROOT.rglob('*.md'):
  if p.name=='VALIDATION.md':continue
  text=p.read_text();dangling=set(re.findall(pattern,text))-rid;danglingac=set(re.findall(acpattern,text))-acids
  check('no dangling IDs '+str(p.relative_to(ROOT)),not dangling and not danglingac,sorted(dangling|danglingac))
+# In a git checkout scan only the files git tracks, so untracked build output such as node_modules (after pnpm install) is not
+# a packaged artifact; a tracked banned file still fails. With no .git (extracted package) every file on disk is scanned.
+def scan_files():
+ if (ROOT/'.git').exists():
+  import subprocess
+  out=subprocess.run(['git','ls-files','-z'],cwd=ROOT,capture_output=True,check=True).stdout.decode('utf8')
+  return [ROOT/x for x in out.split('\0') if x]
+ return list(ROOT.rglob('*'))
 # Never package upstream raw/implementation/media.
 banned_ext={'.apk','.exe','.dll','.so','.srt','.png','.jpg','.jpeg','.webp','.mp4','.woff','.woff2','.pem','.key'}
 # as_posix: Windows separators broke the shots allow-list; the repo's own top-level .git is not a packaged artifact.
-bad=[p.relative_to(ROOT).as_posix() for p in ROOT.rglob('*') if p.is_file() and p.relative_to(ROOT).parts[0]!='.git' and ((p.suffix.lower() in banned_ext and not (p.suffix.lower()=='.png' and p.relative_to(ROOT).as_posix().startswith('specs/design/wireframes/shots/'))) or any(c in ('raw','private','pages','node_modules','.git') for c in p.relative_to(ROOT).parts))]
+bad=[p.relative_to(ROOT).as_posix() for p in scan_files() if p.is_file() and p.relative_to(ROOT).parts[0]!='.git' and ((p.suffix.lower() in banned_ext and not (p.suffix.lower()=='.png' and p.relative_to(ROOT).as_posix().startswith('specs/design/wireframes/shots/'))) or any(c in ('raw','private','pages','node_modules','.git') for c in p.relative_to(ROOT).parts))]
 check('no prohibited vendor/raw/binary artifacts',not bad,bad)
 check('prompt preserves human readiness','only human-ready' in read('BUILD-PROMPT.md') and 'All54tickets supplied draft' in read('BUILD-PROMPT.md'))
 check('separate Midtrans signature secret','Signature Secret Key' in read('CONTRACTS.md') and 'no silent key fallback' in read('BUILD-PROMPT.md'))

@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- CI repair: node job gets a digest-pinned Postgres 18.6 service on localhost (CI-only throwaway password, `HATCH_PG_URL`), runs ticket gates 01/46/47/48; `tools/validate_spec.py` scans git-tracked files in a checkout (untracked node_modules ignored, tracked banned files still fail) with a self-check in `tests/spec-validator`.
 - T48 ledger and Midtrans QRIS sandbox settlement merged (2680a2e) and marked done after Merger and independent Checker PASS. Mock provider only; no live keys.
 - T48 ledger and Midtrans QRIS sandbox API (`services/api/src/ledger`, `payments`, `services/worker/src/payments`, `packages/domain/src/money`): append-only balanced IDR journal with DB-enforced balance, unique source event, immutable reversals and non-negative balances; QRIS intents settle only after a signature check (separate Signature Secret, no ServerKey fallback), an authenticated GET status and merchant/order/amount/currency match, once, via a transactional outbox worker; late settlement goes to a pending refund, never a session. Local mock provider only, no real keys; migration 0003 up/down tested on `hatch_t48`. Money values are sandbox fixtures; D06/D15/D17 are not approved.
 - T47 stations, rational pricing and minimum payment API merged (def55d2) and marked done after Merger and independent Checker PASS. Money values are sandbox fixtures.
