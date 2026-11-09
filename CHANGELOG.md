@@ -1,7 +1,7 @@
 # Changelog
 
 ## Unreleased
-- T51 fix round 1: ticket dispatcher verifies named external tests from JUnit/TRX reports (T01/T50/T51 manifests), checkpoint-cap test, CI runs :core/:app on a pinned Android SDK.
+- T51 fix round 1 (+ Gradle plugins resolved from Maven Central only, no plugin portal): ticket dispatcher verifies named external tests from JUnit/TRX reports (T01/T50/T51 manifests), checkpoint-cap test, CI runs :core/:app on a pinned Android SDK.
 - T51 Android TV core (`agents/android-tv`: pure Kotlin `:core`, Android `:app` harness id.yravg.hatch, `tests/faults/android-tv`, `tests/hardware/android-tv`): provisioning profiles, Ed25519 lease verification (T50 vector), monotonic time trust with reboot fail-closed, lock decision with permission-loss fallback, audited technician escape, optional CEC. JVM/simulator evidence only; every physical check is BLOCKED (no hardware), no model certified.
 - T49 session coordinator and console-to-seat transfer API merged (ce2b6f1) and marked done after Merger and independent Checker PASS.
 - Live API preview (dev tooling, no UI): `services/api/src/server.ts` (refuses 0.0.0.0, payments off without Midtrans sandbox settings), idempotent fixture `scripts/seed-preview.ts`, curl walkthrough in `docs/operator/api-preview.md`.
