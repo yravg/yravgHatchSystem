@@ -5,7 +5,7 @@ import { assertBalanced, balanceDelta, DomainError, type JournalLine } from "@yr
 import { sql } from "drizzle-orm";
 import type { Tx } from "../identity/db.ts";
 
-export type LedgerKind = "manual" | "reversal" | "payment_settlement" | "payment_late_settlement";
+export type LedgerKind = "manual" | "reversal" | "payment_settlement" | "payment_late_settlement" | "order_sale" | "order_refund" | "order_refund_paid";
 
 export interface PostInput {
   tenantId: string;

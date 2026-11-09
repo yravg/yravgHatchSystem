@@ -1,0 +1,132 @@
+{
+  "ticket": "HS-T53",
+  "statusNote": "ticket status not changed by the worker",
+  "requirements": {
+    "HS-53": [
+      {
+        "requirement": "HS-53",
+        "acceptance": "AC-HS-53",
+        "testPath": "tests/inventory/stock.test.ts",
+        "command": "pnpm test:ticket -- 53",
+        "exitCode": 0,
+        "expected": "two 100 ml drinks consume 200 ml once; retry/duplicate event consumes once; moves append-only; cancel reverses once; no negative stock; moving-average cost fixture D17; cost hidden from cashier views",
+        "actual": "passes (11 tests)",
+        "artifact": "specs/tickets/53-operations-api/evidence/logs/ticket-53.log",
+        "verificationLevel": "fixture/simulator: Postgres hatch_t53 + local Midtrans mock, no hardware, no live provider"
+      },
+      {
+        "requirement": "HS-53",
+        "acceptance": "AC-HS-53",
+        "testPath": "tests/orders/domain.test.ts",
+        "command": "pnpm test:ticket -- 53",
+        "exitCode": 0,
+        "expected": "pure consumption, moving average, business day 04:00 Asia/Jakarta, drawer maths",
+        "actual": "passes (5 tests)",
+        "artifact": "specs/tickets/53-operations-api/evidence/logs/ticket-53.log",
+        "verificationLevel": "fixture/simulator: Postgres hatch_t53 + local Midtrans mock, no hardware, no live provider"
+      },
+      {
+        "requirement": "HS-53",
+        "acceptance": "AC-HS-53",
+        "testPath": "tests/orders/orders.test.ts",
+        "command": "pnpm test:ticket -- 53",
+        "exitCode": 0,
+        "expected": "orders attach to session or stand alone; cash/QRIS payment via T48 ledger; QRIS pending grants nothing until verified match; refund pending until proof; offline refused",
+        "actual": "passes (11 tests)",
+        "artifact": "specs/tickets/53-operations-api/evidence/logs/ticket-53.log",
+        "verificationLevel": "fixture/simulator: Postgres hatch_t53 + local Midtrans mock, no hardware, no live provider"
+      },
+      {
+        "requirement": "HS-53",
+        "acceptance": "AC-HS-53",
+        "testPath": "tests/shifts/shifts.test.ts",
+        "command": "pnpm test:ticket -- 53",
+        "exitCode": 0,
+        "expected": "X x3 mutates nothing; Z atomic scoped snapshot; duplicate Z same closeId; policy missing refuses; open-shift block; sessions carried forward; QRIS pending separate; cash ignores QRIS; refund/transfer/late-QRIS conflicts audited",
+        "actual": "passes (13 tests)",
+        "artifact": "specs/tickets/53-operations-api/evidence/logs/ticket-53.log",
+        "verificationLevel": "fixture/simulator: Postgres hatch_t53 + local Midtrans mock, no hardware, no live provider"
+      },
+      {
+        "requirement": "HS-53",
+        "acceptance": "AC-HS-53",
+        "testPath": "tests/orders/migrate.test.ts",
+        "command": "pnpm test:ticket -- 53",
+        "exitCode": 0,
+        "expected": "migration 0006 up/down/up",
+        "actual": "passes (2 tests); also hatch_t53 up/down/up exit 0 (evidence/logs/migration.log)",
+        "artifact": "specs/tickets/53-operations-api/evidence/logs/ticket-53.log",
+        "verificationLevel": "fixture/simulator: Postgres hatch_t53 + local Midtrans mock, no hardware, no live provider"
+      }
+    ],
+    "HS-V02-06": [
+      {
+        "requirement": "HS-V02-06",
+        "acceptance": "AC-HS-V02-06",
+        "testPath": "tests/inventory/stock.test.ts",
+        "command": "pnpm test:ticket -- 53",
+        "exitCode": 0,
+        "expected": "two 100 ml drinks consume 200 ml once; retry/duplicate event consumes once; moves append-only; cancel reverses once; no negative stock; moving-average cost fixture D17; cost hidden from cashier views",
+        "actual": "passes (11 tests)",
+        "artifact": "specs/tickets/53-operations-api/evidence/logs/ticket-53.log",
+        "verificationLevel": "fixture/simulator: Postgres hatch_t53 + local Midtrans mock, no hardware, no live provider"
+      },
+      {
+        "requirement": "HS-V02-06",
+        "acceptance": "AC-HS-V02-06",
+        "testPath": "tests/orders/domain.test.ts",
+        "command": "pnpm test:ticket -- 53",
+        "exitCode": 0,
+        "expected": "pure consumption, moving average, business day 04:00 Asia/Jakarta, drawer maths",
+        "actual": "passes (5 tests)",
+        "artifact": "specs/tickets/53-operations-api/evidence/logs/ticket-53.log",
+        "verificationLevel": "fixture/simulator: Postgres hatch_t53 + local Midtrans mock, no hardware, no live provider"
+      },
+      {
+        "requirement": "HS-V02-06",
+        "acceptance": "AC-HS-V02-06",
+        "testPath": "tests/orders/orders.test.ts",
+        "command": "pnpm test:ticket -- 53",
+        "exitCode": 0,
+        "expected": "orders attach to session or stand alone; cash/QRIS payment via T48 ledger; QRIS pending grants nothing until verified match; refund pending until proof; offline refused",
+        "actual": "passes (11 tests)",
+        "artifact": "specs/tickets/53-operations-api/evidence/logs/ticket-53.log",
+        "verificationLevel": "fixture/simulator: Postgres hatch_t53 + local Midtrans mock, no hardware, no live provider"
+      },
+      {
+        "requirement": "HS-V02-06",
+        "acceptance": "AC-HS-V02-06",
+        "testPath": "tests/shifts/shifts.test.ts",
+        "command": "pnpm test:ticket -- 53",
+        "exitCode": 0,
+        "expected": "X x3 mutates nothing; Z atomic scoped snapshot; duplicate Z same closeId; policy missing refuses; open-shift block; sessions carried forward; QRIS pending separate; cash ignores QRIS; refund/transfer/late-QRIS conflicts audited",
+        "actual": "passes (13 tests)",
+        "artifact": "specs/tickets/53-operations-api/evidence/logs/ticket-53.log",
+        "verificationLevel": "fixture/simulator: Postgres hatch_t53 + local Midtrans mock, no hardware, no live provider"
+      },
+      {
+        "requirement": "HS-V02-06",
+        "acceptance": "AC-HS-V02-06",
+        "testPath": "tests/orders/migrate.test.ts",
+        "command": "pnpm test:ticket -- 53",
+        "exitCode": 0,
+        "expected": "migration 0006 up/down/up",
+        "actual": "passes (2 tests); also hatch_t53 up/down/up exit 0 (evidence/logs/migration.log)",
+        "artifact": "specs/tickets/53-operations-api/evidence/logs/ticket-53.log",
+        "verificationLevel": "fixture/simulator: Postgres hatch_t53 + local Midtrans mock, no hardware, no live provider"
+      }
+    ]
+  },
+  "gates": [
+    "lint exit 0 :: pnpm lint",
+    "typecheck exit 0 :: pnpm typecheck",
+    "test exit 0 :: pnpm test",
+    "ticket-53 exit 0 :: pnpm test:ticket -- 53",
+    "ticket-49 exit 0 :: pnpm test:ticket -- 49",
+    "ticket-50 exit 0 :: pnpm test:ticket -- 50",
+    "ticket-48 exit 0 :: pnpm test:ticket -- 48",
+    "ticket-47 exit 0 :: pnpm test:ticket -- 47",
+    "ticket-46 exit 0 :: pnpm test:ticket -- 46",
+    "validator exit 0 :: python3 -I tools/validate_spec.py on clean git archive export"
+  ]
+}

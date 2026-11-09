@@ -1,0 +1,30 @@
+Scope: all 7 workspace projects
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +239
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 239, reused 0, downloaded 0, added 0
+Progress: resolved 239, reused 239, downloaded 0, added 0
+Progress: resolved 239, reused 239, downloaded 0, added 239, done
+
+devDependencies:
++ @eslint/js 9.39.5
++ @playwright/test 1.65.0
++ @types/node 24.19.2
++ @yravg/contracts 0.0.0 <- packages/contracts
++ @yravg/domain 0.0.0 <- packages/domain
++ ajv 8.20.0
++ eslint 9.39.5
++ typescript 5.9.3
++ typescript-eslint 8.72.1
++ vitest 3.2.7
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│   Ignored build scripts: esbuild@0.28.2.                                     │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Done in 4.3s using pnpm v10.33.0
+exit 0

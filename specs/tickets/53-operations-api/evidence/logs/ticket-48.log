@@ -1,0 +1,87 @@
+
+> yravg-hatchsystem@ test:ticket /home/dev/orca/workspaces/yravgHatchSystem/t53-operations
+> node tools/ticket-dispatch.ts -- 48
+
+JSON report written to /tmp/ticket-dispatch-hCNGWX/report.json
+
+ticket 48: Ledger dan Midtrans QRIS sandbox tanpa UI
+PASS     HS-48 / AC-HS-48  tests/ledger/journal.test.ts :: journal rules an unbalanced journal is refused
+PASS     HS-48 / AC-HS-48  tests/ledger/journal.test.ts :: journal rules a line must carry exactly one positive side and never a negative amount
+PASS     HS-48 / AC-HS-48  tests/ledger/journal.test.ts :: journal rules reverseLines swaps the sides and the result is still balanced
+PASS     HS-48 / AC-HS-48  tests/ledger/journal.test.ts :: journal rules allocation never exceeds what is still due
+PASS     HS-48 / AC-HS-48  tests/ledger/journal.test.ts :: journal rules stays exact above 2^53
+PASS     HS-48 / AC-HS-48  tests/ledger/migrate.test.ts :: T48 migration 0003 applies up, rolls back down to nothing, and applies up again
+PASS     HS-48 / AC-HS-48  tests/ledger/migrate.test.ts :: T48 migration 0003 the database refuses an unbalanced transaction at commit
+PASS     HS-48 / AC-HS-48  tests/ledger/migrate.test.ts :: T48 migration 0003 the database refuses to update or delete a ledger entry or transaction
+PASS     HS-48 / AC-HS-48  tests/ledger/migrate.test.ts :: T48 migration 0003 source event is unique per tenant but may repeat across tenants
+PASS     HS-48 / AC-HS-48  tests/ledger/migrate.test.ts :: T48 migration 0003 a payment intent cannot go back to pending and its amount is frozen
+PASS     HS-48 / AC-HS-48  tests/ledger/ledger.test.ts :: ledger API owner posts a balanced transaction and the balances move
+PASS     HS-48 / AC-HS-48  tests/ledger/ledger.test.ts :: ledger API an unbalanced, float-money or unknown-account request is a 400 and nothing is stored
+PASS     HS-48 / AC-HS-48  tests/ledger/ledger.test.ts :: ledger API a duplicate source event is a 409 and does not post twice
+PASS     HS-48 / AC-HS-48  tests/ledger/ledger.test.ts :: ledger API the same Idempotency-Key replays the first answer instead of posting twice
+PASS     HS-48 / AC-HS-48  tests/ledger/ledger.test.ts :: ledger API concurrent posts with the same source event create exactly one transaction
+PASS     HS-48 / AC-HS-48  tests/ledger/ledger.test.ts :: ledger API a correction is an immutable reversal; a second reversal and a reversal of a reversal are refused
+PASS     HS-48 / AC-HS-48  tests/ledger/ledger.test.ts :: ledger API a movement that would make a balance negative is refused and changes nothing
+PASS     HS-48 / AC-HS-48  tests/ledger/ledger.test.ts :: ledger API reversing a sale whose cash was already paid out would go negative: refused, nothing changes
+PASS     HS-48 / AC-HS-48  tests/ledger/ledger.test.ts :: ledger API the ledger is tenant scoped: another tenant sees its own books and gets 404 for foreign ids
+PASS     HS-48 / AC-HS-48  tests/ledger/ledger.test.ts :: ledger API tenant and outlet come from the session; a body that names them is rejected
+PASS     HS-48 / AC-HS-48  tests/ledger/ledger.test.ts :: ledger API a cashier cannot post, reverse or read the ledger, and an anonymous caller gets 401
+PASS     HS-48 / AC-HS-48  tests/payments/config.test.ts :: payments config loads the four settings and keeps the two keys separate
+PASS     HS-48 / AC-HS-48  tests/payments/config.test.ts :: payments config startup fails closed when the signature secret is missing, even with a server key present
+PASS     HS-48 / AC-HS-48  tests/payments/config.test.ts :: payments config the app refuses to start payments without a signature secret
+PASS     HS-48 / AC-HS-48  tests/payments/config.test.ts :: payments config equal legacy values are accepted but stay two separate settings
+PASS     HS-48 / AC-HS-48  tests/payments/config.test.ts :: payments config refuses a base URL that is neither loopback nor the Midtrans sandbox host (no live endpoint)
+PASS     HS-48 / AC-HS-48  tests/payments/config.test.ts :: payments config the signature is SHA512(order_id + status_code + gross_amount + secret) over the exact provider strings
+PASS     HS-48 / AC-HS-48  tests/payments/payments.test.ts :: verified settlement grants value only after valid signature + authenticated GET status, posts a balanced journal and allocates to the quote
+PASS     HS-48 / AC-HS-48  tests/payments/payments.test.ts :: verified settlement a wrong signature is refused with nothing stored or granted
+PASS     HS-48 / AC-HS-48  tests/payments/payments.test.ts :: verified settlement a notification signed with the ServerKey is refused when it differs from the signature secret (no key fallback)
+PASS     HS-48 / AC-HS-48  tests/payments/payments.test.ts :: verified settlement rotation: the previous signature secret is accepted, an unknown one is not
+PASS     HS-48 / AC-HS-48  tests/payments/payments.test.ts :: verified settlement duplicate notifications credit exactly once
+PASS     HS-48 / AC-HS-48  tests/payments/payments.test.ts :: verified settlement out of order: a stale pending notification after settlement never reverses paid
+PASS     HS-48 / AC-HS-48  tests/payments/payments.test.ts :: verified settlement the tenant comes from the stored intent, never from callback fields
+PASS     HS-48 / AC-HS-48  tests/payments/payments.test.ts :: provider failure provider down keeps the intent pending, retries with backoff, then settles once
+PASS     HS-48 / AC-HS-48  tests/payments/payments.test.ts :: provider failure an unauthorised charge (wrong ServerKey) is not a payment
+PASS     HS-48 / AC-HS-48  tests/payments/payments.test.ts :: worker faults a crash after the effect rolls everything back; the rerun credits exactly once
+PASS     HS-48 / AC-HS-48  tests/payments/payments.test.ts :: worker faults two workers racing on one settlement credit exactly once
+PASS     HS-48 / AC-HS-48  tests/payments/payments.test.ts :: worker faults a clock rollback neither double credits nor loses the job
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: QRIS intent creates a dynamic QRIS intent for a quote through the provider charge, pending, never paid
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: QRIS intent a second live intent for the same quote is refused, concurrent or not (split brain)
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: QRIS intent is refused unless the station is reserved by this cashier, and cross-tenant ids are 404
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: QRIS intent reading an intent is tenant scoped, permission scoped and needs a live session
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: verified settlement grants value only after valid signature + authenticated GET status, posts a balanced journal and allocates to the quote
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: verified settlement a wrong signature is refused with nothing stored or granted
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: verified settlement a notification signed with the ServerKey is refused when it differs from the signature secret (no key fallback)
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: verified settlement rotation: the previous signature secret is accepted, an unknown one is not
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: verified settlement a tampered amount breaks the signature, and a replayed signature on a different order is refused
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: verified settlement wrong amount, merchant, order or currency in the provider GET status grants nothing
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: verified settlement a callback that claims settlement is not enough when the authenticated GET says pending
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: verified settlement a notification whose own fields disagree with the intent is stored and never queued
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: verified settlement duplicate notifications credit exactly once
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: verified settlement out of order: a stale pending notification after settlement never reverses paid
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: verified settlement the tenant comes from the stored intent, never from callback fields
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: verified settlement a notification for an unknown order is stored, grants nothing and answers 200
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: verified settlement no screenshot or client redirect is payment proof
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: provider failure provider down keeps the intent pending, retries with backoff, then settles once
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: provider failure a provider timeout is pending, never success
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: provider failure creating an intent while the provider is down fails typed and leaves no intent behind
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: provider failure an unauthorised charge (wrong ServerKey) is not a payment
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: late settlement and refunds a settlement after the intent was abandoned goes to refund_pending, not to a session
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: late settlement and refunds a settlement after the station was released and reserved by someone else goes to refund_pending
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: late settlement and refunds a provider expiry marks the intent expired; a later settlement is refund_pending
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: late settlement and refunds a refund stays pending: the database refuses 'refunded' without provider proof, and no API claims money returned
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: worker faults a crash after the effect rolls everything back; the rerun credits exactly once
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: worker faults two workers racing on one settlement credit exactly once
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: worker faults a clock rollback neither double credits nor loses the job
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: worker faults polling alone settles an intent when no notification ever arrives
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: worker faults the production loop drains on an interval and stops on abort
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: worker faults a job that keeps failing is dead-lettered with the intent still pending
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/payments.test.ts :: worker faults the SHA-512 formula in the mock equals an independent computation
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/config.test.ts :: payments config loads the four settings and keeps the two keys separate
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/config.test.ts :: payments config startup fails closed when the signature secret is missing, even with a server key present
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/config.test.ts :: payments config the app refuses to start payments without a signature secret
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/config.test.ts :: payments config equal legacy values are accepted but stay two separate settings
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/config.test.ts :: payments config refuses a base URL that is neither loopback nor the Midtrans sandbox host (no live endpoint)
+PASS     HS-V02-17 / AC-HS-V02-17  tests/payments/config.test.ts :: payments config the signature is SHA512(order_id + status_code + gross_amount + secret) over the exact provider strings
+
+OK ticket 48
+exit 0

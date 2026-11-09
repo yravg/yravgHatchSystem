@@ -1,0 +1,502 @@
+
+ RUN  v3.2.7 /home/dev/orca/workspaces/yravgHatchSystem/t53-operations
+
+ ❯ tests/shifts/shifts.test.ts (13 tests | 13 failed) 1172ms
+   × T53 shifts > Z refuses with a clear typed error when no policy version exists, and closes nothing 10ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"91927566-9215-46ea-bc68-3bf682a27b30"}
+   × T53 shifts > the open-shift policy is versioned, tenant scoped, owner only, and labelled as the D30 fixture default 5ms
+     → expected 404 to be 403 // Object.is equality
+   × T53 shifts > business day follows D08: a shift opened at 03:59 local belongs to the previous day, 04:00 starts the next 2ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"b73057a3-842b-43e1-a8bb-74e978073c6c"}
+   × T53 shifts > X report repeated three times changes no shift, ledger entry, audit row, idempotency key or close 1ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"715704dc-1969-4000-b85b-fe19e5026d36"}
+   × T53 shifts > X report: the cash drawer ignores QRIS and QRIS settled and pending are reported separately 5ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"fddb2a84-997d-4b67-b2b3-49da107b1b2c"}
+   × T53 shifts > Z snapshots the register and business-day scope, closes the shift, and carries active sessions forward 6ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"c42e931c-01eb-4c0a-9e11-f00e5848a9d3"}
+   × T53 shifts > a duplicate Z returns the same closeId and changes nothing (same key and a different key) 10ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"a11ae1f0-7ac0-477a-9110-1c923829d833"}
+   × T53 shifts > Z is blocked while another shift of the register is open and passes after that shift is closed 4ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"3b4f741a-ecaa-43e5-ab8e-69d558ec3f1a"}
+   × T53 shifts > Z is atomic: a failure while writing the close leaves the shift open and writes nothing 3ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"5d40a3a7-ba97-453f-aab6-b2cc07ac3b98"}
+   × T53 shifts > a refund of a payment from a closed day is audited as a conflict, never dropped, and the snapshot is unchanged 3ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"a10936dc-6f2e-467a-80b0-f65ac7236483"}
+   × T53 shifts > a transfer in flight at close time is recorded in the snapshot and audited, not dropped 1ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"5d638812-2006-4b10-be35-02e01f6b3934"}
+   × T53 shifts > a QRIS payment settled after the close is audited and never moves the closed totals 12ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"a376de25-6bdd-40e5-b44b-dcbbc3c4bc02"}
+   × T53 shifts > a day that is closed cannot get a new shift on the same register, and the cashier cannot close someone else's shift 1ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"666f7ef8-f735-426f-9e7f-b7a771314bec"}
+ ❯ tests/orders/orders.test.ts (11 tests | 11 failed) 2859ms
+   × T53 orders > an order attaches to a session of its outlet and also stands alone 22ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"fccc60dd-e796-4d67-93aa-e874d406579a"}
+   × T53 orders > a session of another outlet or tenant is NOT_FOUND and no stock is consumed 4ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"7e197bd0-5610-40c5-99a0-e91a1b053717"}
+   × T53 orders > a cash payment posts cash and revenue once, tracks change, and a second payment is refused 7ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"46e3f1dc-ba32-4060-a535-a4bb0dae5107"}
+   × T53 orders > a tender below the total is refused and a payment needs the actor's own open shift 2ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"6cf29c33-e155-448f-9490-3b6b1ab9d42e"}
+   × T53 orders > QRIS stays pending with the provider QR and grants nothing until a verified status 1ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"e52d5ab3-b7a6-4bfd-8abd-d09902513ac6"}
+   × T53 orders > a settlement with the wrong amount or merchant never grants value 1ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"e4852ed5-1f03-4a7a-885d-d6195594a301"}
+   × T53 orders > a provider outage during the QRIS charge creates no payment and is retryable 2ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"65468715-57a1-4d28-ac07-8234bbd25581"}
+   × T53 orders > QRIS is refused when payments are not configured 1332ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"bc1ee4c8-dd37-454b-89b0-64925143be32"}
+   × T53 orders > a cash order captured offline is refused (CONTRACTS section 5: offline sale default refused) 3ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"f5e7803e-692b-451a-97c8-f4dc5c2e33b4"}
+   × T53 orders > a refund stays pending until proof, posts through refund_payable, and proof pays out once 6ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"3d07a2fd-9469-487e-b5fc-fc10c0518bf8"}
+   × T53 orders > a paid order cannot be cancelled and an order of another outlet is NOT_FOUND 2ms
+     → expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"0eea027c-43ae-462f-b65a-9c3ec6fde27d"}
+ ❯ tests/orders/domain.test.ts (5 tests | 5 failed) 42ms
+   × T53 pure core > consumption scales recipe quantities by order quantity exactly 23ms
+     → (0 , consumptionFor) is not a function
+   × T53 pure core > moving average issues cost proportionally and keeps the remainder in stock value 1ms
+     → (0 , issueCost) is not a function
+   × T53 pure core > issuing more than on hand is refused and receipts add value 9ms
+     → (0 , receiveValue) is not a function
+   × T53 pure core > business day cuts at 04:00 Asia/Jakarta and survives UTC storage 1ms
+     → (0 , businessDay) is not a function
+   × T53 pure core > cash drawer expectation ignores QRIS entirely 0ms
+     → (0 , drawerExpected) is not a function
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/inventory/stock.test.ts [ tests/inventory/stock.test.ts ]
+Error: Cannot find module '../../services/api/src/inventory/service.ts' imported from '/home/dev/orca/workspaces/yravgHatchSystem/t53-operations/tests/inventory/stock.test.ts'
+ ❯ tests/inventory/stock.test.ts:4:1
+      2| import { afterAll, beforeAll, describe, expect, it } from "vitest";
+      3| import { randomUUID } from "node:crypto";
+      4| import { consumeForOrder } from "../../services/api/src/inventory/serv…
+       | ^
+      5| import { opsHarness, type OH, call, P, as } from "../orders/support.ts…
+      6| 
+
+Caused by: Error: Failed to load url ../../services/api/src/inventory/service.ts (resolved id: ../../services/api/src/inventory/service.ts) in /home/dev/orca/workspaces/yravgHatchSystem/t53-operations/tests/inventory/stock.test.ts. Does the file exist?
+ ❯ loadAndTransform node_modules/.pnpm/vite@7.3.7_@types+node@24.19.2/node_modules/vite/dist/node/chunks/config.js:22907:33
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/30]⎯
+
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 29 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/orders/domain.test.ts > T53 pure core > consumption scales recipe quantities by order quantity exactly
+TypeError: (0 , consumptionFor) is not a function
+ ❯ tests/orders/domain.test.ts:8:19
+      6| describe("T53 pure core", () => {
+      7|   it("consumption scales recipe quantities by order quantity exactly",…
+      8|     const lines = consumptionFor([{ stockItemId: "milk", qtyBase: 100n…
+       |                   ^
+      9|     expect(lines).toEqual([{ stockItemId: "milk", qtyBase: 200n }, { s…
+     10|     expect(() => consumptionFor([{ stockItemId: "milk", qtyBase: 100n …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/30]⎯
+
+ FAIL  tests/orders/domain.test.ts > T53 pure core > moving average issues cost proportionally and keeps the remainder in stock value
+TypeError: (0 , issueCost) is not a function
+ ❯ tests/orders/domain.test.ts:15:12
+     13|   it("moving average issues cost proportionally and keeps the remainde…
+     14|     // 1000 ml worth Rp5.000 -> 100 ml costs Rp500; 3 ml of 7 ml worth…
+     15|     expect(issueCost({ onHand: 1000n, valueIdr: 5000n }, 100n)).toEqua…
+       |            ^
+     16|     expect(issueCost({ onHand: 7n, valueIdr: 10n }, 3n)).toEqual({ cos…
+     17|     expect(issueCost({ onHand: 7n, valueIdr: 10n }, 7n)).toEqual({ cos…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/30]⎯
+
+ FAIL  tests/orders/domain.test.ts > T53 pure core > issuing more than on hand is refused and receipts add value
+TypeError: (0 , receiveValue) is not a function
+ ❯ tests/orders/domain.test.ts:22:12
+     20|   it("issuing more than on hand is refused and receipts add value", ()…
+     21|     expect(() => issueCost({ onHand: 50n, valueIdr: 100n }, 51n)).toTh…
+     22|     expect(receiveValue({ onHand: 1000n, valueIdr: 5000n }, 1000n, 300…
+       |            ^
+     23|   });
+     24| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/30]⎯
+
+ FAIL  tests/orders/domain.test.ts > T53 pure core > business day cuts at 04:00 Asia/Jakarta and survives UTC storage
+TypeError: (0 , businessDay) is not a function
+ ❯ tests/orders/domain.test.ts:26:12
+     24| 
+     25|   it("business day cuts at 04:00 Asia/Jakarta and survives UTC storage…
+     26|     expect(businessDay(new Date("2026-11-09T03:00:00Z"), "Asia/Jakarta…
+       |            ^
+     27|     expect(businessDay(new Date("2026-11-09T20:59:59Z"), "Asia/Jakarta…
+     28|     expect(businessDay(new Date("2026-11-09T21:00:00Z"), "Asia/Jakarta…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/30]⎯
+
+ FAIL  tests/orders/domain.test.ts > T53 pure core > cash drawer expectation ignores QRIS entirely
+TypeError: (0 , drawerExpected) is not a function
+ ❯ tests/orders/domain.test.ts:34:12
+     32| 
+     33|   it("cash drawer expectation ignores QRIS entirely", () => {
+     34|     expect(drawerExpected({ openingFloatIdr: 100000n, cashSalesIdr: 40…
+       |            ^
+     35|   });
+     36| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/30]⎯
+
+ FAIL  tests/orders/orders.test.ts > T53 orders > an order attaches to a session of its outlet and also stands alone
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"fccc60dd-e796-4d67-93aa-e874d406579a"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ stockItem tests/orders/support.ts:76:15
+ ❯ Object.latte tests/orders/support.ts:84:18
+ ❯ tests/orders/orders.test.ts:21:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/30]⎯
+
+ FAIL  tests/orders/orders.test.ts > T53 orders > a session of another outlet or tenant is NOT_FOUND and no stock is consumed
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"7e197bd0-5610-40c5-99a0-e91a1b053717"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ stockItem tests/orders/support.ts:76:15
+ ❯ Object.latte tests/orders/support.ts:84:18
+ ❯ tests/orders/orders.test.ts:35:28
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/30]⎯
+
+ FAIL  tests/orders/orders.test.ts > T53 orders > a cash payment posts cash and revenue once, tracks change, and a second payment is refused
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"46e3f1dc-ba32-4060-a535-a4bb0dae5107"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ stockItem tests/orders/support.ts:76:15
+ ❯ Object.latte tests/orders/support.ts:84:18
+ ❯ placed tests/orders/orders.test.ts:13:15
+ ❯ tests/orders/orders.test.ts:44:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/30]⎯
+
+ FAIL  tests/orders/orders.test.ts > T53 orders > a tender below the total is refused and a payment needs the actor's own open shift
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"6cf29c33-e155-448f-9490-3b6b1ab9d42e"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ stockItem tests/orders/support.ts:76:15
+ ❯ Object.latte tests/orders/support.ts:84:18
+ ❯ placed tests/orders/orders.test.ts:13:15
+ ❯ tests/orders/orders.test.ts:61:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/30]⎯
+
+ FAIL  tests/orders/orders.test.ts > T53 orders > QRIS stays pending with the provider QR and grants nothing until a verified status
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"e52d5ab3-b7a6-4bfd-8abd-d09902513ac6"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ stockItem tests/orders/support.ts:76:15
+ ❯ Object.latte tests/orders/support.ts:84:18
+ ❯ placed tests/orders/orders.test.ts:13:15
+ ❯ tests/orders/orders.test.ts:74:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/30]⎯
+
+ FAIL  tests/orders/orders.test.ts > T53 orders > a settlement with the wrong amount or merchant never grants value
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"e4852ed5-1f03-4a7a-885d-d6195594a301"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ stockItem tests/orders/support.ts:76:15
+ ❯ Object.latte tests/orders/support.ts:84:18
+ ❯ placed tests/orders/orders.test.ts:13:15
+ ❯ tests/orders/orders.test.ts:93:28
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/30]⎯
+
+ FAIL  tests/orders/orders.test.ts > T53 orders > a provider outage during the QRIS charge creates no payment and is retryable
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"65468715-57a1-4d28-ac07-8234bbd25581"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ stockItem tests/orders/support.ts:76:15
+ ❯ Object.latte tests/orders/support.ts:84:18
+ ❯ placed tests/orders/orders.test.ts:13:15
+ ❯ tests/orders/orders.test.ts:104:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/30]⎯
+
+ FAIL  tests/orders/orders.test.ts > T53 orders > QRIS is refused when payments are not configured
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"bc1ee4c8-dd37-454b-89b0-64925143be32"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ stockItem tests/orders/support.ts:76:15
+ ❯ Object.latte tests/orders/support.ts:84:18
+ ❯ tests/orders/orders.test.ts:116:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/30]⎯
+
+ FAIL  tests/orders/orders.test.ts > T53 orders > a cash order captured offline is refused (CONTRACTS section 5: offline sale default refused)
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"f5e7803e-692b-451a-97c8-f4dc5c2e33b4"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ stockItem tests/orders/support.ts:76:15
+ ❯ Object.latte tests/orders/support.ts:84:18
+ ❯ tests/orders/orders.test.ts:126:28
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/30]⎯
+
+ FAIL  tests/orders/orders.test.ts > T53 orders > a refund stays pending until proof, posts through refund_payable, and proof pays out once
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"3d07a2fd-9469-487e-b5fc-fc10c0518bf8"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ stockItem tests/orders/support.ts:76:15
+ ❯ Object.latte tests/orders/support.ts:84:18
+ ❯ placed tests/orders/orders.test.ts:13:15
+ ❯ tests/orders/orders.test.ts:134:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/30]⎯
+
+ FAIL  tests/orders/orders.test.ts > T53 orders > a paid order cannot be cancelled and an order of another outlet is NOT_FOUND
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"0eea027c-43ae-462f-b65a-9c3ec6fde27d"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ stockItem tests/orders/support.ts:76:15
+ ❯ Object.latte tests/orders/support.ts:84:18
+ ❯ placed tests/orders/orders.test.ts:13:15
+ ❯ tests/orders/orders.test.ts:162:32
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/30]⎯
+
+ FAIL  tests/shifts/shifts.test.ts > T53 shifts > Z refuses with a clear typed error when no policy version exists, and closes nothing
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"91927566-9215-46ea-bc68-3bf682a27b30"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ Object.register tests/orders/support.ts:91:66
+ ❯ tests/shifts/shifts.test.ts:23:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/30]⎯
+
+ FAIL  tests/shifts/shifts.test.ts > T53 shifts > the open-shift policy is versioned, tenant scoped, owner only, and labelled as the D30 fixture default
+AssertionError: expected 404 to be 403 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 403[39m
+[31m+ 404[39m
+
+ ❯ tests/shifts/shifts.test.ts:33:75
+     31| 
+     32|   it("the open-shift policy is versioned, tenant scoped, owner only, a…
+     33|     expect((await h.post(h.cashier, "/shift-close-policies", {})).stat…
+       |                                                                           ^
+     34|     const v1 = await h.policy();
+     35|     expect(v1).toMatchObject({ version: 1, mode: "block_if_other_open"…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/30]⎯
+
+ FAIL  tests/shifts/shifts.test.ts > T53 shifts > business day follows D08: a shift opened at 03:59 local belongs to the previous day, 04:00 starts the next
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"b73057a3-842b-43e1-a8bb-74e978073c6c"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ Object.register tests/orders/support.ts:91:66
+ ❯ tests/shifts/shifts.test.ts:43:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/30]⎯
+
+ FAIL  tests/shifts/shifts.test.ts > T53 shifts > X report repeated three times changes no shift, ledger entry, audit row, idempotency key or close
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"715704dc-1969-4000-b85b-fe19e5026d36"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ tests/shifts/shifts.test.ts:55:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/30]⎯
+
+ FAIL  tests/shifts/shifts.test.ts > T53 shifts > X report: the cash drawer ignores QRIS and QRIS settled and pending are reported separately
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"fddb2a84-997d-4b67-b2b3-49da107b1b2c"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ Object.register tests/orders/support.ts:91:66
+ ❯ tests/shifts/shifts.test.ts:72:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/30]⎯
+
+ FAIL  tests/shifts/shifts.test.ts > T53 shifts > Z snapshots the register and business-day scope, closes the shift, and carries active sessions forward
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"c42e931c-01eb-4c0a-9e11-f00e5848a9d3"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ tests/shifts/shifts.test.ts:83:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/30]⎯
+
+ FAIL  tests/shifts/shifts.test.ts > T53 shifts > a duplicate Z returns the same closeId and changes nothing (same key and a different key)
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"a11ae1f0-7ac0-477a-9110-1c923829d833"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ tests/shifts/shifts.test.ts:104:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/30]⎯
+
+ FAIL  tests/shifts/shifts.test.ts > T53 shifts > Z is blocked while another shift of the register is open and passes after that shift is closed
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"3b4f741a-ecaa-43e5-ab8e-69d558ec3f1a"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ tests/shifts/shifts.test.ts:119:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/30]⎯
+
+ FAIL  tests/shifts/shifts.test.ts > T53 shifts > Z is atomic: a failure while writing the close leaves the shift open and writes nothing
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"5d40a3a7-ba97-453f-aab6-b2cc07ac3b98"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ tests/shifts/shifts.test.ts:133:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/30]⎯
+
+ FAIL  tests/shifts/shifts.test.ts > T53 shifts > a refund of a payment from a closed day is audited as a conflict, never dropped, and the snapshot is unchanged
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"a10936dc-6f2e-467a-80b0-f65ac7236483"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ tests/shifts/shifts.test.ts:147:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/30]⎯
+
+ FAIL  tests/shifts/shifts.test.ts > T53 shifts > a transfer in flight at close time is recorded in the snapshot and audited, not dropped
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"5d638812-2006-4b10-be35-02e01f6b3934"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ tests/shifts/shifts.test.ts:163:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/30]⎯
+
+ FAIL  tests/shifts/shifts.test.ts > T53 shifts > a QRIS payment settled after the close is audited and never moves the closed totals
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"a376de25-6bdd-40e5-b44b-dcbbc3c4bc02"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ tests/shifts/shifts.test.ts:174:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/30]⎯
+
+ FAIL  tests/shifts/shifts.test.ts > T53 shifts > a day that is closed cannot get a new shift on the same register, and the cashier cannot close someone else's shift
+Error: expected 200, got 404 {"error":{"code":"NOT_FOUND","messageKey":"error.notFound","retryable":false,"details":{}},"requestId":"666f7ef8-f735-426f-9e7f-b7a771314bec"}
+ ❯ ok tests/orders/support.ts:69:33
+     67|   const ok = async <T = Json>(r: Promise<{ status: number; json: Json …
+     68|     const x = await r;
+     69|     if (x.status !== 200) throw new Error(`expected 200, got ${x.statu…
+       |                                 ^
+     70|     return x.json["data"] as T;
+     71|   };
+ ❯ tests/shifts/shifts.test.ts:186:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/30]⎯
+
+
+ Test Files  4 failed (4)
+      Tests  29 failed (29)
+   Start at  05:43:05
+   Duration  12.48s (transform 1.33s, setup 0ms, collect 5.20s, tests 4.07s, environment 7ms, prepare 794ms)
+
+exit 1

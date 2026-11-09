@@ -10,6 +10,7 @@ import { assertPaymentsConfig, type PaymentsConfig } from "./payments/config.ts"
 import { PaymentError } from "./payments/errors.ts";
 import { registerPayments } from "./payments/routes.ts";
 import { registerLedger } from "./ledger/routes.ts";
+import { OperationsError, registerOperations } from "./orders/index.ts";
 import { registerRates } from "./rates/routes.ts";
 import { registerStations } from "./stations/routes.ts";
 import { registerSessions, SessionError, type SessionsOptions } from "./sessions/index.ts";
@@ -29,7 +30,7 @@ export function buildApp(opts: AppOptions = {}): FastifyInstance {
   const app = Fastify({ genReqId: () => randomUUID(), ...(opts.logger ? { logger: opts.logger } : {}) });
 
   app.setErrorHandler((err: FastifyError, req, reply) => {
-    if (err instanceof IdentityError || err instanceof PaymentError || err instanceof SessionError) {
+    if (err instanceof IdentityError || err instanceof PaymentError || err instanceof SessionError || err instanceof OperationsError) {
       return reply.status(err.status).send({ error: { code: err.code, messageKey: err.messageKey, retryable: err.retryable, details: { ...err.details } }, requestId: req.id });
     }
     // Never echo err.message or the stack: unknown failures become INTERNAL_ERROR (CONTRACTS section 1).
@@ -55,6 +56,7 @@ export function buildApp(opts: AppOptions = {}): FastifyInstance {
     registerDevices(app, opts.identity);
     registerEdge(app, opts.identity);
     registerSessions(app, opts.identity, opts.sessions);
+    registerOperations(app, opts.identity, opts.payments);
   }
 
   return app;

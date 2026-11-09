@@ -36,7 +36,7 @@ export const matches = (s: ProviderStatus, i: Pick<IntentRow, "provider_order_id
   s.orderId === i.provider_order_id && s.merchantId === i.merchant_id && s.merchantId === merchantId &&
   parseGross(s.grossAmount) === BigInt(i.amount_idr) && s.currency === "IDR" && s.paymentType === "qris";
 
-const settlementAccepted = (s: ProviderStatus): boolean =>
+export const settlementAccepted = (s: ProviderStatus): boolean =>
   s.transactionStatus === "settlement" && s.statusCode === "200" && (s.fraudStatus === undefined || s.fraudStatus === "accept");
 
 export async function verifyIntent(tx: Tx, deps: PaymentsDeps, intentId: string): Promise<JobResult> {

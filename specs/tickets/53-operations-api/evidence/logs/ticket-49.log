@@ -1,0 +1,105 @@
+
+> yravg-hatchsystem@ test:ticket /home/dev/orca/workspaces/yravgHatchSystem/t53-operations
+> node tools/ticket-dispatch.ts -- 49
+
+JSON report written to /tmp/ticket-dispatch-YJ08QK/report.json
+
+ticket 49: Koordinator sesi dan console-to-seat transfer API
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: declares exactly the ten contract states
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: allows the main chain AVAILABLE to AVAILABLE through every state
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: allows the failure branches STARTING to ACTIVATION_FAILED to RECOVERY or AVAILABLE, and ACTIVE to RECOVERY
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: rejects every transition outside the table, including self transitions
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: accrues only while running and stops on pause
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: starting a running clock again does not reset it
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: a wall clock that moves back never yields negative or extra time
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: fixture constants are the contract values
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: an OPEN lease never reaches past the 120 s horizon
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: a FIXED lease ends at the remaining entitlement plus the ACK window, no more
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: renewal is due from 60 s after issue
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: API_OBSERVED, OPERATOR_ATTESTED, LAB_VERIFIED and labelled COMMANDED_ONLY may start billing; SIMULATED only when the fixture allows it
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: COMMANDED_ONLY never proves a lock, so it cannot release a source seat
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: same rate: delta zero and the total is unchanged
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: cheaper destination reprices only the remaining time and is deterministic
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: the minimum is charged once across the transfer, not again for the destination
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: a dearer destination is refused (zone passes downward only) and nothing is quoted
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: an OPEN session has no remaining entitlement: delta zero, the new rate applies from the transfer on
+PASS     HS-49 / AC-HS-49  tests/session/domain.test.ts :: elapsed beyond the entitlement leaves no remaining time to reprice
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: creates STARTING with one START command, a lease grant and an outbox row; the clock has not started
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: a failure after the session row is written rolls back everything: no session, command, outbox row or reservation
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: RECEIVED is not APPLIED: the clock stays stopped until APPLIED, and a reordered or duplicate APPLIED starts billing once
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: COMMANDED_ONLY starts billing but is labelled limited and never shown as device proof
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: a SIMULATED ACK does not start billing in this configuration
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: the lease claims become a lease the edge can sign and a device can verify against its pinned key
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: a station without an active paired seat device is DEVICE_UNAVAILABLE and nothing is reserved
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: a revoked seat device cannot start a session
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: a stale quote (older than 900 s) and an already used quote are QUOTE_STALE
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: one station, five concurrent starts: exactly one wins, the rest are STATION_BUSY
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: a station reserved by someone else is STATION_BUSY
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: manual billing is not available to a cashier
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: the body cannot choose tenantId or outletId, and a missing Idempotency-Key is refused
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: same key and same body replays the same session; same key with another body is IDEMPOTENCY_CONFLICT; no second command
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: another tenant and another outlet get 404, never the session
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: a pending intent is PAYMENT_UNCONFIRMED; once the provider settlement is verified the session starts
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: a payment smaller than the quote refuses activation with INSUFFICIENT_BALANCE and the shortfall
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: one settled payment funds one session only
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: after 10 s without an ACK the start is pending/timed out, never silently ACTIVE; retry reuses the same commandId
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: the sweep applies ACKs and timeouts for every session without being asked per session
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: a FAILED ACK fails activation, releases the station, and a settled payment goes to refund_pending without claiming a refund
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: a late APPLIED after cancel is rejected, never starts billing, and the station waits for the lock proof
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: an ACK signed by another seat device for this command is rejected
+PASS     HS-49 / AC-HS-49  tests/session/start.test.ts :: an ACK from a revoked device or at a stale epoch never reaches the session
+PASS     HS-49 / AC-HS-49  tests/session/running.test.ts :: pause stops the billable clock and locks the picture; resume bills again only after APPLIED
+PASS     HS-49 / AC-HS-49  tests/session/running.test.ts :: a higher lock revision wins: a late APPLIED for a superseded RESUME is rejected and the picture stays locked
+PASS     HS-49 / AC-HS-49  tests/session/running.test.ts :: stale expectedRevision is REVISION_CONFLICT and changes nothing
+PASS     HS-49 / AC-HS-49  tests/session/running.test.ts :: each action from a wrong state is 409 INVALID_TRANSITION with no new command
+PASS     HS-49 / AC-HS-49  tests/session/running.test.ts :: the sweep finishes a FIXED session at its entitlement, locks the device, and bills exactly the entitlement
+PASS     HS-49 / AC-HS-49  tests/session/running.test.ts :: the first lease is bounded to 120 s and renewed from 60 s with a new lease; never two granted leases
+PASS     HS-49 / AC-HS-49  tests/session/running.test.ts :: WAN loss: no renewal while the authority is offline; at the last applied lease expiry the seat locks and the actual billable is recorded
+PASS     HS-49 / AC-HS-49  tests/session/running.test.ts :: an OPEN session that ends is billed by the actual seconds, rounded once
+PASS     HS-49 / AC-HS-49  tests/session/running.test.ts :: end, checkout, clean, release: FINISHED to CHECKOUT_PENDING to CLEANING to AVAILABLE and the station is free again only at the end
+PASS     HS-49 / AC-HS-49  tests/session/running.test.ts :: ending from PAUSED also finishes and locks
+PASS     HS-49 / AC-HS-49  tests/session/running.test.ts :: a server clock that moves back does not add or remove billable time
+PASS     HS-49 / AC-HS-49  tests/session/transfer.test.ts :: is deterministic and frozen; a cheaper zone reprices only the remaining time; a dearer zone is TRANSFER_REFUSED
+PASS     HS-49 / AC-HS-49  tests/session/transfer.test.ts :: move needs an accepted quote for this session and target, unexpired and used once
+PASS     HS-49 / AC-HS-49  tests/session/transfer.test.ts :: destination must be free, in this outlet, with an active paired seat; a PAUSED or already moving session cannot move
+PASS     HS-49 / AC-HS-49  tests/session/transfer.test.ts :: revokes the source, issues LOCK first, reserves the destination, and creates no destination command or lease until the lock is proven
+PASS     HS-49 / AC-HS-49  tests/session/transfer.test.ts :: a COMMANDED_ONLY lock ACK is not proof: the destination stays ungranted
+PASS     HS-49 / AC-HS-49  tests/session/transfer.test.ts :: proven lock then destination: same sessionId, quote, payment and F&B lineage; no new ledger entry; the move window is not billed; CEC never used
+PASS     HS-49 / AC-HS-49  tests/session/transfer.test.ts :: a stale ACK from the old source after the fence is unusable
+PASS     HS-49 / AC-HS-49  tests/session/transfer.test.ts :: FIXED session, source never answers: after 10 s the session is RECOVERY and locked, the destination is never granted; end bills the frozen actual
+PASS     HS-49 / AC-HS-49  tests/session/transfer.test.ts :: OPEN session, source unreachable: the source lease's bounded expiry is the proof, and not before
+PASS     HS-49 / AC-HS-49  tests/session/transfer.test.ts :: recover retry re-sends the source LOCK under the same commandId and the transfer continues when it is proven
+PASS     HS-49 / AC-HS-49  tests/session/transfer.test.ts :: a FAILED destination ACK: RECOVERY, destination locked, source still locked, retry brings it up on the destination
+PASS     HS-49 / AC-HS-49  tests/session/transfer.test.ts :: a destination that never answers times out after 10 s into RECOVERY; ending releases the destination only after its lock is proven
+PASS     HS-49 / AC-HS-49  tests/session/transfer.test.ts :: a crash while granting the destination rolls back; the retry grants exactly one
+PASS     HS-49 / AC-HS-49  tests/session/transfer.test.ts :: concurrent reconciles (two workers) still grant one destination lease and issue one START
+PASS     HS-49 / AC-HS-49  tests/session/transfer.test.ts :: the database itself refuses a second granted lease for one session or one station
+PASS     HS-49 / AC-HS-49  tests/session/transfer.test.ts :: 5.000 covering 30 billable minutes is counted once; only the remaining time is repriced
+PASS     HS-49 / AC-HS-49  tests/session/migrate.test.ts :: applies up, rolls back to nothing, applies up again
+PASS     HS-49 / AC-HS-49  tests/session/migrate.test.ts :: the up file lets a settled intent move to refund_pending (session start failed)
+PASS     HS-49 / AC-HS-49  tests/session/migrate.test.ts :: session events are append-only
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/transfer.test.ts :: is deterministic and frozen; a cheaper zone reprices only the remaining time; a dearer zone is TRANSFER_REFUSED
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/transfer.test.ts :: move needs an accepted quote for this session and target, unexpired and used once
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/transfer.test.ts :: destination must be free, in this outlet, with an active paired seat; a PAUSED or already moving session cannot move
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/transfer.test.ts :: revokes the source, issues LOCK first, reserves the destination, and creates no destination command or lease until the lock is proven
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/transfer.test.ts :: a COMMANDED_ONLY lock ACK is not proof: the destination stays ungranted
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/transfer.test.ts :: proven lock then destination: same sessionId, quote, payment and F&B lineage; no new ledger entry; the move window is not billed; CEC never used
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/transfer.test.ts :: a stale ACK from the old source after the fence is unusable
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/transfer.test.ts :: FIXED session, source never answers: after 10 s the session is RECOVERY and locked, the destination is never granted; end bills the frozen actual
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/transfer.test.ts :: OPEN session, source unreachable: the source lease's bounded expiry is the proof, and not before
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/transfer.test.ts :: recover retry re-sends the source LOCK under the same commandId and the transfer continues when it is proven
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/transfer.test.ts :: a FAILED destination ACK: RECOVERY, destination locked, source still locked, retry brings it up on the destination
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/transfer.test.ts :: a destination that never answers times out after 10 s into RECOVERY; ending releases the destination only after its lock is proven
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/transfer.test.ts :: a crash while granting the destination rolls back; the retry grants exactly one
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/transfer.test.ts :: concurrent reconciles (two workers) still grant one destination lease and issue one START
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/transfer.test.ts :: the database itself refuses a second granted lease for one session or one station
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/transfer.test.ts :: 5.000 covering 30 billable minutes is counted once; only the remaining time is repriced
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/domain.test.ts :: same rate: delta zero and the total is unchanged
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/domain.test.ts :: cheaper destination reprices only the remaining time and is deterministic
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/domain.test.ts :: the minimum is charged once across the transfer, not again for the destination
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/domain.test.ts :: a dearer destination is refused (zone passes downward only) and nothing is quoted
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/domain.test.ts :: an OPEN session has no remaining entitlement: delta zero, the new rate applies from the transfer on
+PASS     HS-V02-09 / AC-HS-V02-09  tests/session/domain.test.ts :: elapsed beyond the entitlement leaves no remaining time to reprice
+
+OK ticket 49
+exit 0

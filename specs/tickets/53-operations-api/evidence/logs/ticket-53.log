@@ -1,0 +1,94 @@
+
+> yravg-hatchsystem@ test:ticket /home/dev/orca/workspaces/yravgHatchSystem/t53-operations
+> node tools/ticket-dispatch.ts -- 53
+
+JSON report written to /tmp/ticket-dispatch-ePIWvG/report.json
+
+ticket 53: API stok, pesanan dan X/Z shift close
+PASS     HS-53 / AC-HS-53  tests/orders/domain.test.ts :: consumption scales recipe quantities by order quantity exactly
+PASS     HS-53 / AC-HS-53  tests/orders/domain.test.ts :: moving average issues cost proportionally and keeps the remainder in stock value
+PASS     HS-53 / AC-HS-53  tests/orders/domain.test.ts :: issuing more than on hand is refused and receipts add value
+PASS     HS-53 / AC-HS-53  tests/orders/domain.test.ts :: business day cuts at 04:00 Asia/Jakarta and survives UTC storage
+PASS     HS-53 / AC-HS-53  tests/orders/domain.test.ts :: cash drawer expectation ignores QRIS entirely
+PASS     HS-53 / AC-HS-53  tests/inventory/stock.test.ts :: two drinks of a 100 ml recipe consume 200 ml exactly once
+PASS     HS-53 / AC-HS-53  tests/inventory/stock.test.ts :: a retry with the same Idempotency-Key replays the order and consumes once
+PASS     HS-53 / AC-HS-53  tests/inventory/stock.test.ts :: a duplicate consume event for the same order is ignored by the unique source event
+PASS     HS-53 / AC-HS-53  tests/inventory/stock.test.ts :: stock moves are append-only: update and delete are refused by the database
+PASS     HS-53 / AC-HS-53  tests/inventory/stock.test.ts :: cancelling an order reverses its consumption exactly once
+PASS     HS-53 / AC-HS-53  tests/inventory/stock.test.ts :: a manual reversal of a receipt is allowed once; a reversal cannot be reversed; no history is deleted
+PASS     HS-53 / AC-HS-53  tests/inventory/stock.test.ts :: consumption beyond stock on hand is refused, nothing is written, no negative balance
+PASS     HS-53 / AC-HS-53  tests/inventory/stock.test.ts :: moving average prices a drink from the running average and never recalculates history
+PASS     HS-53 / AC-HS-53  tests/inventory/stock.test.ts :: cost is never shown to customer-facing or cashier views
+PASS     HS-53 / AC-HS-53  tests/inventory/stock.test.ts :: a new recipe version never changes what an existing order consumed
+PASS     HS-53 / AC-HS-53  tests/inventory/stock.test.ts :: cross-tenant and cross-outlet stock items are NOT_FOUND, and a cashier cannot manage stock
+PASS     HS-53 / AC-HS-53  tests/orders/orders.test.ts :: an order attaches to a session of its outlet and also stands alone
+PASS     HS-53 / AC-HS-53  tests/orders/orders.test.ts :: a session of another outlet or tenant is NOT_FOUND and no stock is consumed
+PASS     HS-53 / AC-HS-53  tests/orders/orders.test.ts :: a cash payment posts cash and revenue once, tracks change, and a second payment is refused
+PASS     HS-53 / AC-HS-53  tests/orders/orders.test.ts :: a tender below the total is refused and a payment needs the actor's own open shift
+PASS     HS-53 / AC-HS-53  tests/orders/orders.test.ts :: QRIS stays pending with the provider QR and grants nothing until a verified status
+PASS     HS-53 / AC-HS-53  tests/orders/orders.test.ts :: a settlement with the wrong amount or merchant never grants value
+PASS     HS-53 / AC-HS-53  tests/orders/orders.test.ts :: a provider outage during the QRIS charge creates no payment and is retryable
+PASS     HS-53 / AC-HS-53  tests/orders/orders.test.ts :: QRIS is refused when payments are not configured
+PASS     HS-53 / AC-HS-53  tests/orders/orders.test.ts :: a cash order captured offline is refused (CONTRACTS section 5: offline sale default refused)
+PASS     HS-53 / AC-HS-53  tests/orders/orders.test.ts :: a refund stays pending until proof, posts through refund_payable, and proof pays out once
+PASS     HS-53 / AC-HS-53  tests/orders/orders.test.ts :: a paid order cannot be cancelled and an order of another outlet is NOT_FOUND
+PASS     HS-53 / AC-HS-53  tests/shifts/shifts.test.ts :: Z refuses with a clear typed error when no policy version exists, and closes nothing
+PASS     HS-53 / AC-HS-53  tests/shifts/shifts.test.ts :: the open-shift policy is versioned, tenant scoped, owner only, and labelled as the D30 fixture default
+PASS     HS-53 / AC-HS-53  tests/shifts/shifts.test.ts :: business day follows D08: a shift opened at 03:59 local belongs to the previous day, 04:00 starts the next
+PASS     HS-53 / AC-HS-53  tests/shifts/shifts.test.ts :: X report repeated three times changes no shift, ledger entry, audit row, idempotency key or close
+PASS     HS-53 / AC-HS-53  tests/shifts/shifts.test.ts :: X report: the cash drawer ignores QRIS and QRIS settled and pending are reported separately
+PASS     HS-53 / AC-HS-53  tests/shifts/shifts.test.ts :: Z snapshots the register and business-day scope, closes the shift, and carries active sessions forward
+PASS     HS-53 / AC-HS-53  tests/shifts/shifts.test.ts :: a duplicate Z returns the same closeId and changes nothing (same key and a different key)
+PASS     HS-53 / AC-HS-53  tests/shifts/shifts.test.ts :: Z is blocked while another shift of the register is open and passes after that shift is closed
+PASS     HS-53 / AC-HS-53  tests/shifts/shifts.test.ts :: Z is atomic: a failure while writing the close leaves the shift open and writes nothing
+PASS     HS-53 / AC-HS-53  tests/shifts/shifts.test.ts :: a refund of a payment from a closed day is audited as a conflict, never dropped, and the snapshot is unchanged
+PASS     HS-53 / AC-HS-53  tests/shifts/shifts.test.ts :: a transfer in flight at close time is recorded in the snapshot and audited, not dropped
+PASS     HS-53 / AC-HS-53  tests/shifts/shifts.test.ts :: a QRIS payment settled after the close is audited and never moves the closed totals
+PASS     HS-53 / AC-HS-53  tests/shifts/shifts.test.ts :: a day that is closed cannot get a new shift on the same register, and the cashier cannot close someone else's shift
+PASS     HS-53 / AC-HS-53  tests/orders/migrate.test.ts :: applies up, rolls back to nothing, applies up again
+PASS     HS-53 / AC-HS-53  tests/orders/migrate.test.ts :: rolling only 0006 back restores the T48 ledger kinds and leaves earlier tables intact
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/domain.test.ts :: consumption scales recipe quantities by order quantity exactly
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/domain.test.ts :: moving average issues cost proportionally and keeps the remainder in stock value
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/domain.test.ts :: issuing more than on hand is refused and receipts add value
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/domain.test.ts :: business day cuts at 04:00 Asia/Jakarta and survives UTC storage
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/domain.test.ts :: cash drawer expectation ignores QRIS entirely
+PASS     HS-V02-06 / AC-HS-V02-06  tests/inventory/stock.test.ts :: two drinks of a 100 ml recipe consume 200 ml exactly once
+PASS     HS-V02-06 / AC-HS-V02-06  tests/inventory/stock.test.ts :: a retry with the same Idempotency-Key replays the order and consumes once
+PASS     HS-V02-06 / AC-HS-V02-06  tests/inventory/stock.test.ts :: a duplicate consume event for the same order is ignored by the unique source event
+PASS     HS-V02-06 / AC-HS-V02-06  tests/inventory/stock.test.ts :: stock moves are append-only: update and delete are refused by the database
+PASS     HS-V02-06 / AC-HS-V02-06  tests/inventory/stock.test.ts :: cancelling an order reverses its consumption exactly once
+PASS     HS-V02-06 / AC-HS-V02-06  tests/inventory/stock.test.ts :: a manual reversal of a receipt is allowed once; a reversal cannot be reversed; no history is deleted
+PASS     HS-V02-06 / AC-HS-V02-06  tests/inventory/stock.test.ts :: consumption beyond stock on hand is refused, nothing is written, no negative balance
+PASS     HS-V02-06 / AC-HS-V02-06  tests/inventory/stock.test.ts :: moving average prices a drink from the running average and never recalculates history
+PASS     HS-V02-06 / AC-HS-V02-06  tests/inventory/stock.test.ts :: cost is never shown to customer-facing or cashier views
+PASS     HS-V02-06 / AC-HS-V02-06  tests/inventory/stock.test.ts :: a new recipe version never changes what an existing order consumed
+PASS     HS-V02-06 / AC-HS-V02-06  tests/inventory/stock.test.ts :: cross-tenant and cross-outlet stock items are NOT_FOUND, and a cashier cannot manage stock
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/orders.test.ts :: an order attaches to a session of its outlet and also stands alone
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/orders.test.ts :: a session of another outlet or tenant is NOT_FOUND and no stock is consumed
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/orders.test.ts :: a cash payment posts cash and revenue once, tracks change, and a second payment is refused
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/orders.test.ts :: a tender below the total is refused and a payment needs the actor's own open shift
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/orders.test.ts :: QRIS stays pending with the provider QR and grants nothing until a verified status
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/orders.test.ts :: a settlement with the wrong amount or merchant never grants value
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/orders.test.ts :: a provider outage during the QRIS charge creates no payment and is retryable
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/orders.test.ts :: QRIS is refused when payments are not configured
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/orders.test.ts :: a cash order captured offline is refused (CONTRACTS section 5: offline sale default refused)
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/orders.test.ts :: a refund stays pending until proof, posts through refund_payable, and proof pays out once
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/orders.test.ts :: a paid order cannot be cancelled and an order of another outlet is NOT_FOUND
+PASS     HS-V02-06 / AC-HS-V02-06  tests/shifts/shifts.test.ts :: Z refuses with a clear typed error when no policy version exists, and closes nothing
+PASS     HS-V02-06 / AC-HS-V02-06  tests/shifts/shifts.test.ts :: the open-shift policy is versioned, tenant scoped, owner only, and labelled as the D30 fixture default
+PASS     HS-V02-06 / AC-HS-V02-06  tests/shifts/shifts.test.ts :: business day follows D08: a shift opened at 03:59 local belongs to the previous day, 04:00 starts the next
+PASS     HS-V02-06 / AC-HS-V02-06  tests/shifts/shifts.test.ts :: X report repeated three times changes no shift, ledger entry, audit row, idempotency key or close
+PASS     HS-V02-06 / AC-HS-V02-06  tests/shifts/shifts.test.ts :: X report: the cash drawer ignores QRIS and QRIS settled and pending are reported separately
+PASS     HS-V02-06 / AC-HS-V02-06  tests/shifts/shifts.test.ts :: Z snapshots the register and business-day scope, closes the shift, and carries active sessions forward
+PASS     HS-V02-06 / AC-HS-V02-06  tests/shifts/shifts.test.ts :: a duplicate Z returns the same closeId and changes nothing (same key and a different key)
+PASS     HS-V02-06 / AC-HS-V02-06  tests/shifts/shifts.test.ts :: Z is blocked while another shift of the register is open and passes after that shift is closed
+PASS     HS-V02-06 / AC-HS-V02-06  tests/shifts/shifts.test.ts :: Z is atomic: a failure while writing the close leaves the shift open and writes nothing
+PASS     HS-V02-06 / AC-HS-V02-06  tests/shifts/shifts.test.ts :: a refund of a payment from a closed day is audited as a conflict, never dropped, and the snapshot is unchanged
+PASS     HS-V02-06 / AC-HS-V02-06  tests/shifts/shifts.test.ts :: a transfer in flight at close time is recorded in the snapshot and audited, not dropped
+PASS     HS-V02-06 / AC-HS-V02-06  tests/shifts/shifts.test.ts :: a QRIS payment settled after the close is audited and never moves the closed totals
+PASS     HS-V02-06 / AC-HS-V02-06  tests/shifts/shifts.test.ts :: a day that is closed cannot get a new shift on the same register, and the cashier cannot close someone else's shift
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/migrate.test.ts :: applies up, rolls back to nothing, applies up again
+PASS     HS-V02-06 / AC-HS-V02-06  tests/orders/migrate.test.ts :: rolling only 0006 back restores the T48 ledger kinds and leaves earlier tables intact
+
+OK ticket 53
+exit 0
