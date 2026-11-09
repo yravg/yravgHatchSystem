@@ -1,7 +1,13 @@
-// T01 shell: only the generated-contracts module. The Android application module (namespace id.yravg.hatch)
-// is added by the Kotlin TV core ticket; it needs the Android SDK, which T01 does not.
-// shortcut: no Gradle wrapper committed (needs a local Gradle to generate); CI uses setup-gradle with a pinned version.
+// :contracts = generated protocol (T01), :core = pure Kotlin TV core (T51), :app = Android module id.yravg.hatch (T51).
+pluginManagement {
+    repositories { google(); mavenCentral(); gradlePluginPortal() }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories { google(); mavenCentral() }
+}
 rootProject.name = "hatch-android-tv"
 
 include(":contracts")
 include(":core")
+include(":app")
