@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS identity_audit_events;
+DROP FUNCTION IF EXISTS identity_audit_immutable();
+DROP TABLE IF EXISTS idempotency_keys;
+DROP TABLE IF EXISTS auth_attempts;
+DROP TABLE IF EXISTS mfa_recovery_codes;
+DROP TABLE IF EXISTS mfa_factors;
+DROP TABLE IF EXISTS staff_sessions;
+DROP TABLE IF EXISTS role_grants;
+DROP TABLE IF EXISTS staff;
+DROP TABLE IF EXISTS outlets;
+DROP TABLE IF EXISTS tenants;
