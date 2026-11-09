@@ -1,0 +1,29 @@
+
+> yravg-hatchsystem@ typecheck /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv
+> tsc -p tsconfig.json --noEmit && pnpm -r --if-present typecheck
+
+Scope: 6 of 7 workspace projects
+
+> @yravg/contracts@0.0.0 typecheck /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/packages/contracts
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/ui@0.0.0 typecheck /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/packages/ui
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/web@0.0.0 typecheck /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/apps/web
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/domain@0.0.0 typecheck /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/packages/domain
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/api@0.0.0 typecheck /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/services/api
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/worker@0.0.0 typecheck /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/services/worker
+> tsc -p tsconfig.json --noEmit
+

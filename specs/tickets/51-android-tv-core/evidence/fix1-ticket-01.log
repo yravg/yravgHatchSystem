@@ -1,0 +1,108 @@
+
+> yravg-hatchsystem@ test:ticket /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv
+> node tools/ticket-dispatch.ts -- 01 --allow-blocked
+
+JSON report written to /tmp/ticket-dispatch-fMdmfn/report.json
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.9.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :contracts
+Build was configured to prefer settings repositories over project repositories but repository 'MavenRepo' was added by build file 'contracts/build.gradle.kts'
+
+> Configure project :core
+Build was configured to prefer settings repositories over project repositories but repository 'MavenRepo' was added by build file 'core/build.gradle.kts'
+
+> Task :contracts:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :contracts:compileKotlin UP-TO-DATE
+> Task :contracts:compileJava NO-SOURCE
+> Task :contracts:processResources NO-SOURCE
+> Task :contracts:classes UP-TO-DATE
+> Task :contracts:jar UP-TO-DATE
+> Task :contracts:compileTestKotlin UP-TO-DATE
+> Task :contracts:compileTestJava NO-SOURCE
+> Task :contracts:processTestResources UP-TO-DATE
+> Task :contracts:testClasses UP-TO-DATE
+> Task :contracts:test
+
+BUILD SUCCESSFUL in 18s
+5 actionable tasks: 1 executed, 4 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.9.0/userguide/configuration_cache_enabling.html
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Hatch.Contracts -> /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/agents/Hatch.Contracts/bin/Debug/net10.0/Hatch.Contracts.dll
+  Hatch.Contracts.Tests -> /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/agents/Hatch.Contracts.Tests/bin/Debug/net10.0/Hatch.Contracts.Tests.dll
+Test run for /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/agents/Hatch.Contracts.Tests/bin/Debug/net10.0/Hatch.Contracts.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+Results File: /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/agents/TestResults-dispatch/contracts/contracts.trx
+
+Passed!  - Failed:     0, Passed:     6, Skipped:     0, Total:     6, Duration: 152 ms - Hatch.Contracts.Tests.dll (net10.0)
+
+ticket 01: Fondasi monorepo dan kontrak domain
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: lease.json canonical form equals the golden
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: command.json canonical form equals the golden
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: ack.json canonical form equals the golden
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: error.json canonical form equals the golden
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: payment.json canonical form equals the golden
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: every fixture file has a golden and a validator case
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: keeps IDR above 2^53 exact
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: sorts keys by UTF-16 code unit
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: escapes only quote, backslash and control characters
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: missing required field
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: unknown member
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: bad enum value
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: money must be a decimal string
+PASS     HS-01 / AC-HS-01  tests/contracts/protocol.test.ts :: timestamps must be UTC with Z
+PASS     HS-01 / AC-HS-01  tests/contracts/generated.test.ts :: committed files equal a fresh generation
+PASS     HS-01 / AC-HS-01  tests/contracts/generated.test.ts :: all three targets declare every schema type and every member name
+PASS     HS-01 / AC-HS-01  tests/contracts/generated.test.ts :: optional members are nullable in Kotlin and .NET
+PASS     HS-01 / AC-HS-01  tests/contracts/generated.test.ts :: the generator refuses schema features
+PASS     HS-01 / AC-HS-01  tests/contracts/secrets.test.ts :: detector flags each secret shape
+PASS     HS-01 / AC-HS-01  tests/contracts/secrets.test.ts :: every file under packages/contracts/fixtures is clean
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: parses decimal strings to bigint and back
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: rejects numbers, floats, negatives
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: same key + same payload replays the first result and runs the effect once
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: same key + different payload is IDEMPOTENCY_CONFLICT (409) with no new effect
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: a different key with the same payload is a separate request
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: is scoped by tenant, actor and route
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: a failed effect stores nothing
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: rejects a missing or non-UUID key
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: cross-tenant id: typed error and the mutation never runs
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: role without permission: typed error and the mutation never runs
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: stale version: typed error and the mutation never runs
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: cross-tenant denial does not leak existence
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: AUTH_FORBIDDEN maps to status 403
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: VALIDATION_FAILED maps to status 400
+PASS     HS-01 / AC-HS-01  packages/domain/test/domain.test.ts :: refuses details that could carry secrets or stack traces
+PASS     HS-01 / AC-HS-01  services/api/test/app.test.ts :: GET /api/v1/health returns the success envelope
+PASS     HS-01 / AC-HS-01  services/api/test/app.test.ts :: unknown route: 404 NOT_FOUND envelope
+PASS     HS-01 / AC-HS-01  services/api/test/app.test.ts :: AUTH_FORBIDDEN is 403 with code and messageKey, and no secrets
+PASS     HS-01 / AC-HS-01  services/api/test/app.test.ts :: malformed JSON body: 400 VALIDATION_FAILED
+PASS     HS-01 / AC-HS-01  services/api/test/app.test.ts :: unexpected failure: 500 INTERNAL_ERROR
+PASS     HS-01 / AC-HS-01  tools/ticket-dispatch.test.ts :: fails when a mandatory test file is missing
+PASS     HS-01 / AC-HS-01  tools/ticket-dispatch.test.ts :: fails when the named test is absent from a file that did run
+PASS     HS-01 / AC-HS-01  tools/ticket-dispatch.test.ts :: fails on failed, skipped and todo results
+PASS     HS-01 / AC-HS-01  tools/ticket-dispatch.test.ts :: exits 1 for a ticket with nothing registered
+PASS     HS-01 / AC-HS-01  tools/ticket-dispatch.test.ts :: exits 1 when the manifest points at a test file that does not exist
+PASS     HS-V02-15 / AC-HS-V02-15  packages/ui/test/tokens.test.ts :: committed tokens.css equals a fresh build
+PASS     HS-V02-15 / AC-HS-V02-15  packages/ui/test/tokens.test.ts :: every value equals the design desk's published tailwind.tokens.css
+PASS     HS-V02-15 / AC-HS-V02-15  packages/ui/test/tokens.test.ts :: only hex colours that exist in tokens.json appear
+PASS     HS-V02-15 / AC-HS-V02-15  packages/ui/test/tokens.test.ts :: text pairs used by the table and the trust strip meet WCAG AA
+PASS     HS-V02-15 / AC-HS-V02-15  packages/ui/test/tokens.test.ts :: ticket 01 is the primary owner of exactly HS-CMP-023 and HS-CMP-058
+PASS     HS-V02-15 / AC-HS-V02-15  packages/ui/test/tokens.test.ts :: brand colours are declared provisional
+PASS     HS-V02-15 / AC-HS-V02-15  packages/ui/test/tokens.test.ts :: the web scaffold uses tokens only
+PASS     HS-01 / kotlin-canonical-equality  kotlin-canonical-equality :: ConformanceTest::lease()
+PASS     HS-01 / kotlin-canonical-equality  kotlin-canonical-equality :: ConformanceTest::command()
+PASS     HS-01 / kotlin-canonical-equality  kotlin-canonical-equality :: ConformanceTest::ack()
+PASS     HS-01 / kotlin-canonical-equality  kotlin-canonical-equality :: ConformanceTest::error()
+PASS     HS-01 / kotlin-canonical-equality  kotlin-canonical-equality :: ConformanceTest::payment()
+PASS     HS-01 / kotlin-canonical-equality  kotlin-canonical-equality :: ConformanceTest::unknownMemberIsRejected()
+PASS     HS-01 / dotnet-canonical-equality  dotnet-canonical-equality :: Hatch.Contracts.Tests.ConformanceTests.Lease
+PASS     HS-01 / dotnet-canonical-equality  dotnet-canonical-equality :: Hatch.Contracts.Tests.ConformanceTests.Command
+PASS     HS-01 / dotnet-canonical-equality  dotnet-canonical-equality :: Hatch.Contracts.Tests.ConformanceTests.Ack
+PASS     HS-01 / dotnet-canonical-equality  dotnet-canonical-equality :: Hatch.Contracts.Tests.ConformanceTests.Error
+PASS     HS-01 / dotnet-canonical-equality  dotnet-canonical-equality :: Hatch.Contracts.Tests.ConformanceTests.Payment
+PASS     HS-01 / dotnet-canonical-equality  dotnet-canonical-equality :: Hatch.Contracts.Tests.ConformanceTests.UnknownMemberIsRejected
+PASS     HS-01 external kotlin-canonical-equality: Kotlin parses the shared fixtures through the generated models and must emit the same canonical JSON as the TypeScript golden files.
+PASS     HS-01 external dotnet-canonical-equality: .NET parses the shared fixtures through the generated models and must emit the same canonical JSON as the TypeScript golden files.
+
+OK ticket 01

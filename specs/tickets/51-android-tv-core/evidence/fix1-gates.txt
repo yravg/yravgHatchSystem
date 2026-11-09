@@ -1,0 +1,15 @@
+pnpm-install exit=0
+pnpm-lint exit=0
+pnpm-typecheck exit=2 (first run: TS2379 in the new dispatcher test) -> fixed, rerun exit=0
+pnpm-test exit=0 (rerun after the fix: see fix1-pnpm-test.log)
+ticket-51 exit=0
+ticket-50 exit=0
+ticket-49 exit=0
+ticket-48 exit=0
+ticket-47 exit=0
+ticket-46 exit=0
+ticket-01 exit=0
+validator exit=0
+dotnet-slnx exit=0
+gradle-rerun exit=0
+ALLDONE

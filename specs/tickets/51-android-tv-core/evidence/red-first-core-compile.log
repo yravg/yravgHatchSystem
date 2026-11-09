@@ -1,0 +1,41 @@
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:11:69 Unresolved reference 'TvCore'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:14:14 Unresolved reference 'establishTrustedTime'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:14:58 Unresolved reference 'applyLease'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:15:16 Cannot infer type for this parameter. Please specify it explicitly.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:19:19 Cannot infer type for this parameter. Please specify it explicitly.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:19:26 Unresolved reference 'PermissionState'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:19:26 Cannot infer type for this parameter. Please specify it explicitly.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:19:51 Unresolved reference 'PermissionState'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:20:35 Unresolved reference 'PermissionState'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:20:102 Unresolved reference 'LockRoute'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:21:30 Unresolved reference 'decide'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:23:26 Unresolved reference 'decide'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:24:35 Cannot infer type for this parameter. Please specify it explicitly.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:24:48 Unresolved reference 'LockReason'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:25:13 Cannot infer type for this parameter. Please specify it explicitly.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:25:26 Unresolved reference 'LockRoute'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:25:59 Cannot infer type for this parameter. Please specify it explicitly.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:25:72 Unresolved reference 'Readiness'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:26:13 Cannot infer type for this parameter. Please specify it explicitly.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:26:26 Unresolved reference 'TvState'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:26:56 Unresolved reference 'tvState'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:31:31 Unresolved reference 'PermissionState'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:32:22 Unresolved reference 'decide'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:33:31 Cannot infer type for this parameter. Please specify it explicitly.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:33:44 Unresolved reference 'LockRoute'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:33:70 Cannot infer type for this parameter. Please specify it explicitly.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:33:83 Unresolved reference 'Readiness'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:34:26 Unresolved reference 'certificationAllowed'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:38:21 Unresolved reference 'OverlayPermissionProbe'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:38:51 Cannot infer type for this parameter. Please specify it explicitly.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:38:51 Unresolved reference. None of the following candidates is applicable because of a receiver type mismatch:
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:44:39 Unresolved reference 'UnsupportedCecDriver'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:45:22 Unresolved reference 'capabilities'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:46:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:46:22 Unresolved reference 'PowerCapability'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:47:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:47:22 Unresolved reference 'LockRoute'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:48:21 Unresolved reference 'UnsupportedCecDriver'.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:53:9 Cannot infer type for this parameter. Please specify it explicitly.
+e: agents/android-tv/core/src/test/kotlin/id/yravg/hatch/core/CapabilityTest.kt:53:22 Unresolved reference 'CecSetupStatus'.
+exit=1 (gradlew :core:test, tests written before any production code; 364 compiler errors, first 40 kept)

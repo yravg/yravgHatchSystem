@@ -61,8 +61,29 @@ jobs:
           distribution: temurin
           java-version: "21"
       - uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a # v4 (uses the committed wrapper, Gradle 9.9.0 checksum pinned)
-      - run: ./gradlew --no-daemon :contracts:test
+      # Android SDK without a third-party action: Google's cmdline-tools zip (22.0) pinned by sha256 (its sha1 equals the one in
+      # repository2-3.xml), and only the android-sdk-license text is written, so no other licence is accepted.
+      - name: Install Android SDK (platforms;android-36, build-tools;36.0.0)
+        run: |
+          set -euo pipefail
+          SDK="$RUNNER_TEMP/android-sdk"
+          mkdir -p "$SDK/cmdline-tools" "$SDK/licenses"
+          curl -sfL -o "$RUNNER_TEMP/clt.zip" https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip
+          echo "4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583  $RUNNER_TEMP/clt.zip" | sha256sum -c -
+          unzip -q "$RUNNER_TEMP/clt.zip" -d "$RUNNER_TEMP/clt"
+          mv "$RUNNER_TEMP/clt/cmdline-tools" "$SDK/cmdline-tools/22.0"
+          printf '24333f8a63b6825ea9c5514f83c2829b004d1fee' > "$SDK/licenses/android-sdk-license"
+          "$SDK/cmdline-tools/22.0/bin/sdkmanager" --sdk_root="$SDK" "platforms;android-36" "build-tools;36.0.0"
+          echo "ANDROID_HOME=$SDK" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$SDK" >> "$GITHUB_ENV" # the runner image presets its own; both must name the SDK installed above
+      - name: Gradle tests and debug build
+        run: |
+          set -o pipefail
+          ./gradlew --no-daemon testDebugUnitTest assembleDebug :contracts:test 2>&1 | tee "$RUNNER_TEMP/gradle.log"
         working-directory: agents/android-tv
+      - name: Surface the Gradle failure as annotations
+        if: failure()
+        run: grep -E "FAILED|What went wrong|Could not|Exception|error:|SDK|licen" "$RUNNER_TEMP/gradle.log" | head -10 | while IFS= read -r l; do echo "::error::${l//%/%25}"; done
 
   dotnet:
     runs-on: ubuntu-24.04

@@ -1,0 +1,47 @@
+
+> yravg-hatchsystem@ test:ticket /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv
+> node tools/ticket-dispatch.ts -- 47
+
+JSON report written to /tmp/ticket-dispatch-hSbJx5/report.json
+
+ticket 47: API stasiun, tarif rasional dan minimum payment
+PASS     HS-47 / AC-HS-47  tests/pricing/api.test.ts :: exactly one of N concurrent reserve requests wins over real HTTP
+PASS     HS-47 / AC-HS-47  tests/pricing/api.test.ts :: the same Idempotency-Key replays the same reservation instead of conflicting
+PASS     HS-47 / AC-HS-47  tests/pricing/api.test.ts :: cross-tenant and cross-outlet reads are 404 and never 403
+PASS     HS-47 / AC-HS-47  tests/pricing/api.test.ts :: owner creates and lists stations; a cashier may list but not create
+PASS     HS-47 / AC-HS-47  tests/pricing/api.test.ts :: v1 Rp10.000/hour: minimum is disabled by default and 61 s quotes exactly 610000/3600 = Rp169
+PASS     HS-47 / AC-HS-47  tests/pricing/api.test.ts :: a new rule version never changes an old quote, and the new quote cites the new version
+PASS     HS-47 / AC-HS-47  tests/pricing/api.test.ts :: the database refuses to change or delete a rule version or a quote
+PASS     HS-47 / AC-HS-47  tests/pricing/api.test.ts :: rate rules and quotes are tenant scoped
+PASS     HS-47 / AC-HS-47  tests/pricing/pricing.test.ts :: Rp10.000/hour for 61 s is 610000/3600 and rounds once to Rp169
+PASS     HS-47 / AC-HS-47  tests/pricing/pricing.test.ts :: rounds once at the end: many small segments do not add up rounding error
+PASS     HS-47 / AC-HS-47  tests/pricing/pricing.test.ts :: half rupiah rounds up, below half rounds down
+PASS     HS-47 / AC-HS-47  tests/pricing/pricing.test.ts :: stays exact above 2^53
+PASS     HS-47 / AC-HS-47  tests/pricing/migrate.test.ts :: applies up, rolls back down to nothing, and applies up again
+PASS     HS-V02-01 / AC-HS-V02-01  tests/pricing/api.test.ts :: exactly one of N concurrent reserve requests wins over real HTTP
+PASS     HS-V02-01 / AC-HS-V02-01  tests/pricing/api.test.ts :: the same Idempotency-Key replays the same reservation instead of conflicting
+PASS     HS-V02-01 / AC-HS-V02-01  tests/pricing/api.test.ts :: cross-tenant and cross-outlet reads are 404 and never 403
+PASS     HS-V02-01 / AC-HS-V02-01  tests/pricing/api.test.ts :: owner creates and lists stations; a cashier may list but not create
+PASS     HS-V02-01 / AC-HS-V02-01  tests/pricing/api.test.ts :: v1 Rp10.000/hour: minimum is disabled by default and 61 s quotes exactly 610000/3600 = Rp169
+PASS     HS-V02-01 / AC-HS-V02-01  tests/pricing/api.test.ts :: a new rule version never changes an old quote, and the new quote cites the new version
+PASS     HS-V02-01 / AC-HS-V02-01  tests/pricing/api.test.ts :: the database refuses to change or delete a rule version or a quote
+PASS     HS-V02-01 / AC-HS-V02-01  tests/pricing/api.test.ts :: rate rules and quotes are tenant scoped
+PASS     HS-V02-01 / AC-HS-V02-01  tests/pricing/pricing.test.ts :: Rp10.000/hour for 61 s is 610000/3600 and rounds once to Rp169
+PASS     HS-V02-01 / AC-HS-V02-01  tests/pricing/pricing.test.ts :: rounds once at the end: many small segments do not add up rounding error
+PASS     HS-V02-01 / AC-HS-V02-01  tests/pricing/pricing.test.ts :: half rupiah rounds up, below half rounds down
+PASS     HS-V02-01 / AC-HS-V02-01  tests/pricing/pricing.test.ts :: stays exact above 2^53
+PASS     HS-V02-01 / AC-HS-V02-01  tests/pricing/migrate.test.ts :: applies up, rolls back down to nothing, and applies up again
+PASS     HS-V02-02 / AC-HS-V02-02  tests/pricing/pricing.test.ts :: 20 min = 5.000, 30 min = 5.000, 40 min = 7.000
+PASS     HS-V02-02 / AC-HS-V02-02  tests/pricing/pricing.test.ts :: pause time is not billable and does not consume covered minutes
+PASS     HS-V02-02 / AC-HS-V02-02  tests/pricing/pricing.test.ts :: the minimum applies once per session across reconnect, retry and zone transfer
+PASS     HS-V02-02 / AC-HS-V02-02  tests/pricing/pricing.test.ts :: is disabled by default
+PASS     HS-V02-02 / AC-HS-V02-02  tests/pricing/pricing.test.ts :: a transfer may only go to an equal or lower rate
+PASS     HS-V02-02 / AC-HS-V02-02  tests/pricing/pricing.test.ts :: insufficient balance cannot activate and reports the shortfall
+PASS     HS-V02-02 / AC-HS-V02-02  tests/pricing/pricing.test.ts :: enough balance activates
+PASS     HS-V02-02 / AC-HS-V02-02  tests/pricing/pricing.test.ts :: a negative balance or requirement is invalid, never activates
+PASS     HS-V02-02 / AC-HS-V02-02  tests/pricing/api.test.ts :: with the minimum fixture: 20 min = 5.000, 30 min = 5.000, 40 min = 7.000; pause is not billed
+PASS     HS-V02-02 / AC-HS-V02-02  tests/pricing/api.test.ts :: an effective date earlier than the latest version is refused
+PASS     HS-V02-02 / AC-HS-V02-02  tests/pricing/api.test.ts :: an enabled minimum needs both fields
+PASS     HS-V02-02 / AC-HS-V02-02  tests/pricing/api.test.ts :: the same Idempotency-Key replays a quote; the same key with another body is 409
+
+OK ticket 47

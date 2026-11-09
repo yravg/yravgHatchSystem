@@ -1,0 +1,10 @@
+e: agents/android-tv/app/src/test/kotlin/id/yravg/hatch/app/AppPolicyTest.kt:31:64 Unresolved reference 'Adapters'.
+e: agents/android-tv/app/src/test/kotlin/id/yravg/hatch/app/AppPolicyTest.kt:32:61 Unresolved reference 'Adapters'.
+e: agents/android-tv/app/src/test/kotlin/id/yravg/hatch/app/AppPolicyTest.kt:36:47 Unresolved reference 'Adapters'.
+e: agents/android-tv/app/src/test/kotlin/id/yravg/hatch/app/AppPolicyTest.kt:37:47 Unresolved reference 'Adapters'.
+e: agents/android-tv/app/src/test/kotlin/id/yravg/hatch/app/AppPolicyTest.kt:38:47 Unresolved reference 'Adapters'.
+e: agents/android-tv/app/src/test/kotlin/id/yravg/hatch/app/BcEd25519VerifierTest.kt:22:113 Unresolved reference 'BcEd25519Verifier'.
+e: agents/android-tv/app/src/test/kotlin/id/yravg/hatch/app/BcEd25519VerifierTest.kt:25:135 Unresolved reference 'BcEd25519Verifier'.
+e: agents/android-tv/app/src/test/kotlin/id/yravg/hatch/app/BcEd25519VerifierTest.kt:26:118 Unresolved reference 'BcEd25519Verifier'.
+e: agents/android-tv/app/src/test/kotlin/id/yravg/hatch/app/BcEd25519VerifierTest.kt:27:21 Unresolved reference 'BcEd25519Verifier'.
+exit=1 (gradlew testDebugUnitTest, app tests written before app production code; Adapters and BcEd25519Verifier unresolved)
