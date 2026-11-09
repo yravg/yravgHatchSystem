@@ -1,6 +1,6 @@
 # HS-T50 — Gateway edge dan pairing/lease core headless
 
-Status: **ready**
+Status: **done**
 Mode: **team**
 Phase: MVP
 
