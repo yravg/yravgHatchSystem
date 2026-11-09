@@ -1,6 +1,6 @@
 # HS-T53 — API stok, pesanan dan X/Z shift close
 
-Status: **ready**
+Status: **done**
 Mode: **team**
 Phase: MVP
 

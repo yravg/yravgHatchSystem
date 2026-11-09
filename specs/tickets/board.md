@@ -12,7 +12,7 @@
 | 49 | [Koordinator sesi dan console-to-seat transfer API](49-session-api/rd.md) | done | team | waits on 47, 48, 50 (done artifacts) | MVP; D01, D06, D07, D26 | backend-first |
 | 51 | [Kotlin TV provisioning, reboot dan offline core](51-android-tv-core/rd.md) | ready | team | waits on 50 (done artifacts) | MVP; D04, D09, D27, D28, D32 | backend-first |
 | 52 | [Booking, deposit, wallet dan pass eligibility API](52-booking-wallet-api/rd.md) | draft | team | waits on 47, 48, 49 (done artifacts) | V1; D03, D10, D26, D31 | backend-first |
-| 53 | [API stok, pesanan dan X/Z shift close](53-operations-api/rd.md) | ready | team | waits on 48, 49 (done artifacts) | MVP; D08, D17, D30 | backend-first |
+| 53 | [API stok, pesanan dan X/Z shift close](53-operations-api/rd.md) | done | team | waits on 48, 49 (done artifacts) | MVP; D08, D17, D30 | backend-first |
 | 54 | [Kontrak, simulator dan fault-check headless](54-backend-contract-check/rd.md) | ready | solo | waits on 46, 47, 48, 49, 50, 51, 53 (done artifacts) | MVP; D04, D06, D07, D29 | backend-first |
 | 02 | [Identitas, tenant dan otorisasi per outlet](02-identity-tenancy/rd.md) | draft | solo | waits on 01, 46 (done artifacts) | MVP; D02, D16, D25 | ui-after-backend |
 | 03 | [Katalog stasiun, aset, zona dan denah](03-stations-catalog/rd.md) | draft | solo | waits on 02, 47 (done artifacts) | MVP; D04 | ui-after-backend |

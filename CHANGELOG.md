@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- T53 stock, orders and X/Z shift close API merged (180b738) and marked done after Merger and independent Checker PASS. Shift policy values are fixtures.
 - T53 stock, orders and X/Z shift close API (`services/api/src/{inventory,orders,shifts}`, `packages/domain/src/order`, migration 0006): append-only stock moves with reversal and moving-average cost fixture, recipe versions, orders attached to a session or standalone paid by cash or sandbox QRIS (value only after verified provider status), pending refunds, non-mutating X report, atomic idempotent Z day close with carried sessions and audited conflicts, versioned D30 open-shift policy fixture (not owner approved). API only; money and D08/D17/D30 values are sandbox fixtures.
 - T49 session coordinator and console-to-seat transfer API merged (ce2b6f1) and marked done after Merger and independent Checker PASS.
 - Live API preview (dev tooling, no UI): `services/api/src/server.ts` (refuses 0.0.0.0, payments off without Midtrans sandbox settings), idempotent fixture `scripts/seed-preview.ts`, curl walkthrough in `docs/operator/api-preview.md`.
