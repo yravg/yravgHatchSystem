@@ -4,3 +4,4 @@
 rootProject.name = "hatch-android-tv"
 
 include(":contracts")
+include(":core")
