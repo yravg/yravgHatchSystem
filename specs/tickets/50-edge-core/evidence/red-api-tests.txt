@@ -1,0 +1,13 @@
+       |                                      ^
+     15|     for (const t of ["devices", "pairing_challenges", "pairing_attempt…
+     16|     expect(await migrateDown(db.pool)).toContain("0004_edge_devices");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/16]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  16 failed (16)
+   Start at  02:29:25
+   Duration  3.20s (transform 269ms, setup 0ms, collect 1.97s, tests 723ms, environment 0ms, prepare 139ms)
+
+red-run exit 1

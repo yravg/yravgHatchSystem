@@ -1,6 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { DomainError, failure, success } from "@yravg/domain";
 import Fastify, { type FastifyError, type FastifyInstance } from "fastify";
+import { registerDevices } from "./devices/routes.ts";
+import { registerEdge } from "./edge/routes.ts";
 import { IdentityError } from "./identity/errors.ts";
 import { registerIdentity } from "./identity/routes.ts";
 import type { IdentityDeps } from "./identity/service.ts";
@@ -47,6 +49,8 @@ export function buildApp(opts: AppOptions = {}): FastifyInstance {
     registerRates(app, opts.identity);
     registerLedger(app, opts.identity);
     if (opts.payments) registerPayments(app, opts.identity, opts.payments);
+    registerDevices(app, opts.identity);
+    registerEdge(app, opts.identity);
   }
 
   return app;

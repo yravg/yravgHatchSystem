@@ -1,0 +1,12 @@
+/home/user/dev/HatchSystem/capped.sh pnpm install --frozen-lockfile exit 0
+/home/user/dev/HatchSystem/capped.sh pnpm lint exit 0
+/home/user/dev/HatchSystem/capped.sh pnpm typecheck exit 0
+/home/user/dev/HatchSystem/capped.sh pnpm test exit 0
+/home/user/dev/HatchSystem/capped.sh pnpm test:ticket -- 50 exit 0
+/home/user/dev/HatchSystem/capped.sh pnpm test:ticket -- 48 exit 1
+/home/user/dev/HatchSystem/capped.sh pnpm test:ticket -- 47 exit 0
+/home/user/dev/HatchSystem/capped.sh pnpm test:ticket -- 46 exit 0
+/home/user/dev/HatchSystem/capped.sh pnpm exec vitest run tests/identity/migrate.test.ts exit 0
+dotnet build HatchAgents.slnx exit 0
+dotnet test HatchAgents.slnx exit 0
+python3 -I tools/validate_spec.py (clean git archive of 3d17dc8) exit 0

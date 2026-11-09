@@ -1,0 +1,70 @@
+== /home/user/dev/HatchSystem/capped.sh pnpm test
+
+> yravg-hatchsystem@ test /home/dev/orca/workspaces/yravgHatchSystem/t50-edge
+> vitest run
+
+
+ RUN  v3.2.7 /home/dev/orca/workspaces/yravgHatchSystem/t50-edge
+
+ ✓ tests/identity/identity.test.ts (36 tests) 20824ms
+   ✓ sessions and tenancy > login sets an HttpOnly Secure SameSite cookie and never returns the session token in the body  436ms
+   ✓ sessions and tenancy > wrong password and unknown email give the same 401 with no existence leak  478ms
+   ✓ sessions and tenancy > tenant and outlet come from the session; a client supplied tenantId or outletId in a body is rejected  455ms
+   ✓ sessions and tenancy > outlet selection at login is limited to granted outlets; other outlets and other tenants are 404  495ms
+   ✓ sessions and tenancy > role denial is 403 and a cross-tenant id is 404, even for a role without the permission  579ms
+   ✓ sessions and tenancy > a revoked role grant loses its permission on the very next request  541ms
+   ✓ sessions and tenancy > an unsafe request without the matching CSRF header is rejected  422ms
+   ✓ sessions and tenancy > logout revokes the session  424ms
+   ✓ TOTP enrolment and fail-closed second factor > enrol returns the secret once; the factor is unusable until a code confirms it  583ms
+   ✓ TOTP enrolment and fail-closed second factor > the secret is stored sealed and recovery codes only as hashes  556ms
+   ✓ TOTP enrolment and fail-closed second factor > a role that requires MFA is denied on business routes until a factor is verified  534ms
+   ✓ TOTP enrolment and fail-closed second factor > an enrolled account starts each login pending and must challenge before any business route  521ms
+   ✓ TOTP enrolment and fail-closed second factor > an unreadable stored secret or a missing factor fails closed  488ms
+   ✓ challenge, step-up, replay and rate limits > step-up opens for the TTL, then expires, then a fresh code renews it  581ms
+   ✓ challenge, step-up, replay and rate limits > a cashier cannot approve a refund however fresh the step-up is  456ms
+   ✓ challenge, step-up, replay and rate limits > a code replayed inside its step is rejected, also from a second session  695ms
+   ✓ challenge, step-up, replay and rate limits > an older step than the last accepted one is rejected (monotonic), even inside the skew window  668ms
+   ✓ challenge, step-up, replay and rate limits > skew is narrow: one step back is accepted, two are not  705ms
+   ✓ challenge, step-up, replay and rate limits > 10 wrong codes lock the actor; the 11th is 429 even with the correct code, and the lock lifts after the window  684ms
+   ✓ challenge, step-up, replay and rate limits > 10 wrong codes from one source lock that source across actors  855ms
+   ✓ challenge, step-up, replay and rate limits > rolling the clock back neither revives a session nor re-opens an accepted code  574ms
+   ✓ challenge, step-up, replay and rate limits > two app instances racing the same code accept it exactly once  705ms
+   ✓ recovery codes > a recovery code works once and then never again  677ms
+   ✓ recovery codes > recovery opens the session but gives no step-up, and another person's code does not work  790ms
+   ✓ recovery codes > wrong recovery codes count toward the 10-attempt limit  703ms
+   ✓ MFA revocation (the only recovery path for someone else) > an owner with a fresh step-up revokes another member's factor: audited, sessions killed, re-enrolment forced  632ms
+   ✓ MFA revocation (the only recovery path for someone else) > a manager cannot revoke someone else's factor (403) and another tenant's staff is 404  873ms
+   ✓ MFA revocation (the only recovery path for someone else) > revocation needs a fresh step-up, a reason, and the current revision  682ms
+   ✓ idempotency and expected revision > the same key and payload replays the stored result and runs the effect once  536ms
+   ✓ idempotency and expected revision > the same key with a different payload is 409 over HTTP and changes nothing  491ms
+   ✓ idempotency and expected revision > two concurrent requests with the same key and different payloads: one wins, the other is 409  587ms
+   ✓ idempotency and expected revision > two concurrent requests with the same key and the same payload run once and agree  430ms
+   ✓ idempotency and expected revision > a missing or malformed Idempotency-Key is 400  383ms
+   ✓ idempotency and expected revision > a stale expectedRevision is 409 REVISION_CONFLICT and nothing changes  368ms
+   ✓ idempotency and expected revision > an outlet of another tenant is 404 and the last owner grant cannot be revoked  508ms
+   ✓ logs > never contain the TOTP secret, an OTP, a recovery code, the password or the session token  721ms
+ ✓ tests/pricing/api.test.ts (18 tests) 1352ms
+ ✓ tests/edge/devices.test.ts (15 tests) 1198ms
+ ✓ packages/domain/test/domain.test.ts (23 tests) 24ms
+ ✓ tests/pricing/pricing.test.ts (14 tests) 7ms
+ ✓ packages/ui/test/tokens.test.ts (8 tests) 7ms
+ ✓ tools/ticket-dispatch.test.ts (9 tests) 235ms
+ ✓ tests/identity/migrate.test.ts (4 tests) 570ms
+   ✓ identity migrations > applies up, rolls back down to nothing, and applies up again  421ms
+ ✓ tests/identity/totp.test.ts (7 tests) 217ms
+ ✓ tests/edge/migrate.test.ts (1 test) 600ms
+   ✓ migration 0004 (edge devices) > applies up, rolls back to nothing, applies up again  492ms
+ ✓ tests/pricing/migrate.test.ts (2 tests) 700ms
+   ✓ T47 migration 0002 > applies up, rolls back down to nothing, and applies up again  577ms
+ ✓ tests/contracts/protocol.test.ts (15 tests) 13ms
+ ✓ tests/contracts/leases.test.ts (5 tests) 19ms
+ ✓ tests/contracts/generated.test.ts (4 tests) 18ms
+ ✓ services/api/test/app.test.ts (5 tests) 66ms
+ ✓ tests/contracts/secrets.test.ts (2 tests) 7ms
+
+ Test Files  16 passed (16)
+      Tests  168 passed (168)
+   Start at  02:40:12
+   Duration  36.70s (transform 572ms, setup 0ms, collect 6.91s, tests 25.86s, environment 3ms, prepare 1.15s)
+
+exit 0

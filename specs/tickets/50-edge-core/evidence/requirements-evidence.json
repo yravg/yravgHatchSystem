@@ -1,0 +1,233 @@
+{
+  "ticket": "50",
+  "generatedBy": "T50 worker",
+  "note": "Red-first: evidence/red-api-tests.txt, evidence/red-dotnet-tests.txt. Physical offline and hardware are BLOCKED, not passed.",
+  "requirements": {
+    "HS-50": {
+      "acceptance": "AC-HS-50",
+      "evidence": [
+        {
+          "testPath": "tests/edge/devices.test.ts",
+          "tests": [
+            "issues an 8 digit code valid 5 minutes and stores only a hash",
+            "an expired code is refused",
+            "a refresh revokes the old code",
+            "5 wrong attempts per minute per device, then 429 even for the right code; other devices are unaffected"
+          ],
+          "command": "pnpm exec vitest run tests/edge",
+          "exitCode": 0,
+          "expected": "8 digits, 300 s TTL, hash only, refresh revokes, 6th attempt 429",
+          "actual": "as expected",
+          "artifact": "specs/tickets/50-edge-core/evidence/ticket-50.log",
+          "verificationLevel": "automated integration on real PostgreSQL (fastify inject); fixture keys and codes; no UI, no hardware"
+        },
+        {
+          "testPath": "tests/edge/devices.test.ts",
+          "tests": [
+            "staff approval with the right code activates the device and pins its key",
+            "revoke is permanent, audited and idempotent; the device can no longer pair",
+            "refuses a wrong signature, a device id mismatch and a revoked device"
+          ],
+          "command": "pnpm exec vitest run tests/edge",
+          "exitCode": 0,
+          "expected": "key pinned at approval; revoked device cannot pair or ACK",
+          "actual": "as expected",
+          "artifact": "specs/tickets/50-edge-core/evidence/ticket-50.log",
+          "verificationLevel": "automated integration on real PostgreSQL (fastify inject); fixture keys and codes; no UI, no hardware"
+        },
+        {
+          "testPath": "tests/edge/devices.test.ts",
+          "tests": [
+            "claim bumps one epoch per outlet; only an active edge device can hold it",
+            "a duplicate ACK is accepted once and stored once (at-least-once, idempotent)"
+          ],
+          "command": "pnpm exec vitest run tests/edge",
+          "exitCode": 0,
+          "expected": "one fenced epoch; stale and future epoch 409; duplicate ACK one row",
+          "actual": "as expected",
+          "artifact": "specs/tickets/50-edge-core/evidence/ticket-50.log",
+          "verificationLevel": "automated integration on real PostgreSQL (fastify inject); fixture keys and codes; no UI, no hardware"
+        },
+        {
+          "testPath": "tests/edge/migrate.test.ts",
+          "tests": [
+            "applies up, rolls back to nothing, applies up again"
+          ],
+          "command": "pnpm exec vitest run tests/edge/migrate.test.ts",
+          "exitCode": 0,
+          "expected": "up/down/up",
+          "actual": "as expected",
+          "artifact": "specs/tickets/50-edge-core/evidence/migration-up-down-up.log",
+          "verificationLevel": "automated integration on real PostgreSQL (fastify inject); fixture keys and codes; no UI, no hardware"
+        },
+        {
+          "testPath": "agents/Hatch.VenueEdge.Tests/PersistBeforeAckTests.cs",
+          "tests": [
+            "Database_is_wal_with_full_synchronous",
+            "The_outbox_row_is_committed_before_the_sink_sees_the_ack",
+            "Death_before_commit_leaves_nothing_and_sends_nothing_then_the_retry_works",
+            "Death_after_commit_keeps_the_row_resends_from_the_outbox_and_applies_once"
+          ],
+          "command": "cd agents && dotnet test HatchAgents.slnx",
+          "exitCode": 0,
+          "expected": "all pass",
+          "actual": "Hatch.VenueEdge.Tests 41/41 passed",
+          "artifact": "specs/tickets/50-edge-core/evidence/dotnet-test.log",
+          "verificationLevel": "automated .NET test, SIMULATOR (simulated display, in-process crash injection, in-process refusing transport); no real hardware"
+        },
+        {
+          "testPath": "agents/Hatch.VenueEdge.Tests/LeaseTests.cs",
+          "tests": [
+            "Wan_down_the_valid_lease_runs_to_its_deadline_then_locks_locally",
+            "Offline_new_start_extend_and_money_actions_are_refused_with_allowance_zero",
+            "A_fenced_edge_stops_granting_and_refuses_starts"
+          ],
+          "command": "cd agents && dotnet test HatchAgents.slnx",
+          "exitCode": 0,
+          "expected": "all pass",
+          "actual": "Hatch.VenueEdge.Tests 41/41 passed",
+          "artifact": "specs/tickets/50-edge-core/evidence/dotnet-test.log",
+          "verificationLevel": "automated .NET test, SIMULATOR (simulated display, in-process crash injection, in-process refusing transport); no real hardware"
+        },
+        {
+          "testPath": "agents/Hatch.VenueEdge.Tests/RebootTests.cs",
+          "tests": [
+            "Reboot_locks_the_picture_and_asks_for_recovery_instead_of_resetting_the_time",
+            "Trusted_reconciliation_resumes_with_no_more_than_the_checkpoint"
+          ],
+          "command": "cd agents && dotnet test HatchAgents.slnx",
+          "exitCode": 0,
+          "expected": "all pass",
+          "actual": "Hatch.VenueEdge.Tests 41/41 passed",
+          "artifact": "specs/tickets/50-edge-core/evidence/dotnet-test.log",
+          "verificationLevel": "automated .NET test, SIMULATOR (simulated display, in-process crash injection, in-process refusing transport); no real hardware"
+        },
+        {
+          "testPath": "agents/Hatch.VenueEdge.Tests/CecTests.cs",
+          "tests": [
+            "With_no_cec_driver_start_pause_expire_and_reboot_all_lock_the_picture",
+            "A_failing_optional_cec_driver_cannot_stop_the_independent_lock"
+          ],
+          "command": "cd agents && dotnet test HatchAgents.slnx",
+          "exitCode": 0,
+          "expected": "all pass",
+          "actual": "Hatch.VenueEdge.Tests 41/41 passed",
+          "artifact": "specs/tickets/50-edge-core/evidence/dotnet-test.log",
+          "verificationLevel": "automated .NET test, SIMULATOR (simulated display, in-process crash injection, in-process refusing transport); no real hardware"
+        },
+        {
+          "testPath": "hardware",
+          "tests": [],
+          "command": "none",
+          "exitCode": null,
+          "expected": "real TV/console with CEC off on both",
+          "actual": "BLOCKED: no named hardware available",
+          "artifact": "",
+          "verificationLevel": "BLOCKED (missing hardware); not a pass"
+        },
+        {
+          "testPath": "agents/Hatch.VenueEdge.Tests/StaleTrustRegressionTests.cs",
+          "tests": [
+            "D1_reboot_then_process_restart_in_new_boot_does_not_restore_stale_trust_or_accept_an_expired_lease",
+            "D1_running_lease_stays_locked_in_recovery_across_reboot_and_a_restart_in_the_new_boot",
+            "Same_boot_process_restart_still_keeps_trust_established_in_that_boot",
+            "Fresh_trusted_time_after_reboot_and_restart_is_the_only_way_trust_returns"
+          ],
+          "command": "cd agents && dotnet test HatchAgents.slnx",
+          "exitCode": 0,
+          "expected": "trust from a previous boot is never restored; after reboot the edge is untrusted and locked until fresh trusted time is established",
+          "actual": "as expected; red first: 3 of 4 failed before the fix (evidence/red-d1-dotnet-tests.txt), green after: VenueEdge 45/45",
+          "artifact": "specs/tickets/50-edge-core/evidence/fix1-dotnet-test.log",
+          "verificationLevel": "automated fixture/simulator (manual clocks, simulated display); no hardware"
+        }
+      ]
+    },
+    "HS-V02-12": {
+      "acceptance": "AC-HS-V02-12",
+      "evidence": [
+        {
+          "testPath": "agents/Hatch.VenueEdge.Tests/OfflineProofTests.cs",
+          "tests": [
+            "Offline_scenario_with_every_connection_refused",
+            "The_refusing_handler_really_throws_for_any_host"
+          ],
+          "command": "cd agents && dotnet test HatchAgents.slnx",
+          "exitCode": 0,
+          "expected": "5 attempts all refused, 0 bytes sent, then lease finishes by deadline, no new grants, rollback/duplicate/replay add 0 s, reboot fails closed",
+          "actual": "as recorded in offline-simulator-proof.json",
+          "artifact": "specs/tickets/50-edge-core/evidence/offline-simulator-proof.json",
+          "verificationLevel": "automated .NET test, SIMULATOR (simulated display, in-process crash injection, in-process refusing transport); no real hardware"
+        },
+        {
+          "testPath": "agents/Hatch.VenueEdge.Tests/LeaseTests.cs",
+          "tests": [
+            "Wall_clock_rollback_in_the_same_boot_cannot_gain_a_second",
+            "Online_extend_with_a_higher_revision_applies_and_a_replay_of_it_adds_nothing",
+            "A_replayed_or_reordered_sequence_is_refused"
+          ],
+          "command": "cd agents && dotnet test HatchAgents.slnx",
+          "exitCode": 0,
+          "expected": "all pass",
+          "actual": "Hatch.VenueEdge.Tests 41/41 passed",
+          "artifact": "specs/tickets/50-edge-core/evidence/dotnet-test.log",
+          "verificationLevel": "automated .NET test, SIMULATOR (simulated display, in-process crash injection, in-process refusing transport); no real hardware"
+        },
+        {
+          "testPath": "agents/Hatch.VenueEdge.Tests/RebootTests.cs",
+          "tests": [
+            "A_plausible_wall_clock_after_reboot_does_not_unlock_anything",
+            "Rolling_the_wall_clock_back_after_reconcile_does_not_add_time"
+          ],
+          "command": "cd agents && dotnet test HatchAgents.slnx",
+          "exitCode": 0,
+          "expected": "all pass",
+          "actual": "Hatch.VenueEdge.Tests 41/41 passed",
+          "artifact": "specs/tickets/50-edge-core/evidence/dotnet-test.log",
+          "verificationLevel": "automated .NET test, SIMULATOR (simulated display, in-process crash injection, in-process refusing transport); no real hardware"
+        },
+        {
+          "testPath": "tests/contracts/leases.test.ts",
+          "tests": [
+            "the committed vector verifies against the pinned key"
+          ],
+          "command": "pnpm exec vitest run tests/contracts/leases.test.ts",
+          "exitCode": 0,
+          "expected": "TS and .NET verify the same signed vector",
+          "actual": "as expected",
+          "artifact": "specs/tickets/50-edge-core/evidence/ticket-50.log",
+          "verificationLevel": "automated; cross-language vector"
+        },
+        {
+          "testPath": "true-offline",
+          "tests": [],
+          "command": "unshare -rn true",
+          "exitCode": 1,
+          "expected": "network namespace blocking all egress",
+          "actual": "Operation not permitted; no namespace available to user dev",
+          "artifact": "specs/tickets/50-edge-core/evidence/true-offline-attempt.txt",
+          "verificationLevel": "in-process transport is SIMULATOR only. Physical Ethernet unplugged on venue hardware: BLOCKED (missing hardware), not a pass"
+        },
+        {
+          "testPath": "agents/Hatch.VenueEdge.Tests/StaleTrustRegressionTests.cs",
+          "tests": [
+            "D1_reboot_then_process_restart_in_new_boot_does_not_restore_stale_trust_or_accept_an_expired_lease",
+            "D1_running_lease_stays_locked_in_recovery_across_reboot_and_a_restart_in_the_new_boot",
+            "Same_boot_process_restart_still_keeps_trust_established_in_that_boot",
+            "Fresh_trusted_time_after_reboot_and_restart_is_the_only_way_trust_returns"
+          ],
+          "command": "cd agents && dotnet test HatchAgents.slnx",
+          "exitCode": 0,
+          "expected": "trust from a previous boot is never restored; after reboot the edge is untrusted and locked until fresh trusted time is established",
+          "actual": "as expected; red first: 3 of 4 failed before the fix (evidence/red-d1-dotnet-tests.txt), green after: VenueEdge 45/45",
+          "artifact": "specs/tickets/50-edge-core/evidence/fix1-dotnet-test.log",
+          "verificationLevel": "automated fixture/simulator (manual clocks, simulated display); no hardware"
+        }
+      ]
+    }
+  },
+  "fix1": {
+    "defect": "D1 stale time trust restored after reboot+restart",
+    "gateExitCodes": "specs/tickets/50-edge-core/evidence/gate-exitcodes-fix1.txt",
+    "note": "pnpm test:ticket -- 48 exits 1: no mandatory tests registered for ticket 48 on this branch (T48 lives in its own worktree)."
+  }
+}

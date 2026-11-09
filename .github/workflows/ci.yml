@@ -42,10 +42,12 @@ jobs:
       - run: node packages/contracts/scripts/generate.ts --check
       # 01 has Gradle/.NET externals that run in the kotlin and dotnet jobs, so BLOCKED is allowed here only.
       - run: pnpm test:ticket -- 01 --allow-blocked
-      # 46, 47, 48 have no external checks: no --allow-blocked. T50 is not in spec-v0.2 (no manifest entry) so it has no gate yet.
+      # 46, 47, 48 have no external checks: no --allow-blocked.
       - run: pnpm test:ticket -- 46
       - run: pnpm test:ticket -- 47
       - run: pnpm test:ticket -- 48
+      # 50 has two dotnet externals (VenueEdge tests); they run in the dotnet job (dotnet test HatchAgents.slnx), so BLOCKED is allowed here only.
+      - run: pnpm test:ticket -- 50 --allow-blocked
       - run: pnpm test:e2e
         env:
           PW_CHANNEL: chrome
@@ -69,7 +71,7 @@ jobs:
       - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
         with:
           global-json-file: global.json
-      - run: dotnet test Hatch.Contracts.Tests/Hatch.Contracts.Tests.csproj
+      - run: dotnet test HatchAgents.slnx
         working-directory: agents
       - run: dotnet build HatchAgents.slnx
         working-directory: agents

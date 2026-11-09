@@ -1,0 +1,6 @@
+up: 0001_identity, 0002_stations_rates, 0004_edge_devices
+up exit 0
+down: 0004_edge_devices, 0002_stations_rates, 0001_identity
+down exit 0
+up: 0001_identity, 0002_stations_rates, 0004_edge_devices
+up exit 0
