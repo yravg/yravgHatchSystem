@@ -1,0 +1,11 @@
+install exit 0
+lint exit 0
+typecheck exit 0
+test exit 0
+test-ticket-49 exit 0
+test-ticket-50 exit 0
+test-ticket-48 exit 0
+test-ticket-47 exit 0
+test-ticket-46 exit 0
+validator exit 0
+DONE
