@@ -1,10 +1,16 @@
-<!-- T01 shell only: .NET 10 venue edge (SQLite WAL authority) is built by the edge ticket. -->
+<!-- T50: venue edge core (headless library). SQLite WAL authority, Ed25519 leases, fenced epoch. No UI, no real console power. -->
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
     <OutputType>Library</OutputType>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.12" />
+    <PackageReference Include="BouncyCastle.Cryptography" Version="2.6.2" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../Hatch.Contracts/Hatch.Contracts.csproj" />
   </ItemGroup>

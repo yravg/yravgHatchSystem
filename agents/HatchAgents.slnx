@@ -2,5 +2,6 @@
   <Project Path="Hatch.Contracts/Hatch.Contracts.csproj" />
   <Project Path="Hatch.Contracts.Tests/Hatch.Contracts.Tests.csproj" />
   <Project Path="venue-edge/Hatch.VenueEdge.csproj" />
+  <Project Path="Hatch.VenueEdge.Tests/Hatch.VenueEdge.Tests.csproj" />
   <Project Path="windows-seat/Hatch.WindowsSeat.csproj" />
 </Solution>

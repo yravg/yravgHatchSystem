@@ -1,0 +1,6 @@
+/home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.VenueEdge.Tests/Rig.cs(63,12): error CS0246: The type or namespace name 'EdgeRuntime' could not be found (are you missing a using directive or an assembly reference?) [/home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.VenueEdge.Tests/Hatch.VenueEdge.Tests.csproj]
+    0 Warning(s)
+    12 Error(s)
+
+Time Elapsed 00:00:10.71
+red-build exit 1
