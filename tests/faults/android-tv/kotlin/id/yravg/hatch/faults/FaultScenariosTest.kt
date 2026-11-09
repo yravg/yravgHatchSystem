@@ -69,6 +69,23 @@ class FaultScenariosTest {
         assertEquals(200, core.decide().remainingSeconds) // lease window minus real elapsed time, never the full 600 again
     }
 
+    @Test fun `checkpoint cap alone stops a replay after reboot from gaining seconds when the trusted-time floor is lost`() {
+        // Defence in depth: the floor (highestTrustedUtcMs) normally keeps trusted time monotonic. Model a restored or corrupted
+        // store that lost it; then only the checkpoint cap in applyLease stands between the replay and extra paid seconds.
+        val clock = FakeClock(); val store = MemoryStore(); var core = boot(clock, store)
+        core.establishTrustedTime(clock.wall, "t")
+        val l = signer.sign(TestKit.lease(issuedAt = clock.wall, seconds = 600, revision = 2))
+        core.applyLease(l); clock.advanceSeconds(100); core.checkpoint() // 500 s left at the checkpoint
+        store.data[TvCore.KEY] = store.data.getValue(TvCore.KEY).replace(Regex("\"highestTrustedUtcMs\":\\d+"), "\"highestTrustedUtcMs\":0")
+        assertTrue(store.data.getValue(TvCore.KEY).contains("\"highestTrustedUtcMs\":0"), "test setup must have wiped the floor")
+        clock.reboot(wallAfter = Instant.parse("2020-01-01T00:00:00Z")); core = boot(clock, store)
+        val earlier = TestKit.T0.plusSeconds(10) // an authority time EARLIER than the checkpoint (T0+100): window arithmetic alone would give 590 s
+        clock.wall = earlier
+        assertEquals(TimeResult.Ok, core.establishTrustedTime(earlier, "authority-reconcile"))
+        assertIs<LeaseResult.Accepted>(core.applyLease(l))
+        assertEquals(500, core.decide().remainingSeconds) // capped at the checkpoint, never 590
+    }
+
     @Test fun `reboot without trusted time fails closed even when the stored lease would still be valid by wall clock`() {
         val clock = FakeClock(); val store = MemoryStore(); var core = boot(clock, store)
         core.establishTrustedTime(clock.wall, "t"); core.applyLease(signer.sign(TestKit.lease(issuedAt = clock.wall, seconds = 3600)))
