@@ -35,7 +35,10 @@
           },
           {
             "file": "tests/contracts/secrets.test.ts",
-            "names": ["detector flags each secret shape", "every file under packages/contracts/fixtures is clean"]
+            "names": [
+              "detector flags each secret shape",
+              "every file under packages/contracts/fixtures is clean"
+            ]
           },
           {
             "file": "packages/domain/test/domain.test.ts",
@@ -83,14 +86,22 @@
             "id": "kotlin-canonical-equality",
             "tool": "gradle",
             "cwd": "agents/android-tv",
-            "command": ["gradle", "--no-daemon", ":contracts:test"],
+            "command": [
+              "gradle",
+              "--no-daemon",
+              ":contracts:test"
+            ],
             "note": "Kotlin parses the shared fixtures through the generated models and must emit the same canonical JSON as the TypeScript golden files."
           },
           {
             "id": "dotnet-canonical-equality",
             "tool": "dotnet",
             "cwd": "agents",
-            "command": ["dotnet", "test", "Hatch.Contracts.Tests/Hatch.Contracts.Tests.csproj"],
+            "command": [
+              "dotnet",
+              "test",
+              "Hatch.Contracts.Tests/Hatch.Contracts.Tests.csproj"
+            ],
             "note": ".NET parses the shared fixtures through the generated models and must emit the same canonical JSON as the TypeScript golden files."
           }
         ]
@@ -193,6 +204,104 @@
               "a sealed value opens only with its own key and owner binding",
               "a tampered sealed value does not open",
               "password hashes verify and are salted"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "47": {
+    "title": "API stasiun, tarif rasional dan minimum payment",
+    "requirements": {
+      "HS-47": {
+        "acceptance": "AC-HS-47",
+        "tests": [
+          {
+            "file": "tests/pricing/api.test.ts",
+            "names": [
+              "exactly one of N concurrent reserve requests wins over real HTTP",
+              "the same Idempotency-Key replays the same reservation instead of conflicting",
+              "cross-tenant and cross-outlet reads are 404 and never 403",
+              "owner creates and lists stations; a cashier may list but not create",
+              "v1 Rp10.000/hour: minimum is disabled by default and 61 s quotes exactly 610000/3600 = Rp169",
+              "a new rule version never changes an old quote, and the new quote cites the new version",
+              "the database refuses to change or delete a rule version or a quote",
+              "rate rules and quotes are tenant scoped"
+            ]
+          },
+          {
+            "file": "tests/pricing/pricing.test.ts",
+            "names": [
+              "Rp10.000/hour for 61 s is 610000/3600 and rounds once to Rp169",
+              "rounds once at the end: many small segments do not add up rounding error",
+              "half rupiah rounds up, below half rounds down",
+              "stays exact above 2^53"
+            ]
+          },
+          {
+            "file": "tests/pricing/migrate.test.ts",
+            "names": [
+              "applies up, rolls back down to nothing, and applies up again"
+            ]
+          }
+        ]
+      },
+      "HS-V02-01": {
+        "acceptance": "AC-HS-V02-01",
+        "tests": [
+          {
+            "file": "tests/pricing/api.test.ts",
+            "names": [
+              "exactly one of N concurrent reserve requests wins over real HTTP",
+              "the same Idempotency-Key replays the same reservation instead of conflicting",
+              "cross-tenant and cross-outlet reads are 404 and never 403",
+              "owner creates and lists stations; a cashier may list but not create",
+              "v1 Rp10.000/hour: minimum is disabled by default and 61 s quotes exactly 610000/3600 = Rp169",
+              "a new rule version never changes an old quote, and the new quote cites the new version",
+              "the database refuses to change or delete a rule version or a quote",
+              "rate rules and quotes are tenant scoped"
+            ]
+          },
+          {
+            "file": "tests/pricing/pricing.test.ts",
+            "names": [
+              "Rp10.000/hour for 61 s is 610000/3600 and rounds once to Rp169",
+              "rounds once at the end: many small segments do not add up rounding error",
+              "half rupiah rounds up, below half rounds down",
+              "stays exact above 2^53"
+            ]
+          },
+          {
+            "file": "tests/pricing/migrate.test.ts",
+            "names": [
+              "applies up, rolls back down to nothing, and applies up again"
+            ]
+          }
+        ]
+      },
+      "HS-V02-02": {
+        "acceptance": "AC-HS-V02-02",
+        "tests": [
+          {
+            "file": "tests/pricing/pricing.test.ts",
+            "names": [
+              "20 min = 5.000, 30 min = 5.000, 40 min = 7.000",
+              "pause time is not billable and does not consume covered minutes",
+              "the minimum applies once per session across reconnect, retry and zone transfer",
+              "is disabled by default",
+              "a transfer may only go to an equal or lower rate",
+              "insufficient balance cannot activate and reports the shortfall",
+              "enough balance activates",
+              "a negative balance or requirement is invalid, never activates"
+            ]
+          },
+          {
+            "file": "tests/pricing/api.test.ts",
+            "names": [
+              "with the minimum fixture: 20 min = 5.000, 30 min = 5.000, 40 min = 7.000; pause is not billed",
+              "an effective date earlier than the latest version is refused",
+              "an enabled minimum needs both fields",
+              "the same Idempotency-Key replays a quote; the same key with another body is 409"
             ]
           }
         ]

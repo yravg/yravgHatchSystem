@@ -1,0 +1,149 @@
+{
+  "ticket": "47",
+  "generatedBy": "T47 worker",
+  "note": "Red-first logs: evidence/red-first-pricing-core.log (12 failed) and evidence/red-first-api.log (routes missing, 404). Zone transfer is proven in the pure core only; the HTTP quote uses one rule version.",
+  "requirements": {
+    "HS-47": {
+      "acceptance": "AC-HS-47",
+      "evidence": [
+        {
+          "testPath": "tests/pricing/api.test.ts",
+          "tests": [
+            "exactly one of N concurrent reserve requests wins over real HTTP"
+          ],
+          "command": "pnpm exec vitest run tests/pricing/api.test.ts",
+          "exitCode": 0,
+          "expected": "1 of 12 concurrent reserves returns 200, 11 return 409, row reserved",
+          "actual": "1 x 200, 11 x 409",
+          "artifact": "evidence/ticket-47.log",
+          "verificationLevel": "automated integration on real PostgreSQL via HTTP (fastify inject and one real loopback HTTP test); sandbox fixture money; no UI, hardware or real payment"
+        },
+        {
+          "testPath": "tests/pricing/pricing.test.ts",
+          "tests": [
+            "Rp10.000/hour for 61 s is 610000/3600 and rounds once to Rp169",
+            "rounds once at the end: many small segments do not add up rounding error"
+          ],
+          "command": "pnpm exec vitest run tests/pricing/pricing.test.ts",
+          "exitCode": 0,
+          "expected": "exact 610000/3600, amount 169, 61 one-second parts also 169 (not 183)",
+          "actual": "as expected",
+          "artifact": "evidence/ticket-47.log",
+          "verificationLevel": "automated integration on real PostgreSQL via HTTP (fastify inject and one real loopback HTTP test); sandbox fixture money; no UI, hardware or real payment"
+        },
+        {
+          "testPath": "tests/pricing/api.test.ts",
+          "tests": [
+            "v1 Rp10.000/hour: minimum is disabled by default and 61 s quotes exactly 610000/3600 = Rp169",
+            "a new rule version never changes an old quote, and the new quote cites the new version"
+          ],
+          "command": "pnpm exec vitest run tests/pricing/api.test.ts",
+          "exitCode": 0,
+          "expected": "quote 169 as decimal string; old quote identical after version 2",
+          "actual": "as expected",
+          "artifact": "evidence/ticket-47.log",
+          "verificationLevel": "automated integration on real PostgreSQL via HTTP (fastify inject and one real loopback HTTP test); sandbox fixture money; no UI, hardware or real payment"
+        },
+        {
+          "testPath": "tests/pricing/migrate.test.ts",
+          "tests": [
+            "applies up, rolls back down to nothing, and applies up again"
+          ],
+          "command": "pnpm exec vitest run tests/pricing/migrate.test.ts",
+          "exitCode": 0,
+          "expected": "up, down, up clean",
+          "actual": "as expected; also CLI on hatch_t47 exit 0/0/0",
+          "artifact": "evidence/migration-up-down-up.log",
+          "verificationLevel": "automated integration on real PostgreSQL via HTTP (fastify inject and one real loopback HTTP test); sandbox fixture money; no UI, hardware or real payment"
+        }
+      ]
+    },
+    "HS-V02-01": {
+      "acceptance": "AC-HS-V02-01",
+      "evidence": [
+        {
+          "testPath": "tests/pricing/api.test.ts",
+          "tests": [
+            "exactly one of N concurrent reserve requests wins over real HTTP"
+          ],
+          "command": "pnpm exec vitest run tests/pricing/api.test.ts",
+          "exitCode": 0,
+          "expected": "1 of 12 concurrent reserves returns 200, 11 return 409, row reserved",
+          "actual": "1 x 200, 11 x 409",
+          "artifact": "evidence/ticket-47.log",
+          "verificationLevel": "automated integration on real PostgreSQL via HTTP (fastify inject and one real loopback HTTP test); sandbox fixture money; no UI, hardware or real payment"
+        },
+        {
+          "testPath": "tests/pricing/pricing.test.ts",
+          "tests": [
+            "Rp10.000/hour for 61 s is 610000/3600 and rounds once to Rp169",
+            "rounds once at the end: many small segments do not add up rounding error"
+          ],
+          "command": "pnpm exec vitest run tests/pricing/pricing.test.ts",
+          "exitCode": 0,
+          "expected": "exact 610000/3600, amount 169, 61 one-second parts also 169 (not 183)",
+          "actual": "as expected",
+          "artifact": "evidence/ticket-47.log",
+          "verificationLevel": "automated integration on real PostgreSQL via HTTP (fastify inject and one real loopback HTTP test); sandbox fixture money; no UI, hardware or real payment"
+        },
+        {
+          "testPath": "tests/pricing/api.test.ts",
+          "tests": [
+            "v1 Rp10.000/hour: minimum is disabled by default and 61 s quotes exactly 610000/3600 = Rp169",
+            "a new rule version never changes an old quote, and the new quote cites the new version"
+          ],
+          "command": "pnpm exec vitest run tests/pricing/api.test.ts",
+          "exitCode": 0,
+          "expected": "quote 169 as decimal string; old quote identical after version 2",
+          "actual": "as expected",
+          "artifact": "evidence/ticket-47.log",
+          "verificationLevel": "automated integration on real PostgreSQL via HTTP (fastify inject and one real loopback HTTP test); sandbox fixture money; no UI, hardware or real payment"
+        },
+        {
+          "testPath": "tests/pricing/migrate.test.ts",
+          "tests": [
+            "applies up, rolls back down to nothing, and applies up again"
+          ],
+          "command": "pnpm exec vitest run tests/pricing/migrate.test.ts",
+          "exitCode": 0,
+          "expected": "up, down, up clean",
+          "actual": "as expected; also CLI on hatch_t47 exit 0/0/0",
+          "artifact": "evidence/migration-up-down-up.log",
+          "verificationLevel": "automated integration on real PostgreSQL via HTTP (fastify inject and one real loopback HTTP test); sandbox fixture money; no UI, hardware or real payment"
+        }
+      ]
+    },
+    "HS-V02-02": {
+      "acceptance": "AC-HS-V02-02",
+      "evidence": [
+        {
+          "testPath": "tests/pricing/pricing.test.ts",
+          "tests": [
+            "20 min = 5.000, 30 min = 5.000, 40 min = 7.000",
+            "pause time is not billable and does not consume covered minutes",
+            "the minimum applies once per session across reconnect, retry and zone transfer",
+            "insufficient balance cannot activate and reports the shortfall"
+          ],
+          "command": "pnpm exec vitest run tests/pricing/pricing.test.ts",
+          "exitCode": 0,
+          "expected": "5000, 5000, 7000; pause not billed; minimum once; shortfall reported",
+          "actual": "as expected",
+          "artifact": "evidence/ticket-47.log",
+          "verificationLevel": "automated integration on real PostgreSQL via HTTP (fastify inject and one real loopback HTTP test); sandbox fixture money; no UI, hardware or real payment"
+        },
+        {
+          "testPath": "tests/pricing/api.test.ts",
+          "tests": [
+            "with the minimum fixture: 20 min = 5.000, 30 min = 5.000, 40 min = 7.000; pause is not billed"
+          ],
+          "command": "pnpm exec vitest run tests/pricing/api.test.ts",
+          "exitCode": 0,
+          "expected": "same figures through POST /api/v1/quotes",
+          "actual": "as expected",
+          "artifact": "evidence/ticket-47.log",
+          "verificationLevel": "automated integration on real PostgreSQL via HTTP (fastify inject and one real loopback HTTP test); sandbox fixture money; no UI, hardware or real payment"
+        }
+      ]
+    }
+  }
+}

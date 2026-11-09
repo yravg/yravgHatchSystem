@@ -4,6 +4,8 @@ import Fastify, { type FastifyError, type FastifyInstance } from "fastify";
 import { IdentityError } from "./identity/errors.ts";
 import { registerIdentity } from "./identity/routes.ts";
 import type { IdentityDeps } from "./identity/service.ts";
+import { registerRates } from "./rates/routes.ts";
+import { registerStations } from "./stations/routes.ts";
 
 export interface AppOptions {
   /** When absent the identity routes are not registered (the T01 scaffold: health only). */
@@ -32,7 +34,11 @@ export function buildApp(opts: AppOptions = {}): FastifyInstance {
 
   app.get("/api/v1/health", (req) => success({ status: "ok" }, { revision: 0, requestId: req.id, serverTime: new Date() }));
 
-  if (opts.identity) registerIdentity(app, opts.identity);
+  if (opts.identity) {
+    registerIdentity(app, opts.identity);
+    registerStations(app, opts.identity);
+    registerRates(app, opts.identity);
+  }
 
   return app;
 }

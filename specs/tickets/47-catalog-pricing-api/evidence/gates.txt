@@ -1,0 +1,9 @@
+pnpm install --frozen-lockfile                  exit 0 (no dependency change, lockfile untouched)
+pnpm lint                                       exit 0
+pnpm typecheck                                  exit 0 (first run exit 2: three missing `as unknown as` casts, fixed)
+pnpm test                                       exit 0   13 files, 147 tests (113 before T47 + 34 new)
+pnpm test:ticket -- 47                          exit 0   OK ticket 47
+pnpm test:ticket -- 46                          exit 0   OK ticket 46 (after updating tests/identity/migrate.test.ts to expect both migrations)
+validator on git archive HEAD (6e981bd)         exit 0   PASS 16764/16764
+migration up / down / up on hatch_t47           exit 0 / 0 / 0
+git push origin t47-pricing                     exit 128 (publickey / access rights); commits are local only

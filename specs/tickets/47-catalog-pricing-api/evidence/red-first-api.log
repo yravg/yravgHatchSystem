@@ -1,0 +1,242 @@
+
+ RUN  v3.2.7 /home/dev/orca/workspaces/yravgHatchSystem/t47-pricing
+
+ ❯ tests/pricing/api.test.ts (18 tests | 9 failed | 9 skipped) 811ms
+   × stations > owner creates and lists stations; a cashier may list but not create 9ms
+     → expected 404 to be 200 // Object.is equality
+   × stations > a duplicate name in the same outlet is a typed 409, not a 500 2ms
+     → expected 404 to be 200 // Object.is equality
+   × stations > cross-tenant and cross-outlet reads are 404 and never 403 1ms
+     → expected 404 to be 200 // Object.is equality
+   × stations > rejects tenantId or outletId smuggled in the body 1ms
+     → expected 404 to be 400 // Object.is equality
+   × stations > requires a session 1ms
+     → expected 404 to be 401 // Object.is equality
+   × stations > exactly one of N concurrent reserve requests wins over real HTTP 1ms
+     → expected 404 to be 200 // Object.is equality
+   × stations > the same Idempotency-Key replays the same reservation instead of conflicting 1ms
+     → expected 404 to be 200 // Object.is equality
+   × stations > only the reserver or a station manager may release, then it can be reserved again 1ms
+     → expected 404 to be 200 // Object.is equality
+   × stations > a retired station cannot be reserved, and a stale revision is refused 1ms
+     → expected 404 to be 200 // Object.is equality
+   ↓ rate rules and quotes (sandbox fixtures) > a quote without any rule is 404; a cashier cannot create rules
+   ↓ rate rules and quotes (sandbox fixtures) > v1 Rp10.000/hour: minimum is disabled by default and 61 s quotes exactly 610000/3600 = Rp169
+   ↓ rate rules and quotes (sandbox fixtures) > a new rule version never changes an old quote, and the new quote cites the new version
+   ↓ rate rules and quotes (sandbox fixtures) > with the minimum fixture: 20 min = 5.000, 30 min = 5.000, 40 min = 7.000; pause is not billed
+   ↓ rate rules and quotes (sandbox fixtures) > an effective date earlier than the latest version is refused
+   ↓ rate rules and quotes (sandbox fixtures) > an enabled minimum needs both fields; money as a JSON number or negative is refused
+   ↓ rate rules and quotes (sandbox fixtures) > the same Idempotency-Key replays a quote; the same key with another body is 409
+   ↓ rate rules and quotes (sandbox fixtures) > rate rules and quotes are tenant scoped: another tenant sees 404 and its own empty list
+   ↓ rate rules and quotes (sandbox fixtures) > the database refuses to change or delete a rule version or a quote
+ ✓ tests/pricing/migrate.test.ts (2 tests) 192ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/pricing/api.test.ts > rate rules and quotes (sandbox fixtures)
+AssertionError: expected 404 to be 200 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 200[39m
+[31m+ 404[39m
+
+ ❯ newStation tests/pricing/api.test.ts:29:20
+     27| const newStation = async (name: string) => {
+     28|   const r = await call(h.app, "POST", `${P}/stations`, { ...as(owner),…
+     29|   expect(r.status).toBe(200);
+       |                    ^
+     30|   return r.json["data"].stationId as string;
+     31| };
+ ❯ tests/pricing/api.test.ts:123:37
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/10]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/pricing/api.test.ts > stations > owner creates and lists stations; a cashier may list but not create
+AssertionError: expected 404 to be 200 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 200[39m
+[31m+ 404[39m
+
+ ❯ newStation tests/pricing/api.test.ts:29:20
+     27| const newStation = async (name: string) => {
+     28|   const r = await call(h.app, "POST", `${P}/stations`, { ...as(owner),…
+     29|   expect(r.status).toBe(200);
+       |                    ^
+     30|   return r.json["data"].stationId as string;
+     31| };
+ ❯ tests/pricing/api.test.ts:38:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/10]⎯
+
+ FAIL  tests/pricing/api.test.ts > stations > a duplicate name in the same outlet is a typed 409, not a 500
+AssertionError: expected 404 to be 200 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 200[39m
+[31m+ 404[39m
+
+ ❯ newStation tests/pricing/api.test.ts:29:20
+     27| const newStation = async (name: string) => {
+     28|   const r = await call(h.app, "POST", `${P}/stations`, { ...as(owner),…
+     29|   expect(r.status).toBe(200);
+       |                    ^
+     30|   return r.json["data"].stationId as string;
+     31| };
+ ❯ tests/pricing/api.test.ts:49:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/10]⎯
+
+ FAIL  tests/pricing/api.test.ts > stations > cross-tenant and cross-outlet reads are 404 and never 403
+AssertionError: expected 404 to be 200 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 200[39m
+[31m+ 404[39m
+
+ ❯ newStation tests/pricing/api.test.ts:29:20
+     27| const newStation = async (name: string) => {
+     28|   const r = await call(h.app, "POST", `${P}/stations`, { ...as(owner),…
+     29|   expect(r.status).toBe(200);
+       |                    ^
+     30|   return r.json["data"].stationId as string;
+     31| };
+ ❯ tests/pricing/api.test.ts:55:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/10]⎯
+
+ FAIL  tests/pricing/api.test.ts > stations > rejects tenantId or outletId smuggled in the body
+AssertionError: expected 404 to be 400 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 400[39m
+[31m+ 404[39m
+
+ ❯ tests/pricing/api.test.ts:63:22
+     61|   it("rejects tenantId or outletId smuggled in the body", async () => {
+     62|     const r = await call(h.app, "POST", `${P}/stations`, { ...as(owner…
+     63|     expect(r.status).toBe(400);
+       |                      ^
+     64|   });
+     65| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/10]⎯
+
+ FAIL  tests/pricing/api.test.ts > stations > requires a session
+AssertionError: expected 404 to be 401 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 401[39m
+[31m+ 404[39m
+
+ ❯ tests/pricing/api.test.ts:67:64
+     65| 
+     66|   it("requires a session", async () => {
+     67|     expect((await call(h.app, "GET", `${P}/stations`)).status).toBe(40…
+       |                                                                ^
+     68|   });
+     69| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/10]⎯
+
+ FAIL  tests/pricing/api.test.ts > stations > exactly one of N concurrent reserve requests wins over real HTTP
+AssertionError: expected 404 to be 200 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 200[39m
+[31m+ 404[39m
+
+ ❯ newStation tests/pricing/api.test.ts:29:20
+     27| const newStation = async (name: string) => {
+     28|   const r = await call(h.app, "POST", `${P}/stations`, { ...as(owner),…
+     29|   expect(r.status).toBe(200);
+       |                    ^
+     30|   return r.json["data"].stationId as string;
+     31| };
+ ❯ tests/pricing/api.test.ts:71:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/10]⎯
+
+ FAIL  tests/pricing/api.test.ts > stations > the same Idempotency-Key replays the same reservation instead of conflicting
+AssertionError: expected 404 to be 200 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 200[39m
+[31m+ 404[39m
+
+ ❯ newStation tests/pricing/api.test.ts:29:20
+     27| const newStation = async (name: string) => {
+     28|   const r = await call(h.app, "POST", `${P}/stations`, { ...as(owner),…
+     29|   expect(r.status).toBe(200);
+       |                    ^
+     30|   return r.json["data"].stationId as string;
+     31| };
+ ❯ tests/pricing/api.test.ts:92:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/10]⎯
+
+ FAIL  tests/pricing/api.test.ts > stations > only the reserver or a station manager may release, then it can be reserved again
+AssertionError: expected 404 to be 200 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 200[39m
+[31m+ 404[39m
+
+ ❯ newStation tests/pricing/api.test.ts:29:20
+     27| const newStation = async (name: string) => {
+     28|   const r = await call(h.app, "POST", `${P}/stations`, { ...as(owner),…
+     29|   expect(r.status).toBe(200);
+       |                    ^
+     30|   return r.json["data"].stationId as string;
+     31| };
+ ❯ tests/pricing/api.test.ts:102:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/10]⎯
+
+ FAIL  tests/pricing/api.test.ts > stations > a retired station cannot be reserved, and a stale revision is refused
+AssertionError: expected 404 to be 200 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 200[39m
+[31m+ 404[39m
+
+ ❯ newStation tests/pricing/api.test.ts:29:20
+     27| const newStation = async (name: string) => {
+     28|   const r = await call(h.app, "POST", `${P}/stations`, { ...as(owner),…
+     29|   expect(r.status).toBe(200);
+       |                    ^
+     30|   return r.json["data"].stationId as string;
+     31| };
+ ❯ tests/pricing/api.test.ts:112:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/10]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  9 failed | 2 passed | 9 skipped (20)
+   Start at  02:09:07
+   Duration  3.35s (transform 283ms, setup 0ms, collect 1.85s, tests 1.00s, environment 0ms, prepare 123ms)
+
