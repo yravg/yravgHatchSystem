@@ -1,0 +1,98 @@
+
+> yravg-hatchsystem@ test /home/dev/orca/workspaces/yravgHatchSystem/t49-session
+> vitest run
+
+
+ RUN  v3.2.7 /home/dev/orca/workspaces/yravgHatchSystem/t49-session
+
+ ✓ tests/identity/identity.test.ts (36 tests) 26354ms
+   ✓ sessions and tenancy > login sets an HttpOnly Secure SameSite cookie and never returns the session token in the body  1047ms
+   ✓ sessions and tenancy > wrong password and unknown email give the same 401 with no existence leak  724ms
+   ✓ sessions and tenancy > tenant and outlet come from the session; a client supplied tenantId or outletId in a body is rejected  590ms
+   ✓ sessions and tenancy > outlet selection at login is limited to granted outlets; other outlets and other tenants are 404  713ms
+   ✓ sessions and tenancy > role denial is 403 and a cross-tenant id is 404, even for a role without the permission  821ms
+   ✓ sessions and tenancy > a revoked role grant loses its permission on the very next request  722ms
+   ✓ sessions and tenancy > an unsafe request without the matching CSRF header is rejected  541ms
+   ✓ sessions and tenancy > logout revokes the session  608ms
+   ✓ TOTP enrolment and fail-closed second factor > enrol returns the secret once; the factor is unusable until a code confirms it  582ms
+   ✓ TOTP enrolment and fail-closed second factor > the secret is stored sealed and recovery codes only as hashes  718ms
+   ✓ TOTP enrolment and fail-closed second factor > a role that requires MFA is denied on business routes until a factor is verified  699ms
+   ✓ TOTP enrolment and fail-closed second factor > an enrolled account starts each login pending and must challenge before any business route  728ms
+   ✓ TOTP enrolment and fail-closed second factor > an unreadable stored secret or a missing factor fails closed  697ms
+   ✓ challenge, step-up, replay and rate limits > step-up opens for the TTL, then expires, then a fresh code renews it  670ms
+   ✓ challenge, step-up, replay and rate limits > a cashier cannot approve a refund however fresh the step-up is  511ms
+   ✓ challenge, step-up, replay and rate limits > a code replayed inside its step is rejected, also from a second session  877ms
+   ✓ challenge, step-up, replay and rate limits > an older step than the last accepted one is rejected (monotonic), even inside the skew window  714ms
+   ✓ challenge, step-up, replay and rate limits > skew is narrow: one step back is accepted, two are not  688ms
+   ✓ challenge, step-up, replay and rate limits > 10 wrong codes lock the actor; the 11th is 429 even with the correct code, and the lock lifts after the window  771ms
+   ✓ challenge, step-up, replay and rate limits > 10 wrong codes from one source lock that source across actors  925ms
+   ✓ challenge, step-up, replay and rate limits > rolling the clock back neither revives a session nor re-opens an accepted code  705ms
+   ✓ challenge, step-up, replay and rate limits > two app instances racing the same code accept it exactly once  833ms
+   ✓ recovery codes > a recovery code works once and then never again  673ms
+   ✓ recovery codes > recovery opens the session but gives no step-up, and another person's code does not work  835ms
+   ✓ recovery codes > wrong recovery codes count toward the 10-attempt limit  795ms
+   ✓ MFA revocation (the only recovery path for someone else) > an owner with a fresh step-up revokes another member's factor: audited, sessions killed, re-enrolment forced  884ms
+   ✓ MFA revocation (the only recovery path for someone else) > a manager cannot revoke someone else's factor (403) and another tenant's staff is 404  811ms
+   ✓ MFA revocation (the only recovery path for someone else) > revocation needs a fresh step-up, a reason, and the current revision  562ms
+   ✓ idempotency and expected revision > the same key and payload replays the stored result and runs the effect once  656ms
+   ✓ idempotency and expected revision > the same key with a different payload is 409 over HTTP and changes nothing  603ms
+   ✓ idempotency and expected revision > two concurrent requests with the same key and different payloads: one wins, the other is 409  681ms
+   ✓ idempotency and expected revision > two concurrent requests with the same key and the same payload run once and agree  690ms
+   ✓ idempotency and expected revision > a missing or malformed Idempotency-Key is 400  698ms
+   ✓ idempotency and expected revision > a stale expectedRevision is 409 REVISION_CONFLICT and nothing changes  726ms
+   ✓ idempotency and expected revision > an outlet of another tenant is 404 and the last owner grant cannot be revoked  597ms
+   ✓ logs > never contain the TOTP secret, an OTP, a recovery code, the password or the session token  1254ms
+ ✓ tests/session/transfer.test.ts (16 tests) 9092ms
+   ✓ tariffDelta quote accepted before action > move needs an accepted quote for this session and target, unexpired and used once  411ms
+   ✓ tariffDelta quote accepted before action > destination must be free, in this outlet, with an active paired seat; a PAUSED or already moving session cannot move  539ms
+   ✓ source locked and proven before the destination is granted > revokes the source, issues LOCK first, reserves the destination, and creates no destination command or lease until the lock is proven  374ms
+   ✓ source locked and proven before the destination is granted > proven lock then destination: same sessionId, quote, payment and F&B lineage; no new ledger entry; the move window is not billed; CEC never used  394ms
+   ✓ source locked and proven before the destination is granted > a stale ACK from the old source after the fence is unusable  328ms
+   ✓ no ACK or unreachable source never creates two playable seats > FIXED session, source never answers: after 10 s the session is RECOVERY and locked, the destination is never granted; end bills the frozen actual  754ms
+   ✓ no ACK or unreachable source never creates two playable seats > OPEN session, source unreachable: the source lease's bounded expiry is the proof, and not before  702ms
+   ✓ no ACK or unreachable source never creates two playable seats > recover retry re-sends the source LOCK under the same commandId and the transfer continues when it is proven  315ms
+   ✓ target failure is a recoverable locked state with no duplicate charge > a FAILED destination ACK: RECOVERY, destination locked, source still locked, retry brings it up on the destination  314ms
+   ✓ target failure is a recoverable locked state with no duplicate charge > a destination that never answers times out after 10 s into RECOVERY; ending releases the destination only after its lock is proven  660ms
+   ✓ crash recovery never grants two valid playback leases > a crash while granting the destination rolls back; the retry grants exactly one  592ms
+   ✓ crash recovery never grants two valid playback leases > concurrent reconciles (two workers) still grant one destination lease and issue one START  982ms
+   ✓ crash recovery never grants two valid playback leases > the database itself refuses a second granted lease for one session or one station  536ms
+   ✓ minimum payment is charged once across the transfer (T47 gap closed over HTTP) > 5.000 covering 30 billable minutes is counted once; only the remaining time is repriced  349ms
+ ✓ tests/payments/payments.test.ts (32 tests) 4672ms
+   ✓ provider failure > a provider timeout is pending, never success  446ms
+   ✓ provider failure > an unauthorised charge (wrong ServerKey) is not a payment  839ms
+ ✓ tests/session/start.test.ts (24 tests) 3757ms
+ ✓ tests/pricing/api.test.ts (18 tests) 1809ms
+ ✓ tests/edge/devices.test.ts (15 tests) 1686ms
+ ✓ tests/session/running.test.ts (11 tests) 3447ms
+   ✓ invalid transitions are rejected > each action from a wrong state is 409 INVALID_TRANSITION with no new command  355ms
+   ✓ open billing uses short renewed leases (D07 fixture 60 s / 120 s) > the first lease is bounded to 120 s and renewed from 60 s with a new lease; never two granted leases  317ms
+ ✓ tests/ledger/ledger.test.ts (11 tests) 1321ms
+ ✓ packages/domain/test/domain.test.ts (23 tests) 14ms
+ ✓ tests/session/domain.test.ts (19 tests) 14ms
+ ✓ tests/ledger/migrate.test.ts (5 tests) 792ms
+   ✓ T48 migration 0003 > applies up, rolls back down to nothing, and applies up again  453ms
+ ✓ tests/pricing/pricing.test.ts (14 tests) 7ms
+ ✓ packages/ui/test/tokens.test.ts (8 tests) 11ms
+ ✓ tests/payments/config.test.ts (6 tests) 7ms
+ ✓ tools/ticket-dispatch.test.ts (9 tests) 279ms
+ ✓ tests/contracts/protocol.test.ts (15 tests) 14ms
+ ✓ tests/identity/migrate.test.ts (4 tests) 694ms
+   ✓ identity migrations > applies up, rolls back down to nothing, and applies up again  481ms
+ ✓ tests/contracts/leases.test.ts (5 tests) 28ms
+ ✓ tests/identity/totp.test.ts (7 tests) 308ms
+ ✓ tests/ledger/journal.test.ts (5 tests) 7ms
+ ✓ tests/session/migrate.test.ts (3 tests) 682ms
+   ✓ migration 0005 (sessions) > applies up, rolls back to nothing, applies up again  473ms
+ ✓ tests/contracts/generated.test.ts (4 tests) 17ms
+ ✓ services/api/test/app.test.ts (5 tests) 78ms
+ ✓ tests/contracts/secrets.test.ts (2 tests) 9ms
+ ✓ tests/pricing/migrate.test.ts (2 tests) 616ms
+   ✓ T47 migration 0002 > applies up, rolls back down to nothing, and applies up again  463ms
+ ✓ tests/edge/migrate.test.ts (1 test) 644ms
+   ✓ migration 0004 (edge devices) > applies up, rolls back to nothing, applies up again  460ms
+
+ Test Files  26 passed (26)
+      Tests  300 passed (300)
+   Start at  04:35:22
+   Duration  88.00s (transform 1.91s, setup 0ms, collect 22.11s, tests 56.36s, environment 5ms, prepare 2.66s)
+

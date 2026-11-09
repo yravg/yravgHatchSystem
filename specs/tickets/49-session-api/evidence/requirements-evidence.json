@@ -1,0 +1,118 @@
+{
+  "ticket": "HS-T49",
+  "branchBase": "65b3e1c",
+  "gateExitCodes": {
+    "install": 0,
+    "lint": 0,
+    "typecheck": 0,
+    "test": 0,
+    "test-ticket-49": 0,
+    "test-ticket-50": 0,
+    "test-ticket-48": 0,
+    "test-ticket-47": 0,
+    "test-ticket-46": 0,
+    "validator": 0
+  },
+  "requirements": [
+    {
+      "requirement": "HS-49",
+      "acceptance": "AC-HS-49",
+      "testPath": "tests/session/domain.test.ts",
+      "command": "pnpm test:ticket -- 49",
+      "exitCode": 0,
+      "expected": "Ten contract states, invalid transitions rejected, clock never negative, lease window 120 s/60 s, COMMANDED_ONLY never proves a lock",
+      "actual": "19 domain tests pass",
+      "artifact": "specs/tickets/49-session-api/evidence/gates/test-ticket-49.log",
+      "verificationLevel": "UNIT (pure core)"
+    },
+    {
+      "requirement": "HS-49",
+      "acceptance": "AC-HS-49",
+      "testPath": "tests/session/start.test.ts",
+      "command": "pnpm test:ticket -- 49",
+      "exitCode": 0,
+      "expected": "Atomic start (session, command, lease claims, outbox), RECEIVED is not APPLIED, COMMANDED_ONLY labelled limited, SIMULATED refused, T47 insufficient-balance and T48 payment gates over HTTP, 10 s timeout, same-commandId retry, refund_pending on failed start, late ACK after cancel rejected",
+      "actual": "24 start tests pass",
+      "artifact": "specs/tickets/49-session-api/evidence/gates/test-ticket-49.log",
+      "verificationLevel": "FIXTURE/SIMULATOR: edge and seat devices are simulators posting signed ACKs through T50 intake; money and timings are sandbox fixtures (D01, D06, D07, D26 unapproved); no hardware, no live provider"
+    },
+    {
+      "requirement": "HS-49",
+      "acceptance": "AC-HS-49",
+      "testPath": "tests/session/running.test.ts",
+      "command": "pnpm test:ticket -- 49",
+      "exitCode": 0,
+      "expected": "Pause locks and stops the clock, higher lock revision wins, OPEN lease 120 s horizon renewed from 60 s, WAN loss locks at last applied lease and records actual billable, fixed end, checkout chain, invalid transitions 409",
+      "actual": "11 running tests pass",
+      "artifact": "specs/tickets/49-session-api/evidence/gates/test-ticket-49.log",
+      "verificationLevel": "FIXTURE/SIMULATOR: edge and seat devices are simulators posting signed ACKs through T50 intake; money and timings are sandbox fixtures (D01, D06, D07, D26 unapproved); no hardware, no live provider"
+    },
+    {
+      "requirement": "HS-49",
+      "acceptance": "AC-HS-49",
+      "testPath": "tests/session/transfer.test.ts",
+      "command": "pnpm test:ticket -- 49",
+      "exitCode": 0,
+      "expected": "Source revoked and lock PROVEN before destination lease; unreachable source never creates a second lease; target failure leaves RECOVERY locked; crash and concurrent reconcile grant one lease; stale old-source ACK unusable; DB refuses two granted leases",
+      "actual": "16 transfer tests pass",
+      "artifact": "specs/tickets/49-session-api/evidence/gates/test-ticket-49.log",
+      "verificationLevel": "FIXTURE/SIMULATOR: edge and seat devices are simulators posting signed ACKs through T50 intake; money and timings are sandbox fixtures (D01, D06, D07, D26 unapproved); no hardware, no live provider"
+    },
+    {
+      "requirement": "HS-49",
+      "acceptance": "AC-HS-49",
+      "testPath": "tests/session/migrate.test.ts",
+      "command": "pnpm test:ticket -- 49",
+      "exitCode": 0,
+      "expected": "Migration 0005 up, down to nothing, up again; settled to refund_pending allowed by the replaced guard",
+      "actual": "3 migration tests pass",
+      "artifact": "specs/tickets/49-session-api/evidence/migration-up-down-up.log",
+      "verificationLevel": "INTEGRATION (real Postgres schema)"
+    },
+    {
+      "requirement": "HS-V02-09",
+      "acceptance": "AC-HS-V02-09",
+      "testPath": "tests/session/transfer.test.ts",
+      "command": "pnpm test:ticket -- 49",
+      "exitCode": 0,
+      "expected": "PS5 A to B, CEC disabled (only LOCK and START commands), same sessionId, quote, payment lineage and F&B reference, frozen deterministic tariffDelta quote accepted before action, source locked before destination grant, no-ACK or unreachable source creates no second lease, target failure is recoverable and locked, no claim of uninterrupted gameplay",
+      "actual": "transfer tests pass; transfer view carries gameplayContinuity \"not_guaranteed\"",
+      "artifact": "specs/tickets/49-session-api/evidence/gates/test-ticket-49.log",
+      "verificationLevel": "FIXTURE/SIMULATOR: edge and seat devices are simulators posting signed ACKs through T50 intake; money and timings are sandbox fixtures (D01, D06, D07, D26 unapproved); no hardware, no live provider"
+    },
+    {
+      "requirement": "HS-V02-09",
+      "acceptance": "AC-HS-V02-09",
+      "testPath": "tests/session/domain.test.ts",
+      "command": "pnpm test:ticket -- 49",
+      "exitCode": 0,
+      "expected": "tariffDelta is deterministic, downward only, minimum once",
+      "actual": "tariffDelta domain tests pass",
+      "artifact": "specs/tickets/49-session-api/evidence/gates/test-ticket-49.log",
+      "verificationLevel": "UNIT (pure core)"
+    }
+  ],
+  "mutationChecks": {
+    "file": "specs/tickets/49-session-api/evidence/mutation-log.txt",
+    "killed": 14,
+    "total": 14
+  },
+  "redFirst": [
+    {
+      "what": "Failing tests were committed and logged before the code",
+      "testPath": "tests/session/*.test.ts",
+      "command": "pnpm exec vitest run tests/session",
+      "exitCode": 1,
+      "actual": "every test failed: sessions module, domain exports and migration 0005 did not exist",
+      "artifact": "specs/tickets/49-session-api/evidence/red-first-api.log; red-first-domain.log"
+    }
+  ],
+  "notVerified": [
+    "physical seat, TV or console hardware (BLOCKED, none available)",
+    "true offline / Ethernet-unplugged venue test (BLOCKED, T50 owns the edge side)",
+    "edge transport and desired-state delivery (T20, not built)",
+    "worker loop for the session sweep (not wired into services/worker)",
+    "real Midtrans sandbox schema (mock only)",
+    "any UI"
+  ]
+}
