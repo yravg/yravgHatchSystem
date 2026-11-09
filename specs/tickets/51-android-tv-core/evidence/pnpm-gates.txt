@@ -1,0 +1,4 @@
+pnpm install --frozen-lockfile exit=0
+pnpm lint exit=0
+pnpm typecheck exit=0
+pnpm test exit=0

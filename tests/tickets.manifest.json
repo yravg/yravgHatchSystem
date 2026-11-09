@@ -540,7 +540,7 @@
               "assembleDebug",
               ":contracts:test"
             ],
-            "note": "31 core + 5 app JVM tests plus assembleDebug (SIMULATOR). Physical Home/Back/input, cold reboot and Ethernet-unplugged tests are BLOCKED: no Android TV hardware (tests/hardware/android-tv P1-P11)."
+            "note": "31 core + 6 app + 6 contracts JVM tests plus assembleDebug (SIMULATOR). Physical Home/Back/input, cold reboot and Ethernet-unplugged tests are BLOCKED: no Android TV hardware (tests/hardware/android-tv P1-P11)."
           }
         ]
       },
