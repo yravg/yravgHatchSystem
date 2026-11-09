@@ -91,7 +91,19 @@
               "--no-daemon",
               ":contracts:test"
             ],
-            "note": "Kotlin parses the shared fixtures through the generated models and must emit the same canonical JSON as the TypeScript golden files."
+            "note": "Kotlin parses the shared fixtures through the generated models and must emit the same canonical JSON as the TypeScript golden files.",
+            "reportDirs": [
+              "contracts/build/test-results"
+            ],
+            "mandatory": [
+              "ConformanceTest::lease()",
+              "ConformanceTest::command()",
+              "ConformanceTest::ack()",
+              "ConformanceTest::error()",
+              "ConformanceTest::payment()",
+              "ConformanceTest::unknownMemberIsRejected()"
+            ],
+            "minTests": 6
           },
           {
             "id": "dotnet-canonical-equality",
@@ -100,9 +112,25 @@
             "command": [
               "dotnet",
               "test",
-              "Hatch.Contracts.Tests/Hatch.Contracts.Tests.csproj"
+              "Hatch.Contracts.Tests/Hatch.Contracts.Tests.csproj",
+              "--logger",
+              "trx;LogFileName=contracts.trx",
+              "--results-directory",
+              "TestResults-dispatch/contracts"
             ],
-            "note": ".NET parses the shared fixtures through the generated models and must emit the same canonical JSON as the TypeScript golden files."
+            "note": ".NET parses the shared fixtures through the generated models and must emit the same canonical JSON as the TypeScript golden files.",
+            "reportDirs": [
+              "TestResults-dispatch/contracts"
+            ],
+            "mandatory": [
+              "Hatch.Contracts.Tests.ConformanceTests.Lease",
+              "Hatch.Contracts.Tests.ConformanceTests.Command",
+              "Hatch.Contracts.Tests.ConformanceTests.Ack",
+              "Hatch.Contracts.Tests.ConformanceTests.Error",
+              "Hatch.Contracts.Tests.ConformanceTests.Payment",
+              "Hatch.Contracts.Tests.ConformanceTests.UnknownMemberIsRejected"
+            ],
+            "minTests": 6
           }
         ]
       },
@@ -486,9 +514,36 @@
             "command": [
               "dotnet",
               "test",
-              "Hatch.VenueEdge.Tests/Hatch.VenueEdge.Tests.csproj"
+              "Hatch.VenueEdge.Tests/Hatch.VenueEdge.Tests.csproj",
+              "--logger",
+              "trx;LogFileName=edge-core.trx",
+              "--results-directory",
+              "TestResults-dispatch/edge-core"
             ],
-            "note": "41 .NET tests: SQLite WAL persists before ACK (kill before/after commit), Ed25519 lease, WAN drop expiry, offline allowance 0, reboot fail closed, optional CEC. Simulator display; no hardware."
+            "note": "45 .NET tests: SQLite WAL persists before ACK (kill before/after commit), Ed25519 lease, WAN drop expiry, offline allowance 0, reboot fail closed, optional CEC. Simulator display; no hardware.",
+            "reportDirs": [
+              "TestResults-dispatch/edge-core"
+            ],
+            "mandatory": [
+              "Hatch.VenueEdge.Tests.IdentityAndVectorTests.The_typescript_signed_vector_verifies_and_the_canonical_payload_is_byte_equal",
+              "Hatch.VenueEdge.Tests.IdentityAndVectorTests.Device_key_is_generated_at_runtime_stored_owner_only_and_proves_possession",
+              "Hatch.VenueEdge.Tests.IdentityAndVectorTests.The_private_seed_never_lands_in_the_edge_database",
+              "Hatch.VenueEdge.Tests.PersistBeforeAckTests.Database_is_wal_with_full_synchronous",
+              "Hatch.VenueEdge.Tests.PersistBeforeAckTests.Death_after_commit_keeps_the_row_resends_from_the_outbox_and_applies_once",
+              "Hatch.VenueEdge.Tests.PersistBeforeAckTests.Death_before_commit_leaves_nothing_and_sends_nothing_then_the_retry_works",
+              "Hatch.VenueEdge.Tests.PersistBeforeAckTests.The_outbox_row_is_committed_before_the_sink_sees_the_ack",
+              "Hatch.VenueEdge.Tests.PersistBeforeAckTests.Events_are_append_only_and_ordered",
+              "Hatch.VenueEdge.Tests.LeaseTests.A_valid_signed_lease_unlocks_the_picture_and_the_ack_is_labelled_simulated",
+              "Hatch.VenueEdge.Tests.LeaseTests.A_lease_that_does_not_verify_is_refused_and_the_picture_stays_locked",
+              "Hatch.VenueEdge.Tests.LeaseTests.A_replayed_or_reordered_sequence_is_refused",
+              "Hatch.VenueEdge.Tests.LeaseTests.A_fenced_edge_stops_granting_and_refuses_starts",
+              "Hatch.VenueEdge.Tests.LeaseTests.The_edge_issues_a_lease_its_own_trust_bundle_accepts",
+              "Hatch.VenueEdge.Tests.CecTests.With_no_cec_driver_start_pause_expire_and_reboot_all_lock_the_picture",
+              "Hatch.VenueEdge.Tests.CecTests.A_failing_optional_cec_driver_cannot_stop_the_independent_lock",
+              "Hatch.VenueEdge.Tests.CecTests.A_display_that_is_not_ready_blocks_the_start_so_no_billing_begins_without_activation",
+              "Hatch.VenueEdge.Tests.CecTests.The_display_adapter_is_a_labelled_simulator_and_has_no_console_power_method"
+            ],
+            "minTests": 45
           }
         ]
       },
@@ -514,9 +569,34 @@
             "command": [
               "dotnet",
               "test",
-              "Hatch.VenueEdge.Tests/Hatch.VenueEdge.Tests.csproj"
+              "Hatch.VenueEdge.Tests/Hatch.VenueEdge.Tests.csproj",
+              "--logger",
+              "trx;LogFileName=edge-offline.trx",
+              "--results-directory",
+              "TestResults-dispatch/edge-offline"
             ],
-            "note": "Offline scenario with an in-process transport refusing every connection (SIMULATOR). Physical Ethernet-unplugged test is BLOCKED: no venue hardware."
+            "note": "Offline scenario with an in-process transport refusing every connection (SIMULATOR). Physical Ethernet-unplugged test is BLOCKED: no venue hardware.",
+            "reportDirs": [
+              "TestResults-dispatch/edge-offline"
+            ],
+            "mandatory": [
+              "Hatch.VenueEdge.Tests.OfflineProofTests.Offline_scenario_with_every_connection_refused",
+              "Hatch.VenueEdge.Tests.OfflineProofTests.The_refusing_handler_really_throws_for_any_host",
+              "Hatch.VenueEdge.Tests.LeaseTests.Wan_down_the_valid_lease_runs_to_its_deadline_then_locks_locally",
+              "Hatch.VenueEdge.Tests.LeaseTests.Offline_new_start_extend_and_money_actions_are_refused_with_allowance_zero",
+              "Hatch.VenueEdge.Tests.LeaseTests.Wall_clock_rollback_in_the_same_boot_cannot_gain_a_second",
+              "Hatch.VenueEdge.Tests.RebootTests.A_fresh_start_is_refused_while_time_is_untrusted",
+              "Hatch.VenueEdge.Tests.RebootTests.A_plausible_wall_clock_after_reboot_does_not_unlock_anything",
+              "Hatch.VenueEdge.Tests.RebootTests.Reboot_locks_the_picture_and_asks_for_recovery_instead_of_resetting_the_time",
+              "Hatch.VenueEdge.Tests.RebootTests.Reconciliation_past_the_signed_deadline_stays_locked",
+              "Hatch.VenueEdge.Tests.RebootTests.Trusted_reconciliation_resumes_with_no_more_than_the_checkpoint",
+              "Hatch.VenueEdge.Tests.RebootTests.Rolling_the_wall_clock_back_after_reconcile_does_not_add_time",
+              "Hatch.VenueEdge.Tests.StaleTrustRegressionTests.D1_running_lease_stays_locked_in_recovery_across_reboot_and_a_restart_in_the_new_boot",
+              "Hatch.VenueEdge.Tests.StaleTrustRegressionTests.D1_reboot_then_process_restart_in_new_boot_does_not_restore_stale_trust_or_accept_an_expired_lease",
+              "Hatch.VenueEdge.Tests.StaleTrustRegressionTests.Same_boot_process_restart_still_keeps_trust_established_in_that_boot",
+              "Hatch.VenueEdge.Tests.StaleTrustRegressionTests.Fresh_trusted_time_after_reboot_and_restart_is_the_only_way_trust_returns"
+            ],
+            "minTests": 45
           }
         ]
       }
@@ -685,7 +765,37 @@
               "assembleDebug",
               ":contracts:test"
             ],
-            "note": "31 core + 6 app + 6 contracts JVM tests plus assembleDebug (SIMULATOR). Physical Home/Back/input, cold reboot and Ethernet-unplugged tests are BLOCKED: no Android TV hardware (tests/hardware/android-tv P1-P11)."
+            "note": "32 core + 6 app + 6 contracts JVM tests plus assembleDebug (SIMULATOR). Physical Home/Back/input, cold reboot and Ethernet-unplugged tests are BLOCKED: no Android TV hardware (tests/hardware/android-tv P1-P11).",
+            "reportDirs": [
+              "app/build/test-results",
+              "core/build/test-results",
+              "contracts/build/test-results"
+            ],
+            "mandatory": [
+              "LeaseVectorTest::kotlin canonical payload equals the committed canonical payload()",
+              "LeaseVectorTest::the committed vector verifies against the pinned key()",
+              "LeaseVectorTest::a changed second or a wrong or unknown key is rejected()",
+              "LeaseVectorTest::stale epoch expired and future leases are rejected and garbage never throws()",
+              "FaultScenariosTest::WAN loss lets a valid lease expire locally then locks and never extends()",
+              "FaultScenariosTest::a replayed lease neither extends nor revives, duplicates are idempotent()",
+              "FaultScenariosTest::wall clock rollback and untrusted time changes add no seconds()",
+              "FaultScenariosTest::three cold reboots return to locked state with no relaunch and no regained seconds()",
+              "FaultScenariosTest::checkpoint cap alone stops a replay after reboot from gaining seconds when the trusted-time floor is lost()",
+              "FaultScenariosTest::reboot without trusted time fails closed even when the stored lease would still be valid by wall clock()",
+              "FaultScenariosTest::same boot process death keeps trust and the running lease()",
+              "FaultScenariosTest::stale epoch, cross-device and split-brain leases are refused()",
+              "FaultScenariosTest::untrusted signer key id in the payload alone is never trusted()",
+              "BcEd25519VerifierTest::the committed vector verifies",
+              "BcEd25519VerifierTest::a changed second is BAD_SIGNATURE and garbage never throws",
+              "ConformanceTest::lease()",
+              "ConformanceTest::command()",
+              "ConformanceTest::ack()",
+              "ConformanceTest::error()",
+              "ConformanceTest::payment()",
+              "ConformanceTest::unknownMemberIsRejected()",
+              "ProvisioningAndLockTest::a valid lease unlocks for its remaining seconds on the monotonic clock then locks()"
+            ],
+            "minTests": 44
           }
         ]
       },
@@ -704,7 +814,31 @@
               "assembleDebug",
               ":contracts:test"
             ],
-            "note": "Provisioning profiles, locked setup, HTTP 200/pairing never grant, technician escape audited (SIMULATOR). Physical key tests BLOCKED."
+            "note": "Provisioning profiles, locked setup, HTTP 200/pairing never grant, technician escape audited (SIMULATOR). Physical key tests BLOCKED.",
+            "reportDirs": [
+              "app/build/test-results",
+              "core/build/test-results",
+              "contracts/build/test-results"
+            ],
+            "mandatory": [
+              "ProvisioningAndLockTest::PROVISIONED_UNPAIRED without a lease is locked with neutral setup, no pairing or payment needed()",
+              "ProvisioningAndLockTest::Home Back and input are consumed while locked in the managed profile()",
+              "ProvisioningAndLockTest::UNPROVISIONED_APP never claims kiosk security and keys pass through honestly()",
+              "ProvisioningAndLockTest::a valid lease unlocks for its remaining seconds on the monotonic clock then locks()",
+              "ProvisioningAndLockTest::a lease is refused without trusted time, for another device, without DISPLAY_GAME, or with a bad signature()",
+              "ProvisioningAndLockTest::pairing HTTP 200 with a locked payload, timeout and refresh never grant play()",
+              "ProvisioningAndLockTest::HTTP 200 carrying a lease only plays when the lease itself verifies()",
+              "ProvisioningAndLockTest::revoked state locks and needs repair, only a lease with a higher epoch after re-provisioning may play()",
+              "ProvisioningAndLockTest::pause end and lock commands lock immediately without CEC and a later lease resumes()",
+              "TechnicianEscapeTest::no credential enrolled means the escape is closed()",
+              "TechnicianEscapeTest::credential is stored only as a salted hash and a correct attempt opens setup only, never the picture()",
+              "TechnicianEscapeTest::wrong credential is denied, audited without the secret, and five wrong attempts per minute lock the escape out()",
+              "TechnicianEscapeTest::every grant and enrolment is audited with actor and reason, and the setup window closes after five minutes()",
+              "TechnicianEscapeTest::credential and audit survive a restart and a short credential is refused()",
+              "AppPolicyTest::manifest requests no hidden or privileged capability",
+              "AppPolicyTest::only a device owner app is PROVISIONED_UNPAIRED, everything else is UNPROVISIONED_APP"
+            ],
+            "minTests": 44
           }
         ]
       },
@@ -723,7 +857,21 @@
               "assembleDebug",
               ":contracts:test"
             ],
-            "note": "Three simulated cold reboots, permission revoke => capability fail + fallback lock, no grant API (SIMULATOR). Real 3-reboot run on an exact model BLOCKED."
+            "note": "Three simulated cold reboots, permission revoke => capability fail + fallback lock, no grant API (SIMULATOR). Real 3-reboot run on an exact model BLOCKED.",
+            "reportDirs": [
+              "app/build/test-results",
+              "core/build/test-results",
+              "contracts/build/test-results"
+            ],
+            "mandatory": [
+              "FaultScenariosTest::three cold reboots return to locked state with no relaunch and no regained seconds()",
+              "FaultScenariosTest::reboot without trusted time fails closed even when the stored lease would still be valid by wall clock()",
+              "FaultScenariosTest::same boot process death keeps trust and the running lease()",
+              "CapabilityTest::missing or revoked overlay permission fails capability, locks via the fallback route and asks for repair()",
+              "CapabilityTest::the permission probe can only read, there is no grant API()",
+              "AppPolicyTest::overlay state is GRANTED, MISSING when never granted, REVOKED when it was granted before"
+            ],
+            "minTests": 44
           }
         ]
       },
@@ -742,7 +890,18 @@
               "assembleDebug",
               ":contracts:test"
             ],
-            "note": "CEC off recorded on TV and console, lock lifecycle with a CEC driver that fails if touched, unsupported power advertised (SIMULATOR). Real TV+console BLOCKED."
+            "note": "CEC off recorded on TV and console, lock lifecycle with a CEC driver that fails if touched, unsupported power advertised (SIMULATOR). Real TV+console BLOCKED.",
+            "reportDirs": [
+              "app/build/test-results",
+              "core/build/test-results",
+              "contracts/build/test-results"
+            ],
+            "mandatory": [
+              "CapabilityTest::CEC is optional, unsupported power is advertised and the lock route does not need CEC or console mains()",
+              "CapabilityTest::venue setup records CEC off on both TV and console and anything else is flagged not certifiable()",
+              "ProvisioningAndLockTest::pause end and lock commands lock immediately without CEC and a later lease resumes()"
+            ],
+            "minTests": 44
           }
         ]
       }

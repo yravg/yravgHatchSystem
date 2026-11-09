@@ -1,0 +1,414 @@
+
+> yravg-hatchsystem@ test:ticket /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv
+> node tools/ticket-dispatch.ts -- 51
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.9.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :contracts
+Build was configured to prefer settings repositories over project repositories but repository 'MavenRepo' was added by build file 'contracts/build.gradle.kts'
+
+> Configure project :core
+Build was configured to prefer settings repositories over project repositories but repository 'MavenRepo' was added by build file 'core/build.gradle.kts'
+
+> Task :contracts:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :contracts:compileKotlin UP-TO-DATE
+> Task :contracts:compileJava NO-SOURCE
+> Task :contracts:processResources NO-SOURCE
+> Task :contracts:classes UP-TO-DATE
+> Task :contracts:jar UP-TO-DATE
+> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :core:compileKotlin UP-TO-DATE
+> Task :core:compileJava NO-SOURCE
+> Task :core:processResources NO-SOURCE
+> Task :core:classes UP-TO-DATE
+> Task :core:jar UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:generateDebugRFile UP-TO-DATE
+> Task :app:compileDebugKotlin UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac NO-SOURCE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :app:bundleDebugClassesToRuntimeJar UP-TO-DATE
+> Task :app:bundleDebugClassesToCompileJar UP-TO-DATE
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:compileDebugUnitTestKotlin UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:compressDebugJavaRes UP-TO-DATE
+> Task :app:compressDebugUnitTestJavaRes UP-TO-DATE
+> Task :app:extractDebugUnitTestJavaRes UP-TO-DATE
+> Task :core:processTestResources UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :app:generateDebugGlobalSynthetics UP-TO-DATE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:dexBuilderDebug UP-TO-DATE
+> Task :app:mergeProjectDexDebug UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:mergeDebugNativeLibs NO-SOURCE
+> Task :app:stripDebugDebugSymbols NO-SOURCE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :app:packageDebug UP-TO-DATE
+> Task :app:createDebugApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleDebug UP-TO-DATE
+> Task :contracts:compileTestKotlin UP-TO-DATE
+> Task :contracts:compileTestJava NO-SOURCE
+> Task :contracts:processTestResources UP-TO-DATE
+> Task :contracts:testClasses UP-TO-DATE
+> Task :contracts:test
+> Task :core:compileTestKotlin
+> Task :core:compileTestJava NO-SOURCE
+> Task :core:testClasses UP-TO-DATE
+> Task :core:test
+> Task :app:testDebugUnitTest
+
+BUILD SUCCESSFUL in 33s
+51 actionable tasks: 4 executed, 47 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.9.0/userguide/configuration_cache_enabling.html
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.9.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :contracts
+Build was configured to prefer settings repositories over project repositories but repository 'MavenRepo' was added by build file 'contracts/build.gradle.kts'
+
+> Configure project :core
+Build was configured to prefer settings repositories over project repositories but repository 'MavenRepo' was added by build file 'core/build.gradle.kts'
+
+> Task :contracts:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :contracts:compileKotlin UP-TO-DATE
+> Task :contracts:compileJava NO-SOURCE
+> Task :contracts:processResources NO-SOURCE
+> Task :contracts:classes UP-TO-DATE
+> Task :contracts:jar UP-TO-DATE
+> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :core:compileKotlin UP-TO-DATE
+> Task :core:compileJava NO-SOURCE
+> Task :core:processResources NO-SOURCE
+> Task :core:classes UP-TO-DATE
+> Task :core:jar UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:generateDebugRFile UP-TO-DATE
+> Task :app:compileDebugKotlin UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac NO-SOURCE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :app:bundleDebugClassesToRuntimeJar UP-TO-DATE
+> Task :app:bundleDebugClassesToCompileJar UP-TO-DATE
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:compileDebugUnitTestKotlin UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:compressDebugJavaRes UP-TO-DATE
+> Task :app:compressDebugUnitTestJavaRes UP-TO-DATE
+> Task :app:extractDebugUnitTestJavaRes UP-TO-DATE
+> Task :core:compileTestKotlin UP-TO-DATE
+> Task :core:compileTestJava NO-SOURCE
+> Task :core:processTestResources UP-TO-DATE
+> Task :core:testClasses UP-TO-DATE
+> Task :core:test
+> Task :app:testDebugUnitTest
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :app:generateDebugGlobalSynthetics UP-TO-DATE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:dexBuilderDebug UP-TO-DATE
+> Task :app:mergeProjectDexDebug UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:mergeDebugNativeLibs NO-SOURCE
+> Task :app:stripDebugDebugSymbols NO-SOURCE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :app:packageDebug UP-TO-DATE
+> Task :app:createDebugApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleDebug UP-TO-DATE
+> Task :contracts:compileTestKotlin UP-TO-DATE
+> Task :contracts:compileTestJava NO-SOURCE
+> Task :contracts:processTestResources UP-TO-DATE
+> Task :contracts:testClasses UP-TO-DATE
+> Task :contracts:test
+
+BUILD SUCCESSFUL in 28s
+51 actionable tasks: 3 executed, 48 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.9.0/userguide/configuration_cache_enabling.html
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.9.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :contracts
+Build was configured to prefer settings repositories over project repositories but repository 'MavenRepo' was added by build file 'contracts/build.gradle.kts'
+
+> Configure project :core
+Build was configured to prefer settings repositories over project repositories but repository 'MavenRepo' was added by build file 'core/build.gradle.kts'
+
+> Task :contracts:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :contracts:compileKotlin UP-TO-DATE
+> Task :contracts:compileJava NO-SOURCE
+> Task :contracts:processResources NO-SOURCE
+> Task :contracts:classes UP-TO-DATE
+> Task :contracts:jar UP-TO-DATE
+> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :core:compileKotlin UP-TO-DATE
+> Task :core:compileJava NO-SOURCE
+> Task :core:processResources NO-SOURCE
+> Task :core:classes UP-TO-DATE
+> Task :core:jar UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:generateDebugRFile UP-TO-DATE
+> Task :app:compileDebugKotlin UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac NO-SOURCE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :app:bundleDebugClassesToRuntimeJar UP-TO-DATE
+> Task :app:bundleDebugClassesToCompileJar UP-TO-DATE
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:compileDebugUnitTestKotlin UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:compressDebugJavaRes UP-TO-DATE
+> Task :app:compressDebugUnitTestJavaRes UP-TO-DATE
+> Task :app:extractDebugUnitTestJavaRes UP-TO-DATE
+> Task :core:compileTestKotlin UP-TO-DATE
+> Task :core:compileTestJava NO-SOURCE
+> Task :core:processTestResources UP-TO-DATE
+> Task :core:testClasses UP-TO-DATE
+> Task :core:test
+> Task :app:testDebugUnitTest
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :app:generateDebugGlobalSynthetics UP-TO-DATE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:dexBuilderDebug UP-TO-DATE
+> Task :app:mergeProjectDexDebug UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:mergeDebugNativeLibs NO-SOURCE
+> Task :app:stripDebugDebugSymbols NO-SOURCE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :app:packageDebug UP-TO-DATE
+> Task :app:createDebugApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleDebug UP-TO-DATE
+> Task :contracts:compileTestKotlin UP-TO-DATE
+> Task :contracts:compileTestJava NO-SOURCE
+> Task :contracts:processTestResources UP-TO-DATE
+> Task :contracts:testClasses UP-TO-DATE
+> Task :contracts:test
+
+BUILD SUCCESSFUL in 24s
+51 actionable tasks: 3 executed, 48 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.9.0/userguide/configuration_cache_enabling.html
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.9.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :contracts
+Build was configured to prefer settings repositories over project repositories but repository 'MavenRepo' was added by build file 'contracts/build.gradle.kts'
+
+> Configure project :core
+Build was configured to prefer settings repositories over project repositories but repository 'MavenRepo' was added by build file 'core/build.gradle.kts'
+
+> Task :contracts:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :contracts:compileKotlin UP-TO-DATE
+> Task :contracts:compileJava NO-SOURCE
+> Task :contracts:processResources NO-SOURCE
+> Task :contracts:classes UP-TO-DATE
+> Task :contracts:jar UP-TO-DATE
+> Task :core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :core:compileKotlin UP-TO-DATE
+> Task :core:compileJava NO-SOURCE
+> Task :core:processResources NO-SOURCE
+> Task :core:classes UP-TO-DATE
+> Task :core:jar UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:generateDebugRFile UP-TO-DATE
+> Task :app:compileDebugKotlin UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac NO-SOURCE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :app:bundleDebugClassesToRuntimeJar UP-TO-DATE
+> Task :app:bundleDebugClassesToCompileJar UP-TO-DATE
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:compileDebugUnitTestKotlin UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:compressDebugJavaRes UP-TO-DATE
+> Task :app:compressDebugUnitTestJavaRes UP-TO-DATE
+> Task :app:extractDebugUnitTestJavaRes UP-TO-DATE
+> Task :core:compileTestKotlin UP-TO-DATE
+> Task :core:compileTestJava NO-SOURCE
+> Task :core:processTestResources UP-TO-DATE
+> Task :core:testClasses UP-TO-DATE
+> Task :core:test
+> Task :app:testDebugUnitTest
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :app:generateDebugGlobalSynthetics UP-TO-DATE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:dexBuilderDebug UP-TO-DATE
+> Task :app:mergeProjectDexDebug UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:mergeDebugNativeLibs NO-SOURCE
+> Task :app:stripDebugDebugSymbols NO-SOURCE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :app:packageDebug UP-TO-DATE
+> Task :app:createDebugApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleDebug UP-TO-DATE
+> Task :contracts:compileTestKotlin UP-TO-DATE
+> Task :contracts:compileTestJava NO-SOURCE
+> Task :contracts:processTestResources UP-TO-DATE
+> Task :contracts:testClasses UP-TO-DATE
+> Task :contracts:test
+
+BUILD SUCCESSFUL in 27s
+51 actionable tasks: 3 executed, 48 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.9.0/userguide/configuration_cache_enabling.html
+
+ticket 51: Kotlin TV provisioning, reboot dan offline core
+PASS     HS-51 / android-tv-51  android-tv-51 :: LeaseVectorTest::kotlin canonical payload equals the committed canonical payload()
+PASS     HS-51 / android-tv-51  android-tv-51 :: LeaseVectorTest::the committed vector verifies against the pinned key()
+PASS     HS-51 / android-tv-51  android-tv-51 :: LeaseVectorTest::a changed second or a wrong or unknown key is rejected()
+PASS     HS-51 / android-tv-51  android-tv-51 :: LeaseVectorTest::stale epoch expired and future leases are rejected and garbage never throws()
+PASS     HS-51 / android-tv-51  android-tv-51 :: FaultScenariosTest::WAN loss lets a valid lease expire locally then locks and never extends()
+PASS     HS-51 / android-tv-51  android-tv-51 :: FaultScenariosTest::a replayed lease neither extends nor revives, duplicates are idempotent()
+PASS     HS-51 / android-tv-51  android-tv-51 :: FaultScenariosTest::wall clock rollback and untrusted time changes add no seconds()
+PASS     HS-51 / android-tv-51  android-tv-51 :: FaultScenariosTest::three cold reboots return to locked state with no relaunch and no regained seconds()
+PASS     HS-51 / android-tv-51  android-tv-51 :: FaultScenariosTest::checkpoint cap alone stops a replay after reboot from gaining seconds when the trusted-time floor is lost()
+PASS     HS-51 / android-tv-51  android-tv-51 :: FaultScenariosTest::reboot without trusted time fails closed even when the stored lease would still be valid by wall clock()
+PASS     HS-51 / android-tv-51  android-tv-51 :: FaultScenariosTest::same boot process death keeps trust and the running lease()
+PASS     HS-51 / android-tv-51  android-tv-51 :: FaultScenariosTest::stale epoch, cross-device and split-brain leases are refused()
+PASS     HS-51 / android-tv-51  android-tv-51 :: FaultScenariosTest::untrusted signer key id in the payload alone is never trusted()
+PASS     HS-51 / android-tv-51  android-tv-51 :: BcEd25519VerifierTest::the committed vector verifies
+PASS     HS-51 / android-tv-51  android-tv-51 :: BcEd25519VerifierTest::a changed second is BAD_SIGNATURE and garbage never throws
+PASS     HS-51 / android-tv-51  android-tv-51 :: ConformanceTest::lease()
+PASS     HS-51 / android-tv-51  android-tv-51 :: ConformanceTest::command()
+PASS     HS-51 / android-tv-51  android-tv-51 :: ConformanceTest::ack()
+PASS     HS-51 / android-tv-51  android-tv-51 :: ConformanceTest::error()
+PASS     HS-51 / android-tv-51  android-tv-51 :: ConformanceTest::payment()
+PASS     HS-51 / android-tv-51  android-tv-51 :: ConformanceTest::unknownMemberIsRejected()
+PASS     HS-51 / android-tv-51  android-tv-51 :: ProvisioningAndLockTest::a valid lease unlocks for its remaining seconds on the monotonic clock then locks()
+PASS     HS-V02-10 / android-tv-v02-10  android-tv-v02-10 :: ProvisioningAndLockTest::PROVISIONED_UNPAIRED without a lease is locked with neutral setup, no pairing or payment needed()
+PASS     HS-V02-10 / android-tv-v02-10  android-tv-v02-10 :: ProvisioningAndLockTest::Home Back and input are consumed while locked in the managed profile()
+PASS     HS-V02-10 / android-tv-v02-10  android-tv-v02-10 :: ProvisioningAndLockTest::UNPROVISIONED_APP never claims kiosk security and keys pass through honestly()
+PASS     HS-V02-10 / android-tv-v02-10  android-tv-v02-10 :: ProvisioningAndLockTest::a valid lease unlocks for its remaining seconds on the monotonic clock then locks()
+PASS     HS-V02-10 / android-tv-v02-10  android-tv-v02-10 :: ProvisioningAndLockTest::a lease is refused without trusted time, for another device, without DISPLAY_GAME, or with a bad signature()
+PASS     HS-V02-10 / android-tv-v02-10  android-tv-v02-10 :: ProvisioningAndLockTest::pairing HTTP 200 with a locked payload, timeout and refresh never grant play()
+PASS     HS-V02-10 / android-tv-v02-10  android-tv-v02-10 :: ProvisioningAndLockTest::HTTP 200 carrying a lease only plays when the lease itself verifies()
+PASS     HS-V02-10 / android-tv-v02-10  android-tv-v02-10 :: ProvisioningAndLockTest::revoked state locks and needs repair, only a lease with a higher epoch after re-provisioning may play()
+PASS     HS-V02-10 / android-tv-v02-10  android-tv-v02-10 :: ProvisioningAndLockTest::pause end and lock commands lock immediately without CEC and a later lease resumes()
+MISSING  HS-V02-10 / android-tv-v02-10  android-tv-v02-10 :: TechnicianEscapeTest::no credential enrolled means the escape is closed()
+MISSING  HS-V02-10 / android-tv-v02-10  android-tv-v02-10 :: TechnicianEscapeTest::credential is stored only as a salted hash and a correct attempt opens setup only, never the picture()
+MISSING  HS-V02-10 / android-tv-v02-10  android-tv-v02-10 :: TechnicianEscapeTest::wrong credential is denied, audited without the secret, and five wrong attempts per minute lock the escape out()
+MISSING  HS-V02-10 / android-tv-v02-10  android-tv-v02-10 :: TechnicianEscapeTest::every grant and enrolment is audited with actor and reason, and the setup window closes after five minutes()
+MISSING  HS-V02-10 / android-tv-v02-10  android-tv-v02-10 :: TechnicianEscapeTest::credential and audit survive a restart and a short credential is refused()
+PASS     HS-V02-10 / android-tv-v02-10  android-tv-v02-10 :: AppPolicyTest::manifest requests no hidden or privileged capability
+PASS     HS-V02-10 / android-tv-v02-10  android-tv-v02-10 :: AppPolicyTest::only a device owner app is PROVISIONED_UNPAIRED, everything else is UNPROVISIONED_APP
+PASS     HS-V02-11 / android-tv-v02-11  android-tv-v02-11 :: FaultScenariosTest::three cold reboots return to locked state with no relaunch and no regained seconds()
+PASS     HS-V02-11 / android-tv-v02-11  android-tv-v02-11 :: FaultScenariosTest::reboot without trusted time fails closed even when the stored lease would still be valid by wall clock()
+PASS     HS-V02-11 / android-tv-v02-11  android-tv-v02-11 :: FaultScenariosTest::same boot process death keeps trust and the running lease()
+PASS     HS-V02-11 / android-tv-v02-11  android-tv-v02-11 :: CapabilityTest::missing or revoked overlay permission fails capability, locks via the fallback route and asks for repair()
+PASS     HS-V02-11 / android-tv-v02-11  android-tv-v02-11 :: CapabilityTest::the permission probe can only read, there is no grant API()
+PASS     HS-V02-11 / android-tv-v02-11  android-tv-v02-11 :: AppPolicyTest::overlay state is GRANTED, MISSING when never granted, REVOKED when it was granted before
+PASS     HS-V02-13 / android-tv-v02-13  android-tv-v02-13 :: CapabilityTest::CEC is optional, unsupported power is advertised and the lock route does not need CEC or console mains()
+PASS     HS-V02-13 / android-tv-v02-13  android-tv-v02-13 :: CapabilityTest::venue setup records CEC off on both TV and console and anything else is flagged not certifiable()
+PASS     HS-V02-13 / android-tv-v02-13  android-tv-v02-13 :: ProvisioningAndLockTest::pause end and lock commands lock immediately without CEC and a later lease resumes()
+FAIL     HS-51 external android-tv-51: 32 core + 6 app + 6 contracts JVM tests plus assembleDebug (SIMULATOR). Physical Home/Back/input, cold reboot and Ethernet-unplugged tests are BLOCKED: no Android TV hardware (tests/hardware/android-tv P1-P11).
+FAIL     HS-V02-10 external android-tv-v02-10: Provisioning profiles, locked setup, HTTP 200/pairing never grant, technician escape audited (SIMULATOR). Physical key tests BLOCKED.
+FAIL     HS-V02-11 external android-tv-v02-11: Three simulated cold reboots, permission revoke => capability fail + fallback lock, no grant API (SIMULATOR). Real 3-reboot run on an exact model BLOCKED.
+FAIL     HS-V02-13 external android-tv-v02-13: CEC off recorded on TV and console, lock lifecycle with a CEC driver that fails if touched, unsupported power advertised (SIMULATOR). Real TV+console BLOCKED.
+PROBLEM: HS-51: external android-tv-51 ran 39 passing test(s), at least 44 required
+PROBLEM: HS-V02-10: external android-tv-v02-10 :: "TechnicianEscapeTest::no credential enrolled means the escape is closed()" is MISSING
+PROBLEM: HS-V02-10: external android-tv-v02-10 :: "TechnicianEscapeTest::credential is stored only as a salted hash and a correct attempt opens setup only, never the picture()" is MISSING
+PROBLEM: HS-V02-10: external android-tv-v02-10 :: "TechnicianEscapeTest::wrong credential is denied, audited without the secret, and five wrong attempts per minute lock the escape out()" is MISSING
+PROBLEM: HS-V02-10: external android-tv-v02-10 :: "TechnicianEscapeTest::every grant and enrolment is audited with actor and reason, and the setup window closes after five minutes()" is MISSING
+PROBLEM: HS-V02-10: external android-tv-v02-10 :: "TechnicianEscapeTest::credential and audit survive a restart and a short credential is refused()" is MISSING
+PROBLEM: HS-V02-10: external android-tv-v02-10 ran 39 passing test(s), at least 44 required
+PROBLEM: HS-V02-11: external android-tv-v02-11 ran 39 passing test(s), at least 44 required
+PROBLEM: HS-V02-13: external android-tv-v02-13 ran 39 passing test(s), at least 44 required
+
+FAIL ticket 51
+ ELIFECYCLE  Command failed with exit code 1.
+exit 1

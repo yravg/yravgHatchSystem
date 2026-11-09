@@ -14,3 +14,5 @@ build/
 
 # Binary evidence (screenshots, traces) stays untracked; hashes are recorded in requirements-evidence.json
 specs/tickets/*/evidence/artifacts/
+# ticket dispatcher .NET reports
+TestResults-dispatch/
