@@ -7,7 +7,7 @@ export type Role = (typeof ROLES)[number];
 const OWNER = [
   "staff.read", "staff.manage", "mfa.revoke.other", "outlet.config", "report.read",
   "refund.approve", "price.override", "session.manage", "checkout", "order.kitchen", "device.manage",
-  "station.manage", "rate.manage",
+  "station.manage", "rate.manage", "edge.authority",
   "ledger.read", "ledger.post", "ledger.reverse",
 ] as const;
 

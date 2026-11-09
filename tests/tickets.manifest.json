@@ -434,5 +434,92 @@
         ]
       }
     }
+  },
+  "50": {
+    "title": "Gateway edge dan pairing/lease core headless",
+    "requirements": {
+      "HS-50": {
+        "acceptance": "AC-HS-50",
+        "tests": [
+          {
+            "file": "tests/edge/devices.test.ts",
+            "names": [
+              "staff with device.manage creates a pending slot; a cashier cannot",
+              "another tenant sees 404, not the device",
+              "rejects a body that tries to choose tenantId or outletId",
+              "issues an 8 digit code valid 5 minutes and stores only a hash",
+              "staff approval with the right code activates the device and pins its key",
+              "an expired code is refused",
+              "a refresh revokes the old code",
+              "a proof signed by a different key is refused",
+              "5 wrong attempts per minute per device, then 429 even for the right code; other devices are unaffected",
+              "a code cannot be approved twice and an active device cannot be re-paired with a new key",
+              "revoke is permanent, audited and idempotent; the device can no longer pair",
+              "claim bumps one epoch per outlet; only an active edge device can hold it",
+              "a duplicate ACK is accepted once and stored once (at-least-once, idempotent)",
+              "refuses a wrong signature, a device id mismatch and a revoked device",
+              "rejects an ACK that is not a valid DeviceAck"
+            ]
+          },
+          {
+            "file": "tests/edge/migrate.test.ts",
+            "names": [
+              "applies up, rolls back to nothing, applies up again"
+            ]
+          },
+          {
+            "file": "tests/contracts/leases.test.ts",
+            "names": [
+              "the committed vector verifies against the pinned key",
+              "a changed second, a changed device or a wrong key is BAD_SIGNATURE / UNKNOWN_SIGNER",
+              "rejects a stale epoch, an expired lease and a lease from the future",
+              "garbage signatures never throw",
+              "sign then verify round-trips with a runtime key"
+            ]
+          }
+        ],
+        "external": [
+          {
+            "id": "dotnet-edge-core",
+            "tool": "dotnet",
+            "cwd": "agents",
+            "command": [
+              "dotnet",
+              "test",
+              "Hatch.VenueEdge.Tests/Hatch.VenueEdge.Tests.csproj"
+            ],
+            "note": "41 .NET tests: SQLite WAL persists before ACK (kill before/after commit), Ed25519 lease, WAN drop expiry, offline allowance 0, reboot fail closed, optional CEC. Simulator display; no hardware."
+          }
+        ]
+      },
+      "HS-V02-12": {
+        "acceptance": "AC-HS-V02-12",
+        "tests": [
+          {
+            "file": "tests/contracts/leases.test.ts",
+            "names": [
+              "the committed vector verifies against the pinned key",
+              "a changed second, a changed device or a wrong key is BAD_SIGNATURE / UNKNOWN_SIGNER",
+              "rejects a stale epoch, an expired lease and a lease from the future",
+              "garbage signatures never throw",
+              "sign then verify round-trips with a runtime key"
+            ]
+          }
+        ],
+        "external": [
+          {
+            "id": "dotnet-edge-offline",
+            "tool": "dotnet",
+            "cwd": "agents",
+            "command": [
+              "dotnet",
+              "test",
+              "Hatch.VenueEdge.Tests/Hatch.VenueEdge.Tests.csproj"
+            ],
+            "note": "Offline scenario with an in-process transport refusing every connection (SIMULATOR). Physical Ethernet-unplugged test is BLOCKED: no venue hardware."
+          }
+        ]
+      }
+    }
   }
 }
