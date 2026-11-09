@@ -39,6 +39,12 @@ Missing: .NET SDK (dotnet host present, no SDK), JDK 17+, Gradle, Android SDK, P
   - API health http://100.108.253.30:3101/api/v1/health (/srv/hatch/out/preview-api.mjs, log preview-api.log)
   - Stop: `pkill -f "next start -H 100.108.253.30"; pkill -f preview-api.mjs`. Update: `git -C /srv/hatch/wt/preview checkout --detach origin/spec-v0.2`, rebuild, restart.
 
+## Live previews (Tailscale only, yravgvps standard, user dev)
+- Web: service hatchsystem-dev-web, http://100.108.253.30:33101/ (next dev from the preview checkout /home/user/dev/HatchSystem/yravgHatchSystem; UI tickets still draft, so scaffold only).
+- API: service hatchsystem-api-dev-web, http://100.108.253.30:33103/api/v1/health, started by /home/user/dev/HatchSystem/run-preview-api.sh against database hatch_preview with fixture seed (services/api/scripts/seed-preview.ts). Walkthrough: docs/operator/api-preview.md. Logins only in /home/user/dev/HatchSystem/preview-credentials.txt (mode 600). Payments off. Verified 2026-11-09: health 200, login 200 (cashier), stations 200 (2), quote 5400 s = Rp18000, cross-tenant 404, wrong password 401, public IP refused.
+- Update after a merge: git -C /home/user/dev/HatchSystem/yravgHatchSystem pull --ff-only origin spec-v0.2, pnpm install, then `vps-preview add` again (root) or restart the two units.
+- The old root previews on 3100/3101 are stopped.
+
 ## Known failures / follow-ups
 - CI not yet run on GitHub Actions; Playwright `chrome` channel in CI untested (Checker used bundled chromium).
 - Node CI job runs test:ticket with --allow-blocked; Kotlin/.NET proven only by their own jobs.
