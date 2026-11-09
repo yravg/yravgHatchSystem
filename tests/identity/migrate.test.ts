@@ -12,12 +12,12 @@ describe("identity migrations", () => {
     (await db.pool.query<{ table_name: string }>("SELECT table_name FROM information_schema.tables WHERE table_schema = $1 ORDER BY 1", [db.name])).rows.map((r) => r.table_name);
 
   it("applies up, rolls back down to nothing, and applies up again", async () => {
-    expect(await migrateUp(db.pool)).toEqual(["0001_identity", "0002_stations_rates"]);
+    expect(await migrateUp(db.pool)).toEqual(["0001_identity", "0002_stations_rates", "0004_edge_devices"]);
     expect(await tables()).toContain("staff_sessions");
     expect(await migrateUp(db.pool)).toEqual([]); // already applied
-    expect(await migrateDown(db.pool)).toEqual(["0002_stations_rates", "0001_identity"]);
+    expect(await migrateDown(db.pool)).toEqual(["0004_edge_devices", "0002_stations_rates", "0001_identity"]);
     expect(await tables()).toEqual(["schema_migrations"]);
-    expect(await migrateUp(db.pool)).toEqual(["0001_identity", "0002_stations_rates"]);
+    expect(await migrateUp(db.pool)).toEqual(["0001_identity", "0002_stations_rates", "0004_edge_devices"]);
   });
 
   it("the drizzle schema has exactly the columns the migration creates", async () => {

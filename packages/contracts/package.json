@@ -3,6 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "exports": { ".": "./src/index.ts", "./schema": "./schema/protocol.schema.json" },
-  "scripts": { "typecheck": "tsc -p tsconfig.json --noEmit" }
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./schema/protocol.schema.json",
+    "./leases": "./leases/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
 }
