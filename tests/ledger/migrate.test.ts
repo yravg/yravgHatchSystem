@@ -7,7 +7,7 @@ const ALL = ["0001_identity", "0002_stations_rates", "0003_ledger_payments"];
 
 describe("T48 migration 0003", () => {
   let db: Awaited<ReturnType<typeof isolatedSchema>>;
-  let tenant = randomUUID(); let tenant2 = randomUUID(); let outlet = randomUUID(); let outlet2 = randomUUID();
+  const tenant = randomUUID(); const tenant2 = randomUUID(); const outlet = randomUUID(); const outlet2 = randomUUID();
   beforeAll(async () => { db = await isolatedSchema(); });
   afterAll(async () => { await db.drop(); });
   const tables = async (): Promise<string[]> =>

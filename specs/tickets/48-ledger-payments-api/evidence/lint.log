@@ -1,0 +1,4 @@
+
+> yravg-hatchsystem@ lint <worktree>
+> eslint .
+
