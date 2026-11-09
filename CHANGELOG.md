@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- T47 stations, rational rates and minimum payment API (`services/api/src/stations`, `rates`, `packages/domain/src/pricing`): exact BigInt rational pricing rounded once (nearest rupiah, half up), optional minimum disabled by default and applied once per session, immutable effective-dated rate versions with stored quotes, tenant/outlet scoped stations with atomic reserve (one of N concurrent wins), pure activation balance check for T49; migration 0002 up/down tested on `hatch_t47`. All money figures are sandbox fixtures; production money policy (D01, D26) is not approved.
 - T46 identity, tenancy and staff 2FA API merged (efe6a70) and marked done after Merger and independent Checker PASS.
 - T46 identity, tenancy and staff 2FA API (`services/api/src/identity`, `tenancy`): cookie sessions with CSRF header, server-derived tenant/outlet, role grants, TOTP enrol/confirm/challenge/recover/revoke with sealed secrets, single-use hashed recovery codes, step-up TTL, replay guard, 10-attempt limits per actor and per source, audit trail, and a Postgres idempotency store that returns 409 for same-key/different-payload including concurrent requests. Fixture secrets only; migrations 0001 up/down tested on `hatch_t46`.
 - Owner marked the backend chain ready: T46, T47, T48, T50, T49, T51, T53, T54 (board.md and rd.md). T47/T48 money values are sandbox fixtures only.

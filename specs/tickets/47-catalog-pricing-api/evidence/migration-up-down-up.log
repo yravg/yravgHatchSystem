@@ -1,0 +1,6 @@
+up: 0001_identity, 0002_stations_rates
+migrate up exit=0
+down: 0002_stations_rates, 0001_identity
+migrate down exit=0
+up: 0001_identity, 0002_stations_rates
+migrate up exit=0

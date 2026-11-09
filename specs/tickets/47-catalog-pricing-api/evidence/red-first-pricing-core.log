@@ -1,0 +1,183 @@
+
+ RUN  v3.2.7 /home/dev/orca/workspaces/yravgHatchSystem/t47-pricing
+
+ ❯ tests/pricing/pricing.test.ts (14 tests | 12 failed) 13ms
+   × exact rational pricing > Rp10.000/hour for 61 s is 610000/3600 and rounds once to Rp169 6ms
+     → (0 , quoteSession) is not a function
+   × exact rational pricing > rounds once at the end: many small segments do not add up rounding error 1ms
+     → (0 , quoteSession) is not a function
+   × exact rational pricing > half rupiah rounds up, below half rounds down 0ms
+     → (0 , rational) is not a function
+   ✓ exact rational pricing > rejects a zero denominator and negative inputs 2ms
+   × exact rational pricing > stays exact above 2^53 0ms
+     → (0 , quoteSession) is not a function
+   × minimum payment (sandbox fixture Rp5.000 covers 30 min, then Rp12.000/hour) > 20 min = 5.000, 30 min = 5.000, 40 min = 7.000 0ms
+     → (0 , quoteSession) is not a function
+   × minimum payment (sandbox fixture Rp5.000 covers 30 min, then Rp12.000/hour) > pause time is not billable and does not consume covered minutes 0ms
+     → (0 , billableSeconds) is not a function
+   × minimum payment (sandbox fixture Rp5.000 covers 30 min, then Rp12.000/hour) > the minimum applies once per session across reconnect, retry and zone transfer 0ms
+     → (0 , quoteSession) is not a function
+   × minimum payment (sandbox fixture Rp5.000 covers 30 min, then Rp12.000/hour) > is disabled by default: no minimum, a 1 s session costs its exact share 0ms
+     → (0 , quoteSession) is not a function
+   × minimum payment (sandbox fixture Rp5.000 covers 30 min, then Rp12.000/hour) > a session with no billable time costs nothing even with a minimum enabled 0ms
+     → (0 , quoteSession) is not a function
+   × minimum payment (sandbox fixture Rp5.000 covers 30 min, then Rp12.000/hour) > a transfer may only go to an equal or lower rate (D26 downward only) 0ms
+     → (0 , canTransferZone) is not a function
+   × activation balance check > insufficient balance cannot activate and reports the shortfall 0ms
+     → (0 , canActivate) is not a function
+   × activation balance check > enough balance activates 0ms
+     → (0 , canActivate) is not a function
+   ✓ activation balance check > a negative balance or requirement is invalid, never activates 0ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 12 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/pricing/pricing.test.ts > exact rational pricing > Rp10.000/hour for 61 s is 610000/3600 and rounds once to Rp169
+TypeError: (0 , quoteSession) is not a function
+ ❯ tests/pricing/pricing.test.ts:17:15
+     15| describe("exact rational pricing", () => {
+     16|   it("Rp10.000/hour for 61 s is 610000/3600 and rounds once to Rp169",…
+     17|     const q = quoteSession(plain, run(61n));
+       |               ^
+     18|     expect(q.exact).toEqual({ numerator: 610_000n, denominator: 3_600n…
+     19|     expect(q.amountIdr).toBe(169n);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/12]⎯
+
+ FAIL  tests/pricing/pricing.test.ts > exact rational pricing > rounds once at the end: many small segments do not add up rounding error
+TypeError: (0 , quoteSession) is not a function
+ ❯ tests/pricing/pricing.test.ts:24:12
+     22|   it("rounds once at the end: many small segments do not add up roundi…
+     23|     const parts = Array.from({ length: 61 }, () => ({ seconds: 1n, pau…
+     24|     expect(quoteSession(plain, parts).amountIdr).toBe(169n); // roundi…
+       |            ^
+     25|     expect(quoteSession(plain, parts).exact).toEqual(quoteSession(plai…
+     26|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/12]⎯
+
+ FAIL  tests/pricing/pricing.test.ts > exact rational pricing > half rupiah rounds up, below half rounds down
+TypeError: (0 , rational) is not a function
+ ❯ tests/pricing/pricing.test.ts:29:24
+     27| 
+     28|   it("half rupiah rounds up, below half rounds down", () => {
+     29|     expect(roundHalfUp(rational(1n, 2n))).toBe(1n);
+       |                        ^
+     30|     expect(roundHalfUp(rational(499n, 1000n))).toBe(0n);
+     31|     expect(roundHalfUp(rational(5n, 2n))).toBe(3n);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/12]⎯
+
+ FAIL  tests/pricing/pricing.test.ts > exact rational pricing > stays exact above 2^53
+TypeError: (0 , quoteSession) is not a function
+ ❯ tests/pricing/pricing.test.ts:43:12
+     41|   it("stays exact above 2^53", () => {
+     42|     const big: RateRule = { ratePerHourIdr: 9_007_199_254_740_993n };
+     43|     expect(quoteSession(big, run(H)).amountIdr).toBe(9_007_199_254_740…
+       |            ^
+     44|   });
+     45| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/12]⎯
+
+ FAIL  tests/pricing/pricing.test.ts > minimum payment (sandbox fixture Rp5.000 covers 30 min, then Rp12.000/hour) > 20 min = 5.000, 30 min = 5.000, 40 min = 7.000
+TypeError: (0 , quoteSession) is not a function
+ ❯ tests/pricing/pricing.test.ts:49:12
+     47| describe("minimum payment (sandbox fixture Rp5.000 covers 30 min, then…
+     48|   it("20 min = 5.000, 30 min = 5.000, 40 min = 7.000", () => {
+     49|     expect(quoteSession(withMinimum, run(20n * MIN)).amountIdr).toBe(5…
+       |            ^
+     50|     expect(quoteSession(withMinimum, run(30n * MIN)).amountIdr).toBe(5…
+     51|     expect(quoteSession(withMinimum, run(40n * MIN)).amountIdr).toBe(7…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/12]⎯
+
+ FAIL  tests/pricing/pricing.test.ts > minimum payment (sandbox fixture Rp5.000 covers 30 min, then Rp12.000/hour) > pause time is not billable and does not consume covered minutes
+TypeError: (0 , billableSeconds) is not a function
+ ❯ tests/pricing/pricing.test.ts:60:12
+     58|       { seconds: 10n * MIN, paused: false },
+     59|     ];
+     60|     expect(billableSeconds(segs)).toBe(30n * MIN);
+       |            ^
+     61|     expect(quoteSession(withMinimum, segs).amountIdr).toBe(5_000n); //…
+     62|     expect(quoteSession(withMinimum, [...segs, { seconds: 10n * MIN, p…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/12]⎯
+
+ FAIL  tests/pricing/pricing.test.ts > minimum payment (sandbox fixture Rp5.000 covers 30 min, then Rp12.000/hour) > the minimum applies once per session across reconnect, retry and zone transfer
+TypeError: (0 , quoteSession) is not a function
+ ❯ tests/pricing/pricing.test.ts:67:12
+     65|   it("the minimum applies once per session across reconnect, retry and…
+     66|     const reconnect = [{ seconds: 15n * MIN, paused: false }, { second…
+     67|     expect(quoteSession(withMinimum, reconnect).amountIdr).toBe(7_000n…
+       |            ^
+     68|     expect(quoteSession(withMinimum, reconnect).amountIdr).toBe(quoteS…
+     69|     // transfer to a cheaper zone after 20 min: no new minimum, no ret…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/12]⎯
+
+ FAIL  tests/pricing/pricing.test.ts > minimum payment (sandbox fixture Rp5.000 covers 30 min, then Rp12.000/hour) > is disabled by default: no minimum, a 1 s session costs its exact share
+TypeError: (0 , quoteSession) is not a function
+ ❯ tests/pricing/pricing.test.ts:75:12
+     73| 
+     74|   it("is disabled by default: no minimum, a 1 s session costs its exac…
+     75|     expect(quoteSession(plain, run(1n)).amountIdr).toBe(3n); // 10000/…
+       |            ^
+     76|     expect(quoteSession(plain, run(0n)).amountIdr).toBe(0n);
+     77|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/12]⎯
+
+ FAIL  tests/pricing/pricing.test.ts > minimum payment (sandbox fixture Rp5.000 covers 30 min, then Rp12.000/hour) > a session with no billable time costs nothing even with a minimum enabled
+TypeError: (0 , quoteSession) is not a function
+ ❯ tests/pricing/pricing.test.ts:80:12
+     78| 
+     79|   it("a session with no billable time costs nothing even with a minimu…
+     80|     expect(quoteSession(withMinimum, [{ seconds: 600n, paused: true }]…
+       |            ^
+     81|   });
+     82| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/12]⎯
+
+ FAIL  tests/pricing/pricing.test.ts > minimum payment (sandbox fixture Rp5.000 covers 30 min, then Rp12.000/hour) > a transfer may only go to an equal or lower rate (D26 downward only)
+TypeError: (0 , canTransferZone) is not a function
+ ❯ tests/pricing/pricing.test.ts:84:12
+     82| 
+     83|   it("a transfer may only go to an equal or lower rate (D26 downward o…
+     84|     expect(canTransferZone(12_000n, 6_000n)).toBe(true);
+       |            ^
+     85|     expect(canTransferZone(12_000n, 12_000n)).toBe(true);
+     86|     expect(canTransferZone(6_000n, 12_000n)).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/12]⎯
+
+ FAIL  tests/pricing/pricing.test.ts > activation balance check > insufficient balance cannot activate and reports the shortfall
+TypeError: (0 , canActivate) is not a function
+ ❯ tests/pricing/pricing.test.ts:92:12
+     90| describe("activation balance check", () => {
+     91|   it("insufficient balance cannot activate and reports the shortfall",…
+     92|     expect(canActivate(4_999n, 5_000n)).toEqual({ ok: false, reason: "…
+       |            ^
+     93|   });
+     94|   it("enough balance activates", () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/12]⎯
+
+ FAIL  tests/pricing/pricing.test.ts > activation balance check > enough balance activates
+TypeError: (0 , canActivate) is not a function
+ ❯ tests/pricing/pricing.test.ts:95:12
+     93|   });
+     94|   it("enough balance activates", () => {
+     95|     expect(canActivate(5_000n, 5_000n)).toEqual({ ok: true });
+       |            ^
+     96|   });
+     97|   it("a negative balance or requirement is invalid, never activates", …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/12]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  12 failed | 2 passed (14)
+   Start at  02:06:36
+   Duration  527ms (transform 127ms, setup 0ms, collect 273ms, tests 13ms, environment 0ms, prepare 72ms)
+

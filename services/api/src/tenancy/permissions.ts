@@ -7,11 +7,12 @@ export type Role = (typeof ROLES)[number];
 const OWNER = [
   "staff.read", "staff.manage", "mfa.revoke.other", "outlet.config", "report.read",
   "refund.approve", "price.override", "session.manage", "checkout", "order.kitchen", "device.manage",
+  "station.manage", "rate.manage",
 ] as const;
 
 export const ROLE_PERMISSIONS: Readonly<Record<Role, readonly string[]>> = {
   owner: OWNER,
-  manager: ["staff.read", "report.read", "refund.approve", "price.override", "session.manage", "checkout"],
+  manager: ["staff.read", "report.read", "refund.approve", "price.override", "session.manage", "checkout", "station.manage"],
   cashier: ["session.manage", "checkout"],
   kitchen: ["order.kitchen"],
   technician: ["device.manage"],
