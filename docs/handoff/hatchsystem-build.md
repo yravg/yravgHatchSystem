@@ -11,6 +11,7 @@ Branch: spec-v0.2, pushed to origin (public) on owner approval 2026-11-09. Route
 | T01 build | done | t01-foundation 5e2d6dc (laptop af2d076 + VPS Linux run); fixes f15270d, 4f45361 |
 | T01 merge + independent check | done | Merger e96d0fe (no conflicts); Checker PASS on fresh clone incl. forced Kotlin rerun, .NET, mutation and gate-honesty tests, Playwright in mcr.microsoft.com/playwright:v1.65.0-noble |
 | T01 status | done | board.md + 01-foundation/rd.md |
+| T46 identity/tenancy/2FA API | done | worker t46-identity 528346d; Merger merge-t46 efe6a70 (no conflicts, all gates 0, validator 16764/16764 on git archive); Checker PASS (6/6 mutations caught, real HTTP 21/21, 0 secret hits, migration up/down/up, Kotlin JVM :contracts:test 6/6; Android BLOCKED no SDK). Evidence VPS /home/user/dev/HatchSystem/evidence/t46-checker/ |
 
 ## Machine toolchain (2026-11-08)
 node v24.14.1, pnpm 10.33.0, Python 3.11 (`python`, no `python3` on Windows), OpenJDK 11.
@@ -40,6 +41,10 @@ Missing: .NET SDK (dotnet host present, no SDK), JDK 17+, Gradle, Android SDK, P
 - Node CI job runs test:ticket with --allow-blocked; Kotlin/.NET proven only by their own jobs.
 - Idempotency 409 tested at domain level only, in-memory store; concurrent same-key untested (relevant from T46).
 - Kotlin/C# not linted (ESLint ignores agents/).
+- Validator flags node_modules inside a worktree; gates run it on a `git archive HEAD` export.
+- T46: worker wrote tests after code (mutation check substitutes); no RLS (explicit scoped queries); trustProxy unset; no server key bootstrap; owner must lock role/MFA/step-up TTL assumptions in specs/tickets/46-identity-api/results.md before production.
+- VPS deploy key not yet added on GitHub: lead relays VPS branches from the laptop.
+- Android SDK absent on VPS: Android tasks blocked (T51 needs it; owner approved licence at T51).
 
 ## Next step
-Dispatch T46 (ready). Then T47; then T48 and T50 in parallel; then T49 and T51; then T53; then T54. Each needs its dependencies done (Merger + independent Checker) first.
+T46 done. Dispatch T47 next; then T48 and T50 in parallel; then T49 and T51; then T53; then T54. Each needs its dependencies done (Merger + independent Checker) first.
