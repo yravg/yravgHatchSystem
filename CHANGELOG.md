@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Live API preview (dev tooling, no UI): `services/api/src/server.ts` (refuses 0.0.0.0, payments off without Midtrans sandbox settings), idempotent fixture `scripts/seed-preview.ts`, curl walkthrough in `docs/operator/api-preview.md`.
 - Owner kept both validator changes (77deb83 status agreement, 2871108 tracked-file scan).
 - CI repair: node job gets a digest-pinned Postgres 18.6 service on localhost (CI-only throwaway password, `HATCH_PG_URL`), runs ticket gates 01/46/47/48/50 (50 with --allow-blocked, its .NET tests run in the dotnet job via `dotnet test HatchAgents.slnx`); `tools/validate_spec.py` scans git-tracked files in a checkout (untracked node_modules ignored, tracked banned files still fail) with a self-check in `tests/spec-validator`.
 - T50 edge core (pairing, authority epoch, Ed25519 leases, .NET edge with SQLite WAL) merged (d54c692) and marked done after a same-worker fix (D1 stale time trust) and independent Checker PASS; offline proof re-run in an empty network namespace.

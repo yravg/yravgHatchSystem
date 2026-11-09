@@ -7,6 +7,8 @@
     ".": "./src/app.ts"
   },
   "scripts": {
+    "start": "node src/server.ts",
+    "seed:preview": "node scripts/seed-preview.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
