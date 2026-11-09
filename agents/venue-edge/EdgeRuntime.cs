@@ -55,6 +55,9 @@ public sealed class EdgeRuntime : IDisposable
         Store.Atomic(tx =>
         {
             tx.Meta("boot_id", o.BootId);
+            // Trust from a previous boot is dead: its monotonic anchor belongs to a clock that no longer exists. Clear it in the
+            // same transaction that records the new boot id, so a later restart inside this boot cannot restore it (D1).
+            if (!sameBoot) tx.DeleteMeta("trust_utc").DeleteMeta("trust_mono");
             foreach (var s in stations.Values)
             {
                 if (!sameBoot && s.State is StationState.Running or StationState.Paused)

@@ -1,0 +1,6 @@
+
+> yravg-hatchsystem@ test:ticket /home/dev/orca/workspaces/yravgHatchSystem/t50-edge
+> node tools/ticket-dispatch.ts -- 48
+
+FAIL: no mandatory tests registered for ticket 48
+ ELIFECYCLE  Command failed with exit code 1.
