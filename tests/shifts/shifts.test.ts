@@ -42,12 +42,13 @@ describe("T53 shifts", () => {
   it("business day follows D08: a shift opened at 03:59 local belongs to the previous day, 04:00 starts the next", async () => {
     const r1 = await reg(); const r2 = await reg();
     h.clock.now = new Date("2026-11-09T20:59:00Z");
-    const a = await h.ok(h.post(h.cashier, "/shifts/open", { registerId: r1, openingFloatIdr: "0" }));
+    const c = await h.relogin("cashierA"); // a fresh session: the fixture clock jumped past the old one's lifetime
+    const a = await h.ok(h.post(c, "/shifts/open", { registerId: r1, openingFloatIdr: "0" }));
     h.clock.now = new Date("2026-11-09T21:00:00Z");
-    const b = await h.ok(h.post(h.cashier, "/shifts/open", { registerId: r2, openingFloatIdr: "0" }));
+    const b = await h.ok(h.post(c, "/shifts/open", { registerId: r2, openingFloatIdr: "0" }));
     expect([a["businessDay"], b["businessDay"]]).toEqual(["2026-11-09", "2026-11-10"]);
-    await h.ok(h.post(h.cashier, `/shifts/${a["shiftId"]}/close`, { actualCashIdr: "0" }));
-    await h.ok(h.post(h.cashier, `/shifts/${b["shiftId"]}/close`, { actualCashIdr: "0" }));
+    await h.ok(h.post(c, `/shifts/${a["shiftId"]}/close`, { actualCashIdr: "0" }));
+    await h.ok(h.post(c, `/shifts/${b["shiftId"]}/close`, { actualCashIdr: "0" }));
     h.clock.now = new Date("2026-11-09T03:00:00Z");
   });
 

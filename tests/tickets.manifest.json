@@ -666,5 +666,154 @@
         ]
       }
     }
+  },
+  "53": {
+    "title": "API stok, pesanan dan X/Z shift close",
+    "requirements": {
+      "HS-53": {
+        "acceptance": "AC-HS-53",
+        "tests": [
+          {
+            "file": "tests/orders/domain.test.ts",
+            "names": [
+              "consumption scales recipe quantities by order quantity exactly",
+              "moving average issues cost proportionally and keeps the remainder in stock value",
+              "issuing more than on hand is refused and receipts add value",
+              "business day cuts at 04:00 Asia/Jakarta and survives UTC storage",
+              "cash drawer expectation ignores QRIS entirely"
+            ]
+          },
+          {
+            "file": "tests/inventory/stock.test.ts",
+            "names": [
+              "two drinks of a 100 ml recipe consume 200 ml exactly once",
+              "a retry with the same Idempotency-Key replays the order and consumes once",
+              "a duplicate consume event for the same order is ignored by the unique source event",
+              "stock moves are append-only: update and delete are refused by the database",
+              "cancelling an order reverses its consumption exactly once",
+              "a manual reversal of a receipt is allowed once; a reversal cannot be reversed; no history is deleted",
+              "consumption beyond stock on hand is refused, nothing is written, no negative balance",
+              "moving average prices a drink from the running average and never recalculates history",
+              "cost is never shown to customer-facing or cashier views",
+              "a new recipe version never changes what an existing order consumed",
+              "cross-tenant and cross-outlet stock items are NOT_FOUND, and a cashier cannot manage stock"
+            ]
+          },
+          {
+            "file": "tests/orders/orders.test.ts",
+            "names": [
+              "an order attaches to a session of its outlet and also stands alone",
+              "a session of another outlet or tenant is NOT_FOUND and no stock is consumed",
+              "a cash payment posts cash and revenue once, tracks change, and a second payment is refused",
+              "a tender below the total is refused and a payment needs the actor's own open shift",
+              "QRIS stays pending with the provider QR and grants nothing until a verified status",
+              "a settlement with the wrong amount or merchant never grants value",
+              "a provider outage during the QRIS charge creates no payment and is retryable",
+              "QRIS is refused when payments are not configured",
+              "a cash order captured offline is refused (CONTRACTS section 5: offline sale default refused)",
+              "a refund stays pending until proof, posts through refund_payable, and proof pays out once",
+              "a paid order cannot be cancelled and an order of another outlet is NOT_FOUND"
+            ]
+          },
+          {
+            "file": "tests/shifts/shifts.test.ts",
+            "names": [
+              "Z refuses with a clear typed error when no policy version exists, and closes nothing",
+              "the open-shift policy is versioned, tenant scoped, owner only, and labelled as the D30 fixture default",
+              "business day follows D08: a shift opened at 03:59 local belongs to the previous day, 04:00 starts the next",
+              "X report repeated three times changes no shift, ledger entry, audit row, idempotency key or close",
+              "X report: the cash drawer ignores QRIS and QRIS settled and pending are reported separately",
+              "Z snapshots the register and business-day scope, closes the shift, and carries active sessions forward",
+              "a duplicate Z returns the same closeId and changes nothing (same key and a different key)",
+              "Z is blocked while another shift of the register is open and passes after that shift is closed",
+              "Z is atomic: a failure while writing the close leaves the shift open and writes nothing",
+              "a refund of a payment from a closed day is audited as a conflict, never dropped, and the snapshot is unchanged",
+              "a transfer in flight at close time is recorded in the snapshot and audited, not dropped",
+              "a QRIS payment settled after the close is audited and never moves the closed totals",
+              "a day that is closed cannot get a new shift on the same register, and the cashier cannot close someone else's shift"
+            ]
+          },
+          {
+            "file": "tests/orders/migrate.test.ts",
+            "names": [
+              "applies up, rolls back to nothing, applies up again",
+              "rolling only 0006 back restores the T48 ledger kinds and leaves earlier tables intact"
+            ]
+          }
+        ]
+      },
+      "HS-V02-06": {
+        "acceptance": "AC-HS-V02-06",
+        "tests": [
+          {
+            "file": "tests/orders/domain.test.ts",
+            "names": [
+              "consumption scales recipe quantities by order quantity exactly",
+              "moving average issues cost proportionally and keeps the remainder in stock value",
+              "issuing more than on hand is refused and receipts add value",
+              "business day cuts at 04:00 Asia/Jakarta and survives UTC storage",
+              "cash drawer expectation ignores QRIS entirely"
+            ]
+          },
+          {
+            "file": "tests/inventory/stock.test.ts",
+            "names": [
+              "two drinks of a 100 ml recipe consume 200 ml exactly once",
+              "a retry with the same Idempotency-Key replays the order and consumes once",
+              "a duplicate consume event for the same order is ignored by the unique source event",
+              "stock moves are append-only: update and delete are refused by the database",
+              "cancelling an order reverses its consumption exactly once",
+              "a manual reversal of a receipt is allowed once; a reversal cannot be reversed; no history is deleted",
+              "consumption beyond stock on hand is refused, nothing is written, no negative balance",
+              "moving average prices a drink from the running average and never recalculates history",
+              "cost is never shown to customer-facing or cashier views",
+              "a new recipe version never changes what an existing order consumed",
+              "cross-tenant and cross-outlet stock items are NOT_FOUND, and a cashier cannot manage stock"
+            ]
+          },
+          {
+            "file": "tests/orders/orders.test.ts",
+            "names": [
+              "an order attaches to a session of its outlet and also stands alone",
+              "a session of another outlet or tenant is NOT_FOUND and no stock is consumed",
+              "a cash payment posts cash and revenue once, tracks change, and a second payment is refused",
+              "a tender below the total is refused and a payment needs the actor's own open shift",
+              "QRIS stays pending with the provider QR and grants nothing until a verified status",
+              "a settlement with the wrong amount or merchant never grants value",
+              "a provider outage during the QRIS charge creates no payment and is retryable",
+              "QRIS is refused when payments are not configured",
+              "a cash order captured offline is refused (CONTRACTS section 5: offline sale default refused)",
+              "a refund stays pending until proof, posts through refund_payable, and proof pays out once",
+              "a paid order cannot be cancelled and an order of another outlet is NOT_FOUND"
+            ]
+          },
+          {
+            "file": "tests/shifts/shifts.test.ts",
+            "names": [
+              "Z refuses with a clear typed error when no policy version exists, and closes nothing",
+              "the open-shift policy is versioned, tenant scoped, owner only, and labelled as the D30 fixture default",
+              "business day follows D08: a shift opened at 03:59 local belongs to the previous day, 04:00 starts the next",
+              "X report repeated three times changes no shift, ledger entry, audit row, idempotency key or close",
+              "X report: the cash drawer ignores QRIS and QRIS settled and pending are reported separately",
+              "Z snapshots the register and business-day scope, closes the shift, and carries active sessions forward",
+              "a duplicate Z returns the same closeId and changes nothing (same key and a different key)",
+              "Z is blocked while another shift of the register is open and passes after that shift is closed",
+              "Z is atomic: a failure while writing the close leaves the shift open and writes nothing",
+              "a refund of a payment from a closed day is audited as a conflict, never dropped, and the snapshot is unchanged",
+              "a transfer in flight at close time is recorded in the snapshot and audited, not dropped",
+              "a QRIS payment settled after the close is audited and never moves the closed totals",
+              "a day that is closed cannot get a new shift on the same register, and the cashier cannot close someone else's shift"
+            ]
+          },
+          {
+            "file": "tests/orders/migrate.test.ts",
+            "names": [
+              "applies up, rolls back to nothing, applies up again",
+              "rolling only 0006 back restores the T48 ledger kinds and leaves earlier tables intact"
+            ]
+          }
+        ]
+      }
+    }
   }
 }

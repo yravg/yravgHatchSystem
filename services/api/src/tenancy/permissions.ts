@@ -9,13 +9,14 @@ const OWNER = [
   "refund.approve", "price.override", "session.manage", "checkout", "order.kitchen", "device.manage",
   "station.manage", "rate.manage", "edge.authority",
   "ledger.read", "ledger.post", "ledger.reverse",
+  "stock.manage", "stock.read", "shift.operate", "shift.policy", // T53 (D02 lock open)
 ] as const;
 
 export const ROLE_PERMISSIONS: Readonly<Record<Role, readonly string[]>> = {
   owner: OWNER,
-  manager: ["staff.read", "report.read", "refund.approve", "price.override", "session.manage", "checkout", "station.manage", "ledger.read", "ledger.post", "ledger.reverse"],
-  cashier: ["session.manage", "checkout"],
-  kitchen: ["order.kitchen"],
+  manager: ["staff.read", "report.read", "refund.approve", "price.override", "session.manage", "checkout", "station.manage", "ledger.read", "ledger.post", "ledger.reverse", "stock.manage", "stock.read", "shift.operate"],
+  cashier: ["session.manage", "checkout", "stock.read", "shift.operate"],
+  kitchen: ["order.kitchen", "stock.read"],
   technician: ["device.manage"],
 };
 

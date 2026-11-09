@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { migrateDown, migrateUp } from "../../services/api/src/identity/migrate.ts";
 import { isolatedSchema } from "./support.ts";
 
-const ALL = ["0001_identity", "0002_stations_rates", "0003_ledger_payments", "0004_edge_devices", "0005_sessions"];
+const ALL = ["0001_identity", "0002_stations_rates", "0003_ledger_payments", "0004_edge_devices", "0005_sessions", "0006_operations"];
 
 describe("migration 0005 (sessions)", () => {
   let db: Awaited<ReturnType<typeof isolatedSchema>>;

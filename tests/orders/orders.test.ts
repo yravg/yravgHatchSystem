@@ -137,6 +137,7 @@ describe("T53 orders", () => {
     const b0 = await h.bal();
     const body = { paymentId: pay["paymentId"], reason: "pelanggan batal" };
     expect((await h.post(h.cashier, `/orders/${o.orderId}/refunds`, body)).status).toBe(403);
+    h.clock.advance(400); // the step-up from enrolment (TTL 300 s fixture) has lapsed
     const noStep = await h.post(h.manager, `/orders/${o.orderId}/refunds`, body);
     expect(noStep.status).toBe(403);
     expect(noStep.json["error"].code).toBe("STEP_UP_REQUIRED");

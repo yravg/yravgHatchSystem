@@ -81,8 +81,8 @@ export async function opsHarness(o: { payments?: boolean } = {}) {
     (await ok(post(owner, "/menu-items", { name, priceIdr, recipe })))["menuItemId"] as string;
   /** The common fixture: 1000 ml of milk (Rp5.000 total) and a "latte" using 100 ml, price Rp20.000. */
   const latte = async () => {
-    const milk = await stockItem("susu", "1000", "5000");
-    const menu = await menuItem("latte", "20000", [{ stockItemId: milk, qty: "100" }]);
+    const milk = await stockItem(`susu-${randomUUID()}`, "1000", "5000");
+    const menu = await menuItem(`latte-${randomUUID()}`, "20000", [{ stockItemId: milk, qty: "100" }]);
     return { milk, menu };
   };
   const order = (s: Staff, lines: { menuItemId: string; qty: number }[], extra: Json = {}, key?: string) => post(s, "/orders", { lines, ...extra }, key);
@@ -126,7 +126,7 @@ export async function opsHarness(o: { payments?: boolean } = {}) {
 
   return {
     app, pool: schema.pool, clock, world, mock, owner, manager, ownerB, cashier, cashierA2, stepUp, post, get, ok,
-    stockItem, menuItem, latte, order, onHand, register, openShift, policy, q, count, seedSession, bal, seedTransfer,
+    stockItem, menuItem, latte, order, relogin: (who: string) => login(app, who), onHand, register, openShift, policy, q, count, seedSession, bal, seedTransfer,
     close: async () => { await app.close(); await mock.stop(); await schema.drop(); },
   };
 }

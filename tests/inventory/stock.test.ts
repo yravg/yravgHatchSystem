@@ -1,6 +1,7 @@
 // T53 inventory: recipes, append-only stock moves, moving-average cost (D17 FIXTURE, not approved), order consumption.
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { randomUUID } from "node:crypto";
+import { connect } from "../../services/api/src/identity/db.ts";
 import { consumeForOrder } from "../../services/api/src/inventory/service.ts";
 import { opsHarness, type OH, call, P, as } from "../orders/support.ts";
 
@@ -35,14 +36,8 @@ describe("T53 inventory", () => {
   it("a duplicate consume event for the same order is ignored by the unique source event", async () => {
     const { milk, menu } = await h.latte();
     const o = (await h.order(h.cashier, [{ menuItemId: menu, qty: 2 }])).json["data"];
-    const first = await h.pool.connect();
-    try {
-      await first.query("BEGIN");
-      // replaying the consume for the same order (duplicate delivery) must be a no-op
-      const again = await consumeForOrder(first as never, { tenantId: h.world.tenantA, outletId: h.world.outletA1, orderId: o.orderId, actorId: h.world.cashierA, now: h.clock.read() });
-      await first.query("COMMIT");
-      expect(again.created).toBe(false);
-    } finally { first.release(); }
+    const again = await connect(h.pool).transaction((tx) => consumeForOrder(tx, { tenantId: h.world.tenantA, outletId: h.world.outletA1, orderId: o.orderId, actorId: h.world.cashierA, now: h.clock.read() }));
+    expect(again.created).toBe(false); // replaying the consume for the same order (duplicate delivery) is a no-op
     expect(await h.onHand(milk)).toBe("800");
   });
 
@@ -92,7 +87,7 @@ describe("T53 inventory", () => {
     await h.order(h.cashier, [{ menuItemId: menu, qty: 1 }]); // 100 ml at Rp5 = Rp500
     const moves = (await h.ok(h.get(h.owner, `/stock-items/${milk}/moves`)))["moves"].filter((m: { kind: string }) => m.kind === "consume");
     expect(moves.map((m: { costIdr: string }) => m.costIdr)).toEqual(["200", "500"]);
-    const first = await h.q<{ cost_idr: string }>("SELECT cost_idr FROM stock_moves WHERE stock_item_id = $1 AND kind = 'consume' ORDER BY id LIMIT 1", [milk]);
+    const first = await h.q<{ cost_idr: string }>("SELECT cost_idr FROM stock_moves WHERE stock_item_id = $1 AND kind = 'consume' ORDER BY seq LIMIT 1", [milk]);
     expect(first[0]?.cost_idr).toBe("200"); // the first move still carries the cost it had when it happened
   });
 
