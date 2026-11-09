@@ -30,8 +30,12 @@ const TRANSITIONS: Readonly<Record<SessionState, readonly SessionState[]>> = {
 
 export class InvalidTransitionError extends Error {
   readonly code = "INVALID_TRANSITION";
-  constructor(readonly from: SessionState, readonly to: SessionState) {
+  readonly from: SessionState;
+  readonly to: SessionState;
+  constructor(from: SessionState, to: SessionState) {
     super(`INVALID_TRANSITION ${from} -> ${to}`);
+    this.from = from;
+    this.to = to;
   }
 }
 
