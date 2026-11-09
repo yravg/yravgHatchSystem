@@ -11,8 +11,10 @@ let t: PayHarness;
 beforeAll(async () => { t = await payHarness(); });
 afterAll(async () => { await t.close(); });
 
-const settled = async (intentId: string) => (await t.get(intentId))["status"];
-const credits = () => t.count("SELECT count(*) AS n FROM ledger_transactions WHERE kind = 'payment_settlement'");
+const settled = async (intentId: string): Promise<string> => (await t.h.pool.query("SELECT status FROM payment_intents WHERE id = $1", [intentId])).rows[0].status;
+const credits = (intentId?: string) => intentId
+  ? t.count("SELECT count(*) AS n FROM ledger_transactions WHERE source_event = $1", [`payment:${intentId}:settlement`])
+  : t.count("SELECT count(*) AS n FROM ledger_transactions WHERE kind = 'payment_settlement'");
 
 describe("QRIS intent", () => {
   it("creates a dynamic QRIS intent for a quote through the provider charge, pending, never paid", async () => {
@@ -45,8 +47,7 @@ describe("QRIS intent", () => {
     const i = await t.newIntent();
     expect((await call(t.h.app, "GET", `${P}/payments/qris-intents/${i.intentId}`, as(t.ownerB))).status).toBe(404);
     expect((await call(t.h.app, "GET", `${P}/payments/qris-intents/${i.intentId}`)).status).toBe(401);
-    const kitchen = await call(t.h.app, "GET", `${P}/payments/qris-intents/${i.intentId}`, as(t.cashier));
-    expect(kitchen.status).toBe(200);
+    expect((await call(t.h.app, "GET", `${P}/payments/qris-intents/${i.intentId}`, as(t.cashier))).status).toBe(200);
   });
 });
 
@@ -136,7 +137,9 @@ describe("verified settlement", () => {
     const r = await t.notify(t.mock.notification(i.orderId, { gross: "5.00", status: "settlement", statusCode: "200" }));
     expect(r.status).toBe(200);
     expect((await t.h.pool.query("SELECT outcome FROM provider_events WHERE provider_order_id = $1", [i.orderId])).rows[0].outcome).toBe("rejected_mismatch");
-    expect(await t.count("SELECT count(*) AS n FROM outbox WHERE aggregate_id = $1 AND processed_at IS NULL AND topic = 'payment.verify' AND available_at <= now() + interval '1 second'", [i.intentId])).toBeLessThanOrEqual(1);
+    await t.runner.drain();
+    expect(await settled(i.intentId)).toBe("pending"); // the mismatching callback itself grants nothing
+    t.h.clock.advance(60);
     await t.runner.drain();
     expect(await settled(i.intentId)).toBe("settled"); // the poll chain still asks the provider, which is the authority
   });
@@ -145,12 +148,11 @@ describe("verified settlement", () => {
     const i = await t.newIntent();
     t.mock.settle(i.orderId);
     const body = t.mock.notification(i.orderId);
-    const before = await credits();
     for (let k = 0; k < 4; k++) expect((await t.notify(body)).status).toBe(200);
     await t.runner.drain();
     await t.notify(body);
     await t.runner.drain();
-    expect(await credits()).toBe(before + 1);
+    expect(await credits(i.intentId)).toBe(1);
     expect(await t.count("SELECT count(*) AS n FROM provider_events WHERE provider_order_id = $1", [i.orderId])).toBe(1);
   });
 
@@ -211,11 +213,12 @@ describe("provider failure", () => {
     expect(job.attempts).toBeGreaterThanOrEqual(1);
     expect(String(job.last_error)).not.toContain(FIXTURE_SERVER_KEY);
     t.mock.mode = "ok";
-    expect((await t.runner.drain()).done).toBe(0); // backoff has not elapsed
+    await t.runner.drain(); // backoff has not elapsed for this job
+    expect(await settled(i.intentId)).toBe("pending");
     t.h.clock.advance(3600);
     await t.runner.drain();
     expect(await settled(i.intentId)).toBe("settled");
-    expect(await credits()).toBeGreaterThanOrEqual(1);
+    expect(await credits(i.intentId)).toBe(1);
   });
 
   it("a provider timeout is pending, never success", async () => {
@@ -303,25 +306,25 @@ describe("worker faults", () => {
     const i = await t.newIntent();
     t.mock.settle(i.orderId);
     await t.notify(t.mock.notification(i.orderId));
-    const before = await credits();
+    
     const crashing = (await import("../../services/worker/src/payments/runner.ts")).createPaymentsRunner(
       { pool: t.h.pool, config: t.config, clock: t.h.clock.read },
       { around: async (run) => { await run(); throw new Error("simulated process death"); } });
     await crashing.drain(1);
-    expect(await credits()).toBe(before);
+    expect(await credits(i.intentId)).toBe(0);
     expect(await settled(i.intentId)).toBe("pending");
     t.h.clock.advance(3600);
     await t.runner.drain();
-    expect(await credits()).toBe(before + 1);
+    expect(await credits(i.intentId)).toBe(1);
   });
 
   it("two workers racing on one settlement credit exactly once", async () => {
     const i = await t.newIntent();
     t.mock.settle(i.orderId);
     await t.notify(t.mock.notification(i.orderId));
-    const before = await credits();
+    
     await Promise.all([t.runner.drain(), t.runner.drain(), t.runner.drain()]);
-    expect(await credits()).toBe(before + 1);
+    expect(await credits(i.intentId)).toBe(1);
     expect(await settled(i.intentId)).toBe("settled");
   });
 
@@ -329,13 +332,13 @@ describe("worker faults", () => {
     const i = await t.newIntent();
     t.mock.settle(i.orderId);
     await t.notify(t.mock.notification(i.orderId));
-    const before = await credits();
+    
     t.h.clock.advance(-3 * 3600);
     await t.runner.drain();
     t.h.clock.advance(3 * 3600);
     await t.runner.drain();
     await t.runner.drain();
-    expect(await credits()).toBe(before + 1);
+    expect(await credits(i.intentId)).toBe(1);
     expect(await settled(i.intentId)).toBe("settled");
   });
 
@@ -344,6 +347,19 @@ describe("worker faults", () => {
     t.mock.settle(i.orderId);
     t.h.clock.advance(60);
     await t.runner.drain();
+    expect(await settled(i.intentId)).toBe("settled");
+  });
+
+  it("the production loop drains on an interval and stops on abort", async () => {
+    const i = await t.newIntent();
+    t.mock.settle(i.orderId);
+    t.h.clock.advance(60);
+    const ac = new AbortController();
+    const { runPaymentsLoop } = await import("../../services/worker/src/payments/runner.ts");
+    const done = runPaymentsLoop(t.runner, { intervalMs: 20, signal: ac.signal });
+    for (let k = 0; k < 50 && (await settled(i.intentId)) !== "settled"; k++) await new Promise((ok) => setTimeout(ok, 40));
+    ac.abort();
+    await done;
     expect(await settled(i.intentId)).toBe("settled");
   });
 

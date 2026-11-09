@@ -75,7 +75,7 @@ describe("T48 migration 0003", () => {
     const rule = (await db.pool.query("SELECT id FROM rate_rule_versions WHERE tenant_id = $1", [tenant])).rows[0].id;
     await db.pool.query("INSERT INTO quotes (id, tenant_id, outlet_id, station_id, rule_version_id, segments, billable_seconds, exact_numerator, exact_denominator, amount_idr, minimum_applied, created_by) VALUES ($1, $2, $3, $4, $5, '[]', 0, '0', '1', 1000, false, $6)", [q, tenant, outlet, s, rule, randomUUID()]);
     await db.pool.query(
-      "INSERT INTO payment_intents (id, tenant_id, outlet_id, quote_id, station_id, provider_order_id, merchant_id, amount_idr, status, created_by, expires_at) VALUES ($1, $2, $3, $4, $5, 'ord-1', 'M', 1000, 'settled', $6, now())",
+      "INSERT INTO payment_intents (id, tenant_id, outlet_id, quote_id, station_id, provider_order_id, merchant_id, amount_idr, status, created_by, expires_at, station_reserved_by, station_reserved_at) VALUES ($1, $2, $3, $4, $5, 'ord-1', 'M', 1000, 'settled', $6, now(), $6, now())",
       [i, tenant, outlet, q, s, randomUUID()]);
     await expect(db.pool.query("UPDATE payment_intents SET status = 'pending' WHERE id = $1", [i])).rejects.toThrow(/transition/);
     await expect(db.pool.query("UPDATE payment_intents SET amount_idr = 5 WHERE id = $1", [i])).rejects.toThrow(/immutable|transition/);

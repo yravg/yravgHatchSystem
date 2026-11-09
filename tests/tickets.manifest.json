@@ -307,5 +307,132 @@
         ]
       }
     }
+  },
+  "48": {
+    "title": "Ledger dan Midtrans QRIS sandbox tanpa UI",
+    "requirements": {
+      "HS-48": {
+        "acceptance": "AC-HS-48",
+        "tests": [
+          {
+            "file": "tests/ledger/journal.test.ts",
+            "names": [
+              "journal rules an unbalanced journal is refused",
+              "journal rules a line must carry exactly one positive side and never a negative amount",
+              "journal rules reverseLines swaps the sides and the result is still balanced",
+              "journal rules allocation never exceeds what is still due",
+              "journal rules stays exact above 2^53"
+            ]
+          },
+          {
+            "file": "tests/ledger/migrate.test.ts",
+            "names": [
+              "T48 migration 0003 applies up, rolls back down to nothing, and applies up again",
+              "T48 migration 0003 the database refuses an unbalanced transaction at commit",
+              "T48 migration 0003 the database refuses to update or delete a ledger entry or transaction",
+              "T48 migration 0003 source event is unique per tenant but may repeat across tenants",
+              "T48 migration 0003 a payment intent cannot go back to pending and its amount is frozen"
+            ]
+          },
+          {
+            "file": "tests/ledger/ledger.test.ts",
+            "names": [
+              "ledger API owner posts a balanced transaction and the balances move",
+              "ledger API an unbalanced, float-money or unknown-account request is a 400 and nothing is stored",
+              "ledger API a duplicate source event is a 409 and does not post twice",
+              "ledger API the same Idempotency-Key replays the first answer instead of posting twice",
+              "ledger API concurrent posts with the same source event create exactly one transaction",
+              "ledger API a correction is an immutable reversal; a second reversal and a reversal of a reversal are refused",
+              "ledger API a movement that would make a balance negative is refused and changes nothing",
+              "ledger API reversing a sale whose cash was already paid out would go negative: refused, nothing changes",
+              "ledger API the ledger is tenant scoped: another tenant sees its own books and gets 404 for foreign ids",
+              "ledger API tenant and outlet come from the session; a body that names them is rejected",
+              "ledger API a cashier cannot post, reverse or read the ledger, and an anonymous caller gets 401"
+            ]
+          },
+          {
+            "file": "tests/payments/config.test.ts",
+            "names": [
+              "payments config loads the four settings and keeps the two keys separate",
+              "payments config startup fails closed when the signature secret is missing, even with a server key present",
+              "payments config the app refuses to start payments without a signature secret",
+              "payments config equal legacy values are accepted but stay two separate settings",
+              "payments config refuses a base URL that is neither loopback nor the Midtrans sandbox host (no live endpoint)",
+              "payments config the signature is SHA512(order_id + status_code + gross_amount + secret) over the exact provider strings"
+            ]
+          },
+          {
+            "file": "tests/payments/payments.test.ts",
+            "names": [
+              "verified settlement grants value only after valid signature + authenticated GET status, posts a balanced journal and allocates to the quote",
+              "verified settlement a wrong signature is refused with nothing stored or granted",
+              "verified settlement a notification signed with the ServerKey is refused when it differs from the signature secret (no key fallback)",
+              "verified settlement rotation: the previous signature secret is accepted, an unknown one is not",
+              "verified settlement duplicate notifications credit exactly once",
+              "verified settlement out of order: a stale pending notification after settlement never reverses paid",
+              "verified settlement the tenant comes from the stored intent, never from callback fields",
+              "provider failure provider down keeps the intent pending, retries with backoff, then settles once",
+              "provider failure an unauthorised charge (wrong ServerKey) is not a payment",
+              "worker faults a crash after the effect rolls everything back; the rerun credits exactly once",
+              "worker faults two workers racing on one settlement credit exactly once",
+              "worker faults a clock rollback neither double credits nor loses the job"
+            ]
+          }
+        ]
+      },
+      "HS-V02-17": {
+        "acceptance": "AC-HS-V02-17",
+        "tests": [
+          {
+            "file": "tests/payments/payments.test.ts",
+            "names": [
+              "QRIS intent creates a dynamic QRIS intent for a quote through the provider charge, pending, never paid",
+              "QRIS intent a second live intent for the same quote is refused, concurrent or not (split brain)",
+              "QRIS intent is refused unless the station is reserved by this cashier, and cross-tenant ids are 404",
+              "QRIS intent reading an intent is tenant scoped, permission scoped and needs a live session",
+              "verified settlement grants value only after valid signature + authenticated GET status, posts a balanced journal and allocates to the quote",
+              "verified settlement a wrong signature is refused with nothing stored or granted",
+              "verified settlement a notification signed with the ServerKey is refused when it differs from the signature secret (no key fallback)",
+              "verified settlement rotation: the previous signature secret is accepted, an unknown one is not",
+              "verified settlement a tampered amount breaks the signature, and a replayed signature on a different order is refused",
+              "verified settlement wrong amount, merchant, order or currency in the provider GET status grants nothing",
+              "verified settlement a callback that claims settlement is not enough when the authenticated GET says pending",
+              "verified settlement a notification whose own fields disagree with the intent is stored and never queued",
+              "verified settlement duplicate notifications credit exactly once",
+              "verified settlement out of order: a stale pending notification after settlement never reverses paid",
+              "verified settlement the tenant comes from the stored intent, never from callback fields",
+              "verified settlement a notification for an unknown order is stored, grants nothing and answers 200",
+              "verified settlement no screenshot or client redirect is payment proof",
+              "provider failure provider down keeps the intent pending, retries with backoff, then settles once",
+              "provider failure a provider timeout is pending, never success",
+              "provider failure creating an intent while the provider is down fails typed and leaves no intent behind",
+              "provider failure an unauthorised charge (wrong ServerKey) is not a payment",
+              "late settlement and refunds a settlement after the intent was abandoned goes to refund_pending, not to a session",
+              "late settlement and refunds a settlement after the station was released and reserved by someone else goes to refund_pending",
+              "late settlement and refunds a provider expiry marks the intent expired; a later settlement is refund_pending",
+              "late settlement and refunds a refund stays pending: the database refuses 'refunded' without provider proof, and no API claims money returned",
+              "worker faults a crash after the effect rolls everything back; the rerun credits exactly once",
+              "worker faults two workers racing on one settlement credit exactly once",
+              "worker faults a clock rollback neither double credits nor loses the job",
+              "worker faults polling alone settles an intent when no notification ever arrives",
+              "worker faults the production loop drains on an interval and stops on abort",
+              "worker faults a job that keeps failing is dead-lettered with the intent still pending",
+              "worker faults the SHA-512 formula in the mock equals an independent computation"
+            ]
+          },
+          {
+            "file": "tests/payments/config.test.ts",
+            "names": [
+              "payments config loads the four settings and keeps the two keys separate",
+              "payments config startup fails closed when the signature secret is missing, even with a server key present",
+              "payments config the app refuses to start payments without a signature secret",
+              "payments config equal legacy values are accepted but stay two separate settings",
+              "payments config refuses a base URL that is neither loopback nor the Midtrans sandbox host (no live endpoint)",
+              "payments config the signature is SHA512(order_id + status_code + gross_amount + secret) over the exact provider strings"
+            ]
+          }
+        ]
+      }
+    }
   }
 }

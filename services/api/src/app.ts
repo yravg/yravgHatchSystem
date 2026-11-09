@@ -4,20 +4,27 @@ import Fastify, { type FastifyError, type FastifyInstance } from "fastify";
 import { IdentityError } from "./identity/errors.ts";
 import { registerIdentity } from "./identity/routes.ts";
 import type { IdentityDeps } from "./identity/service.ts";
+import { assertPaymentsConfig, type PaymentsConfig } from "./payments/config.ts";
+import { PaymentError } from "./payments/errors.ts";
+import { registerPayments } from "./payments/routes.ts";
+import { registerLedger } from "./ledger/routes.ts";
 import { registerRates } from "./rates/routes.ts";
 import { registerStations } from "./stations/routes.ts";
 
 export interface AppOptions {
   /** When absent the identity routes are not registered (the T01 scaffold: health only). */
   identity?: IdentityDeps;
+  /** Midtrans sandbox settings. Without them the payment routes are not registered; with an invalid set startup throws. */
+  payments?: PaymentsConfig;
   logger?: { level: string; stream: NodeJS.WritableStream };
 }
 
 export function buildApp(opts: AppOptions = {}): FastifyInstance {
+  if (opts.payments) assertPaymentsConfig(opts.payments); // fail closed before anything listens
   const app = Fastify({ genReqId: () => randomUUID(), ...(opts.logger ? { logger: opts.logger } : {}) });
 
   app.setErrorHandler((err: FastifyError, req, reply) => {
-    if (err instanceof IdentityError) {
+    if (err instanceof IdentityError || err instanceof PaymentError) {
       return reply.status(err.status).send({ error: { code: err.code, messageKey: err.messageKey, retryable: err.retryable, details: { ...err.details } }, requestId: req.id });
     }
     // Never echo err.message or the stack: unknown failures become INTERNAL_ERROR (CONTRACTS section 1).
@@ -38,6 +45,8 @@ export function buildApp(opts: AppOptions = {}): FastifyInstance {
     registerIdentity(app, opts.identity);
     registerStations(app, opts.identity);
     registerRates(app, opts.identity);
+    registerLedger(app, opts.identity);
+    if (opts.payments) registerPayments(app, opts.identity, opts.payments);
   }
 
   return app;
