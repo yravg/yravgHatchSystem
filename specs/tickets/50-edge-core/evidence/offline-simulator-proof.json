@@ -1,0 +1,13 @@
+{
+  "label": "SIMULATOR: in-process transport that refuses every connection; NOT a physical Ethernet-unplugged test",
+  "physicalOfflineTest": "BLOCKED: no venue hardware available",
+  "linux": "unshare -rn is not permitted for user dev on this VPS (Operation not permitted on uid_map), so a network namespace could not be used",
+  "attempts": 5,
+  "refused": 5,
+  "succeeded": 0,
+  "bytesSent": 0,
+  "lastError": "connection refused (simulated: all egress blocked)",
+  "remainingAfterRollback": 500,
+  "remainingAfterReboot": 500,
+  "stateAfterReboot": "RecoveryRequired"
+}

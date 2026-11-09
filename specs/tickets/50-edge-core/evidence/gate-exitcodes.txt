@@ -1,0 +1,4 @@
+/home/user/dev/HatchSystem/capped.sh pnpm test exit 0
+/home/user/dev/HatchSystem/capped.sh pnpm test:ticket -- 50 exit 0
+/home/user/dev/HatchSystem/capped.sh pnpm test:ticket -- 47 exit 0
+/home/user/dev/HatchSystem/capped.sh pnpm test:ticket -- 46 exit 0

@@ -1,0 +1,9 @@
+== unshare -rn true (network namespace attempt, user dev)
+unshare: write failed /proc/self/uid_map: Operation not permitted
+exit 1
+== ip route (host, NOT blocked: shows why a namespace or simulator is needed)
+default via 187.53.135.254 dev eth0 proto static 
+172.16.0.0/24 dev docker0 proto kernel scope link src 172.16.0.1 
+172.16.1.0/24 dev br-fc6ffe04445c proto kernel scope link src 172.16.1.1 
+172.16.2.0/24 dev br-dd8e53248683 proto kernel scope link src 172.16.2.1 
+172.16.3.0/24 dev br-a6946db4d711 proto kernel scope link src 172.16.3.1 

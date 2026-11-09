@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- T50 edge core (headless): device pairing (8 digits, 5 minutes, staff approval, refresh revokes, 5/min/device), per-device Ed25519 keys and revocation, one fenced authority epoch per outlet, ACK intake, Ed25519 SessionLease signing, and the .NET 10 venue edge (SQLite WAL, persist before ACK, WAN-drop local expiry, offline allowance 0, reboot fails closed, optional CEC, simulator display). Offline proof is simulator evidence; physical offline test is BLOCKED (no hardware).
 - T47 stations, rational pricing and minimum payment API merged (def55d2) and marked done after Merger and independent Checker PASS. Money values are sandbox fixtures.
 - T47 stations, rational rates and minimum payment API (`services/api/src/stations`, `rates`, `packages/domain/src/pricing`): exact BigInt rational pricing rounded once (nearest rupiah, half up), optional minimum disabled by default and applied once per session, immutable effective-dated rate versions with stored quotes, tenant/outlet scoped stations with atomic reserve (one of N concurrent wins), pure activation balance check for T49; migration 0002 up/down tested on `hatch_t47`. All money figures are sandbox fixtures; production money policy (D01, D26) is not approved.
 - T46 identity, tenancy and staff 2FA API merged (efe6a70) and marked done after Merger and independent Checker PASS.
