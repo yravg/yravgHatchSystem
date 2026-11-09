@@ -390,8 +390,6 @@ async function progressTransfer(tx: Tx, ctx: Ctx, s: S): Promise<void> {
 }
 
 async function grantDestination(tx: Tx, ctx: Ctx, s: S, tr: Row): Promise<void> {
-  const epoch = await authority(tx, s.tenantId, s.outletId);
-  void epoch;
   if (s.state === "RECOVERY") await setState(tx, s, "ACTIVE", { recovery_reason: null }, ctx.now);
   const c = await issue(tx, ctx, s, { action: "START", purpose: "target_start", deviceId: tr["to_device_id"], stationId: tr["to_station_id"], actor: "system:transfer", withLease: true, transferId: tr["id"] });
   await tx.execute(sql`UPDATE session_transfers SET status = 'ACTIVATING_TARGET', start_command_id = ${c.command_id}, failure_reason = NULL, updated_at = ${ts(ctx.now)} WHERE id = ${tr["id"]}`);
