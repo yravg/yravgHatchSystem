@@ -1,0 +1,8 @@
+Mutation check (worker, 2026-11-09): each line below was broken in turn, tests/identity/identity.test.ts run, then the file restored.
+M1 replay guard  `step <= lastUsedStep` -> `step < lastUsedStep`        -> 2 tests FAILED (replay, two-instance race)
+M2 rate limit    `>= maxWrongAttempts` -> `> maxWrongAttempts`           -> 3 tests FAILED (actor lock, source lock, recovery lock)
+M3 idempotency   conflict detection removed (`request_hash !== hash`)    -> 2 tests FAILED (409 sequential, 409 concurrent)
+M4 recovery      `used_at IS NULL` filter removed (code reusable)        -> 1 test FAILED (single-use)
+M5 step-up       step-up check removed from requirePermission            -> 2 tests FAILED (TTL expiry, recovery gives no step-up)
+Restored sources verified identical afterwards. NOTE: the tests were written after the implementation, so there was no red-first run;
+this mutation check is the substitute evidence that the tests can fail.

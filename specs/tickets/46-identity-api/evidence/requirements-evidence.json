@@ -1,0 +1,120 @@
+{
+  "ticket": "46",
+  "generatedBy": "T46 worker",
+  "note": "Test-first was not followed (tests written after code); see evidence/mutation-check.txt for the substitute proof that the tests can fail.",
+  "requirements": {
+    "HS-46": {
+      "acceptance": "AC-HS-46",
+      "evidence": [
+        {
+          "testPath": "tests/identity/identity.test.ts",
+          "tests": [
+            "login sets an HttpOnly Secure SameSite cookie and never returns the session token in the body",
+            "wrong password and unknown email give the same 401 with no existence leak",
+            "tenant and outlet come from the session; a client supplied tenantId or outletId in a body is rejected",
+            "outlet selection at login is limited to granted outlets; other outlets and other tenants are 404",
+            "role denial is 403 and a cross-tenant id is 404, even for a role without the permission",
+            "a revoked role grant loses its permission on the very next request",
+            "an unsafe request without the matching CSRF header is rejected",
+            "logout revokes the session",
+            "a recovery code works once and then never again",
+            "recovery opens the session but gives no step-up, and another person's code does not work",
+            "wrong recovery codes count toward the 10-attempt limit",
+            "an owner with a fresh step-up revokes another member's factor: audited, sessions killed, re-enrolment forced",
+            "a manager cannot revoke someone else's factor (403) and another tenant's staff is 404",
+            "revocation needs a fresh step-up, a reason, and the current revision",
+            "the same key and payload replays the stored result and runs the effect once",
+            "the same key with a different payload is 409 over HTTP and changes nothing",
+            "two concurrent requests with the same key and different payloads: one wins, the other is 409",
+            "two concurrent requests with the same key and the same payload run once and agree",
+            "a missing or malformed Idempotency-Key is 400",
+            "a stale expectedRevision is 409 REVISION_CONFLICT and nothing changes",
+            "an outlet of another tenant is 404 and the last owner grant cannot be revoked"
+          ],
+          "command": "pnpm test:ticket -- 46",
+          "exitCode": 0,
+          "expected": "all 21 named tests in this file PASS (none skipped/todo/missing)",
+          "actual": "PASS 21/21; ticket 46 total 50 PASS, 0 other",
+          "artifact": "specs/tickets/46-identity-api/evidence/ticket-46.log",
+          "verificationLevel": "automated integration: real PostgreSQL 18.6 (hatch_t46, one schema per test file) + Fastify inject; fixture secrets/clock; no browser, no UI, no hardware, no real authenticator or account"
+        },
+        {
+          "testPath": "tests/identity/migrate.test.ts",
+          "tests": [
+            "applies up, rolls back down to nothing, and applies up again",
+            "the drizzle schema has exactly the columns the migration creates",
+            "a child row cannot point at another tenant's parent",
+            "only an owner grant may span every outlet"
+          ],
+          "command": "pnpm test:ticket -- 46",
+          "exitCode": 0,
+          "expected": "all 4 named tests in this file PASS (none skipped/todo/missing)",
+          "actual": "PASS 4/4; ticket 46 total 50 PASS, 0 other",
+          "artifact": "specs/tickets/46-identity-api/evidence/ticket-46.log",
+          "verificationLevel": "automated integration: real PostgreSQL 18.6 (hatch_t46, one schema per test file) + Fastify inject; fixture secrets/clock; no browser, no UI, no hardware, no real authenticator or account"
+        },
+        {
+          "testPath": "services/api/src/identity/migrations/0001_identity.{up,down}.sql",
+          "command": "node src/identity/migrate-cli.ts up; down; up (cwd services/api, DATABASE_URL=hatch_t46)",
+          "exitCode": 0,
+          "expected": "migration applies, rolls back to schema_migrations only, applies again",
+          "actual": "11 -> 1 -> 11 tables, exit 0/0/0",
+          "artifact": "specs/tickets/46-identity-api/evidence/migration-up-down-up.log",
+          "verificationLevel": "automated integration: real PostgreSQL 18.6 (hatch_t46, one schema per test file) + Fastify inject; fixture secrets/clock; no browser, no UI, no hardware, no real authenticator or account"
+        }
+      ]
+    },
+    "HS-V02-07": {
+      "acceptance": "AC-HS-V02-07",
+      "evidence": [
+        {
+          "testPath": "tests/identity/identity.test.ts",
+          "tests": [
+            "enrol returns the secret once; the factor is unusable until a code confirms it",
+            "the secret is stored sealed and recovery codes only as hashes",
+            "a role that requires MFA is denied on business routes until a factor is verified",
+            "an enrolled account starts each login pending and must challenge before any business route",
+            "an unreadable stored secret or a missing factor fails closed",
+            "step-up opens for the TTL, then expires, then a fresh code renews it",
+            "a cashier cannot approve a refund however fresh the step-up is",
+            "a code replayed inside its step is rejected, also from a second session",
+            "an older step than the last accepted one is rejected (monotonic), even inside the skew window",
+            "skew is narrow: one step back is accepted, two are not",
+            "10 wrong codes lock the actor; the 11th is 429 even with the correct code, and the lock lifts after the window",
+            "10 wrong codes from one source lock that source across actors",
+            "rolling the clock back neither revives a session nor re-opens an accepted code",
+            "two app instances racing the same code accept it exactly once",
+            "a recovery code works once and then never again",
+            "recovery opens the session but gives no step-up, and another person's code does not work",
+            "wrong recovery codes count toward the 10-attempt limit",
+            "never contain the TOTP secret, an OTP, a recovery code, the password or the session token"
+          ],
+          "command": "pnpm test:ticket -- 46",
+          "exitCode": 0,
+          "expected": "all 18 named tests in this file PASS (none skipped/todo/missing)",
+          "actual": "PASS 18/18; ticket 46 total 50 PASS, 0 other",
+          "artifact": "specs/tickets/46-identity-api/evidence/ticket-46.log",
+          "verificationLevel": "automated integration: real PostgreSQL 18.6 (hatch_t46, one schema per test file) + Fastify inject; fixture secrets/clock; no browser, no UI, no hardware, no real authenticator or account"
+        },
+        {
+          "testPath": "tests/identity/totp.test.ts",
+          "tests": [
+            "matches the RFC 6238 SHA1 vectors truncated to 6 digits",
+            "accepts one step of skew either side and rejects two",
+            "rejects codes that are not exactly 6 digits",
+            "round-trips base32",
+            "a sealed value opens only with its own key and owner binding",
+            "a tampered sealed value does not open",
+            "password hashes verify and are salted"
+          ],
+          "command": "pnpm test:ticket -- 46",
+          "exitCode": 0,
+          "expected": "all 7 named tests in this file PASS (none skipped/todo/missing)",
+          "actual": "PASS 7/7; ticket 46 total 50 PASS, 0 other",
+          "artifact": "specs/tickets/46-identity-api/evidence/ticket-46.log",
+          "verificationLevel": "automated integration: real PostgreSQL 18.6 (hatch_t46, one schema per test file) + Fastify inject; fixture secrets/clock; no browser, no UI, no hardware, no real authenticator or account"
+        }
+      ]
+    }
+  }
+}

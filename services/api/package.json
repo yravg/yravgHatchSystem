@@ -12,6 +12,11 @@
   "dependencies": {
     "@yravg/contracts": "workspace:*",
     "@yravg/domain": "workspace:*",
-    "fastify": "5.12.8"
+    "drizzle-orm": "0.45.4",
+    "fastify": "5.12.8",
+    "pg": "8.23.1"
+  },
+  "devDependencies": {
+    "@types/pg": "8.23.1"
   }
 }
