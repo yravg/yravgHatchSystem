@@ -20,7 +20,7 @@ Worker: single worker, branch `t50-edge`. Status of the ticket is NOT changed he
 | python3 tools/validate_spec.py (clean git archive of HEAD) | 0 | errors: [] |
 | migration up / down / up on hatch_t50 | 0 / 0 / 0 | 0001, 0002, 0004 |
 | cd agents && dotnet build HatchAgents.slnx | 0 | 0 errors |
-| cd agents && dotnet test HatchAgents.slnx | 0 | Contracts 6/6, VenueEdge 41/41 |
+| cd agents && dotnet test HatchAgents.slnx | 0 | Contracts 6/6, VenueEdge 41/41 (45/45 after fix round 1) |
 
 ## Red first
 - `evidence/red-api-tests.txt`: 16 of 16 API tests failed before any route or migration existed (exit 1).
@@ -35,3 +35,11 @@ Worker: single worker, branch `t50-edge`. Status of the ticket is NOT changed he
 - Not checked: Windows execution, Kotlin Gradle build (no Kotlin change), Playwright (no UI).
 - Residual risks: a crash can lose up to CheckpointSeconds (30) of consumed time after a reboot (the customer gains at most that); API pairing code is only 8 digits, protected by the 5/min/device limit and staff approval; an unauthenticated device can refresh a pending challenge (denial of service on pairing only).
 - Shared-file additions: tests/pricing/migrate.test.ts also lists the migration names (T47 test), so its expected list now includes 0004; T48 will add 0003 and the Merger resolves the lines.
+
+## Fix round 1 (Checker defect D1)
+- Defect: `Boot()` rewrote `boot_id` on the first open after a reboot but kept `trust_utc`/`trust_mono`; a process restart inside the new boot then restored the stale anchor (`restored-same-boot`) and an expired lease replayed as APPLIED with the picture unlocked.
+- Fix (one root cause): in the same transaction that records the new boot id, `Boot()` now deletes `trust_utc` and `trust_mono` when the boot id changed (`EdgeStore.Tx.DeleteMeta`). Trust returns only via a fresh `Time.Establish`, which persists a new anchor for that boot.
+- Red first: `evidence/red-d1-dotnet-tests.txt` (3 of 4 new tests failed on the old code). Green: `StaleTrustRegressionTests` 4/4, VenueEdge 45/45.
+- Same-bug sweep: the only place that restores time trust is `TimeTrust.Restore`, called once from `Boot()` (now same-boot only with a surviving anchor). Station/lease state restore keeps `AnchorMono` but every reboot turns Running/Paused into RecoveryRequired, and reconcile only resumes after `Establish`. No other path restores trust or lease validity.
+- Gates after the fix: see `evidence/gate-exitcodes-fix1.txt`. `pnpm test:ticket -- 48` exits 1 ("no mandatory tests registered for ticket 48"): T48 is not on this branch (separate worktree), so this gate cannot pass here. Reported as a failed gate, not hidden.
+- Scope note from the Checker: the WebSocket/mTLS transport, service host and ACK HTTP client are not required by T50's AC and belong to T20 (CONTRACTS section 5 transport line carried there). Recorded, not built.

@@ -1,0 +1,37 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Hatch.Contracts -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.Contracts/bin/Debug/net10.0/Hatch.Contracts.dll
+  Hatch.VenueEdge -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/venue-edge/bin/Debug/net10.0/Hatch.VenueEdge.dll
+/home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.VenueEdge.Tests/PersistBeforeAckTests.cs(86,79): warning xUnit1031: Test methods should not use blocking task operations, as they can cause deadlocks. Use an async test method and await instead. (https://xunit.net/xunit.analyzers/rules/xUnit1031) [/home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.VenueEdge.Tests/Hatch.VenueEdge.Tests.csproj]
+  Hatch.VenueEdge.Tests -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.VenueEdge.Tests/bin/Debug/net10.0/Hatch.VenueEdge.Tests.dll
+Test run for /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.VenueEdge.Tests/bin/Debug/net10.0/Hatch.VenueEdge.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:01.13]     Hatch.VenueEdge.Tests.StaleTrustRegressionTests.D1_reboot_then_process_restart_in_new_boot_does_not_restore_stale_trust_or_accept_an_expired_lease [FAIL]
+[xUnit.net 00:00:01.30]     Hatch.VenueEdge.Tests.StaleTrustRegressionTests.Fresh_trusted_time_after_reboot_and_restart_is_the_only_way_trust_returns [FAIL]
+[xUnit.net 00:00:01.34]     Hatch.VenueEdge.Tests.StaleTrustRegressionTests.D1_running_lease_stays_locked_in_recovery_across_reboot_and_a_restart_in_the_new_boot [FAIL]
+  Failed Hatch.VenueEdge.Tests.StaleTrustRegressionTests.D1_reboot_then_process_restart_in_new_boot_does_not_restore_stale_trust_or_accept_an_expired_lease [586 ms]
+  Error Message:
+   Assert.False() Failure
+Expected: False
+Actual:   True
+  Stack Trace:
+     at Hatch.VenueEdge.Tests.StaleTrustRegressionTests.D1_reboot_then_process_restart_in_new_boot_does_not_restore_stale_trust_or_accept_an_expired_lease() in /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.VenueEdge.Tests/StaleTrustRegressionTests.cs:line 24
+--- End of stack trace from previous location ---
+  Failed Hatch.VenueEdge.Tests.StaleTrustRegressionTests.Fresh_trusted_time_after_reboot_and_restart_is_the_only_way_trust_returns [170 ms]
+  Error Message:
+   Assert.False() Failure
+Expected: False
+Actual:   True
+  Stack Trace:
+     at Hatch.VenueEdge.Tests.StaleTrustRegressionTests.Fresh_trusted_time_after_reboot_and_restart_is_the_only_way_trust_returns() in /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.VenueEdge.Tests/StaleTrustRegressionTests.cs:line 61
+--- End of stack trace from previous location ---
+  Failed Hatch.VenueEdge.Tests.StaleTrustRegressionTests.D1_running_lease_stays_locked_in_recovery_across_reboot_and_a_restart_in_the_new_boot [41 ms]
+  Error Message:
+   Assert.False() Failure
+Expected: False
+Actual:   True
+  Stack Trace:
+     at Hatch.VenueEdge.Tests.StaleTrustRegressionTests.D1_running_lease_stays_locked_in_recovery_across_reboot_and_a_restart_in_the_new_boot() in /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.VenueEdge.Tests/StaleTrustRegressionTests.cs:line 40
+--- End of stack trace from previous location ---
+
+Failed!  - Failed:     3, Passed:     1, Skipped:     0, Total:     4, Duration: 909 ms - Hatch.VenueEdge.Tests.dll (net10.0)

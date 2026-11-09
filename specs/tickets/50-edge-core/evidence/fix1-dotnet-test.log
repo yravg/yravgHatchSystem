@@ -1,0 +1,14 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Hatch.Contracts -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.Contracts/bin/Debug/net10.0/Hatch.Contracts.dll
+  Hatch.VenueEdge -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/venue-edge/bin/Debug/net10.0/Hatch.VenueEdge.dll
+  Hatch.Contracts.Tests -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.Contracts.Tests/bin/Debug/net10.0/Hatch.Contracts.Tests.dll
+Test run for /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.Contracts.Tests/bin/Debug/net10.0/Hatch.Contracts.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:     6, Skipped:     0, Total:     6, Duration: 320 ms - Hatch.Contracts.Tests.dll (net10.0)
+  Hatch.VenueEdge.Tests -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.VenueEdge.Tests/bin/Debug/net10.0/Hatch.VenueEdge.Tests.dll
+Test run for /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.VenueEdge.Tests/bin/Debug/net10.0/Hatch.VenueEdge.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    45, Skipped:     0, Total:    45, Duration: 3 s - Hatch.VenueEdge.Tests.dll (net10.0)

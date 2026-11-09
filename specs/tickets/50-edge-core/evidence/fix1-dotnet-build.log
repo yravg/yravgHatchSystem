@@ -1,0 +1,13 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Hatch.Contracts -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.Contracts/bin/Debug/net10.0/Hatch.Contracts.dll
+  Hatch.VenueEdge -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/venue-edge/bin/Debug/net10.0/Hatch.VenueEdge.dll
+  Hatch.WindowsSeat -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/windows-seat/bin/Debug/net10.0/Hatch.WindowsSeat.dll
+  Hatch.Contracts.Tests -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.Contracts.Tests/bin/Debug/net10.0/Hatch.Contracts.Tests.dll
+  Hatch.VenueEdge.Tests -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.VenueEdge.Tests/bin/Debug/net10.0/Hatch.VenueEdge.Tests.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:03.75

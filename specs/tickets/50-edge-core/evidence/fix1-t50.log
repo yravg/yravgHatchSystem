@@ -1,0 +1,55 @@
+
+> yravg-hatchsystem@ test:ticket /home/dev/orca/workspaces/yravgHatchSystem/t50-edge
+> node tools/ticket-dispatch.ts -- 50
+
+JSON report written to /tmp/ticket-dispatch-OjqJuQ/report.json
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Hatch.Contracts -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.Contracts/bin/Debug/net10.0/Hatch.Contracts.dll
+  Hatch.VenueEdge -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/venue-edge/bin/Debug/net10.0/Hatch.VenueEdge.dll
+  Hatch.VenueEdge.Tests -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.VenueEdge.Tests/bin/Debug/net10.0/Hatch.VenueEdge.Tests.dll
+Test run for /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.VenueEdge.Tests/bin/Debug/net10.0/Hatch.VenueEdge.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    45, Skipped:     0, Total:    45, Duration: 3 s - Hatch.VenueEdge.Tests.dll (net10.0)
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Hatch.Contracts -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.Contracts/bin/Debug/net10.0/Hatch.Contracts.dll
+  Hatch.VenueEdge -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/venue-edge/bin/Debug/net10.0/Hatch.VenueEdge.dll
+  Hatch.VenueEdge.Tests -> /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.VenueEdge.Tests/bin/Debug/net10.0/Hatch.VenueEdge.Tests.dll
+Test run for /home/dev/orca/workspaces/yravgHatchSystem/t50-edge/agents/Hatch.VenueEdge.Tests/bin/Debug/net10.0/Hatch.VenueEdge.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    45, Skipped:     0, Total:    45, Duration: 2 s - Hatch.VenueEdge.Tests.dll (net10.0)
+
+ticket 50: Gateway edge dan pairing/lease core headless
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: staff with device.manage creates a pending slot; a cashier cannot
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: another tenant sees 404, not the device
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: rejects a body that tries to choose tenantId or outletId
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: issues an 8 digit code valid 5 minutes and stores only a hash
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: staff approval with the right code activates the device and pins its key
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: an expired code is refused
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: a refresh revokes the old code
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: a proof signed by a different key is refused
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: 5 wrong attempts per minute per device, then 429 even for the right code; other devices are unaffected
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: a code cannot be approved twice and an active device cannot be re-paired with a new key
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: revoke is permanent, audited and idempotent; the device can no longer pair
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: claim bumps one epoch per outlet; only an active edge device can hold it
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: a duplicate ACK is accepted once and stored once (at-least-once, idempotent)
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: refuses a wrong signature, a device id mismatch and a revoked device
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: rejects an ACK that is not a valid DeviceAck
+PASS     HS-50 / AC-HS-50  tests/edge/migrate.test.ts :: applies up, rolls back to nothing, applies up again
+PASS     HS-50 / AC-HS-50  tests/contracts/leases.test.ts :: the committed vector verifies against the pinned key
+PASS     HS-50 / AC-HS-50  tests/contracts/leases.test.ts :: a changed second, a changed device or a wrong key is BAD_SIGNATURE / UNKNOWN_SIGNER
+PASS     HS-50 / AC-HS-50  tests/contracts/leases.test.ts :: rejects a stale epoch, an expired lease and a lease from the future
+PASS     HS-50 / AC-HS-50  tests/contracts/leases.test.ts :: garbage signatures never throw
+PASS     HS-50 / AC-HS-50  tests/contracts/leases.test.ts :: sign then verify round-trips with a runtime key
+PASS     HS-V02-12 / AC-HS-V02-12  tests/contracts/leases.test.ts :: the committed vector verifies against the pinned key
+PASS     HS-V02-12 / AC-HS-V02-12  tests/contracts/leases.test.ts :: a changed second, a changed device or a wrong key is BAD_SIGNATURE / UNKNOWN_SIGNER
+PASS     HS-V02-12 / AC-HS-V02-12  tests/contracts/leases.test.ts :: rejects a stale epoch, an expired lease and a lease from the future
+PASS     HS-V02-12 / AC-HS-V02-12  tests/contracts/leases.test.ts :: garbage signatures never throw
+PASS     HS-V02-12 / AC-HS-V02-12  tests/contracts/leases.test.ts :: sign then verify round-trips with a runtime key
+PASS     HS-50 external dotnet-edge-core: 41 .NET tests: SQLite WAL persists before ACK (kill before/after commit), Ed25519 lease, WAN drop expiry, offline allowance 0, reboot fail closed, optional CEC. Simulator display; no hardware.
+PASS     HS-V02-12 external dotnet-edge-offline: Offline scenario with an in-process transport refusing every connection (SIMULATOR). Physical Ethernet-unplugged test is BLOCKED: no venue hardware.
+
+OK ticket 50

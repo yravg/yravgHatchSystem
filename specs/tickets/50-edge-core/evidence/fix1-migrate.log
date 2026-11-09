@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 /home/dev/orca/workspaces/yravgHatchSystem/t50-edge
+
+ ✓ tests/identity/migrate.test.ts (4 tests) 403ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  03:37:16
+   Duration  1.83s (transform 288ms, setup 0ms, collect 1.17s, tests 403ms, environment 0ms, prepare 71ms)
+

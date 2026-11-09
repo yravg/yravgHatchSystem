@@ -79,6 +79,7 @@ public sealed class EdgeStore : IDisposable
             Exec("INSERT INTO events (at, kind, station_id, payload) VALUES ($a, $k, $s, $p)", ("$a", at), ("$k", kind), ("$s", stationId), ("$p", payload));
         public void Outbox(string at, string commandId, string status, string payload) =>
             Exec("INSERT OR IGNORE INTO outbox (command_id, status, payload, created_at) VALUES ($c, $s, $p, $a)", ("$c", commandId), ("$s", status), ("$p", payload), ("$a", at));
+        public Tx DeleteMeta(string key) { Exec("DELETE FROM meta WHERE key = $k", ("$k", key)); return this; }
         public void Meta(string key, string value) => Exec("INSERT INTO meta (key, value) VALUES ($k, $v) ON CONFLICT (key) DO UPDATE SET value = $v", ("$k", key), ("$v", value));
         public void SaveStation(StationRow r) => Exec("""
             INSERT INTO stations (station_id, device_id, state, revision, remaining_ms, anchor_mono_ms, lock_reason, not_after, lease_json)
