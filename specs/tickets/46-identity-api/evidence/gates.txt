@@ -1,0 +1,11 @@
+Gate commands, run from the worktree through capped.sh (node 26.13.0, pnpm 10.33.0, Postgres 18.6 on 127.0.0.1:5433, database hatch_t46)
+pnpm install --frozen-lockfile                      exit 0
+pnpm lint                                           exit 0
+pnpm typecheck                                      exit 0
+pnpm test                                           exit 0   10 files, 113 tests passed (66 from T01 + 47 new)
+pnpm test:ticket -- 46                              exit 0   50 mandatory checks PASS, 0 FAIL/MISSING/SKIPPED/NOT_RUN ("OK ticket 46")
+python3 -I tools/validate_spec.py (in this worktree) exit 1   17602/17603: the only failing check is "no prohibited vendor/raw/binary artifacts",
+                                                              flagged paths are all under node_modules/ (21604 files) created by pnpm install
+python3 -I tools/validate_spec.py (git archive HEAD, no node_modules) exit 0   PASS 16764/16764
+node src/identity/migrate-cli.ts up / down / up     exit 0 / 0 / 0   11 -> 1 -> 11 tables in hatch_t46 public schema (1 = schema_migrations)
+git push origin t46-identity                        exit 128 "Permission denied (publickey)" (deploy key not added; commits kept locally)

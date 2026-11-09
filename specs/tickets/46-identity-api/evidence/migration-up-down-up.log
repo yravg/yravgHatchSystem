@@ -1,0 +1,9 @@
+up: 0001_identity
+  migrate up exit=0
+  public tables: 11
+down: 0001_identity
+  migrate down exit=0
+  public tables: 1
+up: 0001_identity
+  migrate up exit=0
+  public tables: 11
