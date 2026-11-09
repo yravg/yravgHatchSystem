@@ -1,0 +1,59 @@
+
+> yravg-hatchsystem@ test:ticket /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv
+> node tools/ticket-dispatch.ts -- 46
+
+JSON report written to /tmp/ticket-dispatch-0jQOgB/report.json
+
+ticket 46: API identitas, tenancy dan staff 2FA
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: login sets an HttpOnly Secure SameSite cookie and never returns the session token in the body
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: wrong password and unknown email give the same 401 with no existence leak
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: tenant and outlet come from the session; a client supplied tenantId or outletId in a body is rejected
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: outlet selection at login is limited to granted outlets; other outlets and other tenants are 404
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: role denial is 403 and a cross-tenant id is 404, even for a role without the permission
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: a revoked role grant loses its permission on the very next request
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: an unsafe request without the matching CSRF header is rejected
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: logout revokes the session
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: a recovery code works once and then never again
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: recovery opens the session but gives no step-up, and another person's code does not work
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: wrong recovery codes count toward the 10-attempt limit
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: an owner with a fresh step-up revokes another member's factor: audited, sessions killed, re-enrolment forced
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: a manager cannot revoke someone else's factor (403) and another tenant's staff is 404
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: revocation needs a fresh step-up, a reason, and the current revision
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: the same key and payload replays the stored result and runs the effect once
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: the same key with a different payload is 409 over HTTP and changes nothing
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: two concurrent requests with the same key and different payloads: one wins, the other is 409
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: two concurrent requests with the same key and the same payload run once and agree
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: a missing or malformed Idempotency-Key is 400
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: a stale expectedRevision is 409 REVISION_CONFLICT and nothing changes
+PASS     HS-46 / AC-HS-46  tests/identity/identity.test.ts :: an outlet of another tenant is 404 and the last owner grant cannot be revoked
+PASS     HS-46 / AC-HS-46  tests/identity/migrate.test.ts :: applies up, rolls back down to nothing, and applies up again
+PASS     HS-46 / AC-HS-46  tests/identity/migrate.test.ts :: the drizzle schema has exactly the columns the migration creates
+PASS     HS-46 / AC-HS-46  tests/identity/migrate.test.ts :: a child row cannot point at another tenant's parent
+PASS     HS-46 / AC-HS-46  tests/identity/migrate.test.ts :: only an owner grant may span every outlet
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: enrol returns the secret once; the factor is unusable until a code confirms it
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: the secret is stored sealed and recovery codes only as hashes
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: a role that requires MFA is denied on business routes until a factor is verified
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: an enrolled account starts each login pending and must challenge before any business route
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: an unreadable stored secret or a missing factor fails closed
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: step-up opens for the TTL, then expires, then a fresh code renews it
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: a cashier cannot approve a refund however fresh the step-up is
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: a code replayed inside its step is rejected, also from a second session
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: an older step than the last accepted one is rejected (monotonic), even inside the skew window
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: skew is narrow: one step back is accepted, two are not
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: 10 wrong codes lock the actor; the 11th is 429 even with the correct code, and the lock lifts after the window
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: 10 wrong codes from one source lock that source across actors
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: rolling the clock back neither revives a session nor re-opens an accepted code
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: two app instances racing the same code accept it exactly once
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: a recovery code works once and then never again
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: recovery opens the session but gives no step-up, and another person's code does not work
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: wrong recovery codes count toward the 10-attempt limit
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/identity.test.ts :: never contain the TOTP secret, an OTP, a recovery code, the password or the session token
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/totp.test.ts :: matches the RFC 6238 SHA1 vectors truncated to 6 digits
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/totp.test.ts :: accepts one step of skew either side and rejects two
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/totp.test.ts :: rejects codes that are not exactly 6 digits
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/totp.test.ts :: round-trips base32
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/totp.test.ts :: a sealed value opens only with its own key and owner binding
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/totp.test.ts :: a tampered sealed value does not open
+PASS     HS-V02-07 / AC-HS-V02-07  tests/identity/totp.test.ts :: password hashes verify and are salted
+
+OK ticket 46

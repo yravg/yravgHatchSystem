@@ -96,8 +96,8 @@ describe("external named tests (D1: a bare exit code proves nothing)", () => {
     expect(evaluateExternal("HS-X", ext({ minTests: 2 }), all).problems).toEqual([]);
   });
   it("an external naming no tests is a problem unless it opts out explicitly", () => {
-    expect(evaluateExternal("HS-X", ext({ mandatory: undefined }), all).problems.join()).toMatch(/names no mandatory tests/);
-    expect(evaluateExternal("HS-X", ext({ mandatory: undefined, exitCodeOnly: true }), all).problems).toEqual([]);
+    expect(evaluateExternal("HS-X", ext({ mandatory: [] }), all).problems.join()).toMatch(/names no mandatory tests/);
+    expect(evaluateExternal("HS-X", ext({ mandatory: [], exitCodeOnly: true }), all).problems).toEqual([]);
   });
   it("parses .NET TRX outcomes and XML-escaped names", () => {
     const trx = `<TestRun><Results><UnitTestResult testName="N.C.Ok" outcome="Passed"/><UnitTestResult testName="N.C.Bad" outcome="Failed"/><UnitTestResult testName="N.C.Skip" outcome="NotExecuted"/></Results></TestRun>`;

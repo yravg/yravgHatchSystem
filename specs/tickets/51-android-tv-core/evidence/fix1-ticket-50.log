@@ -1,0 +1,90 @@
+
+> yravg-hatchsystem@ test:ticket /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv
+> node tools/ticket-dispatch.ts -- 50
+
+JSON report written to /tmp/ticket-dispatch-fqwTcb/report.json
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Hatch.Contracts -> /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/agents/Hatch.Contracts/bin/Debug/net10.0/Hatch.Contracts.dll
+  Hatch.VenueEdge -> /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/agents/venue-edge/bin/Debug/net10.0/Hatch.VenueEdge.dll
+/home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/agents/Hatch.VenueEdge.Tests/PersistBeforeAckTests.cs(86,79): warning xUnit1031: Test methods should not use blocking task operations, as they can cause deadlocks. Use an async test method and await instead. (https://xunit.net/xunit.analyzers/rules/xUnit1031) [/home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/agents/Hatch.VenueEdge.Tests/Hatch.VenueEdge.Tests.csproj]
+  Hatch.VenueEdge.Tests -> /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/agents/Hatch.VenueEdge.Tests/bin/Debug/net10.0/Hatch.VenueEdge.Tests.dll
+Test run for /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/agents/Hatch.VenueEdge.Tests/bin/Debug/net10.0/Hatch.VenueEdge.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+Results File: /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/agents/TestResults-dispatch/edge-core/edge-core.trx
+
+Passed!  - Failed:     0, Passed:    45, Skipped:     0, Total:    45, Duration: 4 s - Hatch.VenueEdge.Tests.dll (net10.0)
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Hatch.Contracts -> /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/agents/Hatch.Contracts/bin/Debug/net10.0/Hatch.Contracts.dll
+  Hatch.VenueEdge -> /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/agents/venue-edge/bin/Debug/net10.0/Hatch.VenueEdge.dll
+  Hatch.VenueEdge.Tests -> /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/agents/Hatch.VenueEdge.Tests/bin/Debug/net10.0/Hatch.VenueEdge.Tests.dll
+Test run for /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/agents/Hatch.VenueEdge.Tests/bin/Debug/net10.0/Hatch.VenueEdge.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+Results File: /home/dev/orca/workspaces/yravgHatchSystem/t51-android-tv/agents/TestResults-dispatch/edge-offline/edge-offline.trx
+
+Passed!  - Failed:     0, Passed:    45, Skipped:     0, Total:    45, Duration: 5 s - Hatch.VenueEdge.Tests.dll (net10.0)
+
+ticket 50: Gateway edge dan pairing/lease core headless
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: staff with device.manage creates a pending slot; a cashier cannot
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: another tenant sees 404, not the device
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: rejects a body that tries to choose tenantId or outletId
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: issues an 8 digit code valid 5 minutes and stores only a hash
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: staff approval with the right code activates the device and pins its key
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: an expired code is refused
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: a refresh revokes the old code
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: a proof signed by a different key is refused
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: 5 wrong attempts per minute per device, then 429 even for the right code; other devices are unaffected
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: a code cannot be approved twice and an active device cannot be re-paired with a new key
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: revoke is permanent, audited and idempotent; the device can no longer pair
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: claim bumps one epoch per outlet; only an active edge device can hold it
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: a duplicate ACK is accepted once and stored once (at-least-once, idempotent)
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: refuses a wrong signature, a device id mismatch and a revoked device
+PASS     HS-50 / AC-HS-50  tests/edge/devices.test.ts :: rejects an ACK that is not a valid DeviceAck
+PASS     HS-50 / AC-HS-50  tests/edge/migrate.test.ts :: applies up, rolls back to nothing, applies up again
+PASS     HS-50 / AC-HS-50  tests/contracts/leases.test.ts :: the committed vector verifies against the pinned key
+PASS     HS-50 / AC-HS-50  tests/contracts/leases.test.ts :: a changed second, a changed device or a wrong key is BAD_SIGNATURE / UNKNOWN_SIGNER
+PASS     HS-50 / AC-HS-50  tests/contracts/leases.test.ts :: rejects a stale epoch, an expired lease and a lease from the future
+PASS     HS-50 / AC-HS-50  tests/contracts/leases.test.ts :: garbage signatures never throw
+PASS     HS-50 / AC-HS-50  tests/contracts/leases.test.ts :: sign then verify round-trips with a runtime key
+PASS     HS-V02-12 / AC-HS-V02-12  tests/contracts/leases.test.ts :: the committed vector verifies against the pinned key
+PASS     HS-V02-12 / AC-HS-V02-12  tests/contracts/leases.test.ts :: a changed second, a changed device or a wrong key is BAD_SIGNATURE / UNKNOWN_SIGNER
+PASS     HS-V02-12 / AC-HS-V02-12  tests/contracts/leases.test.ts :: rejects a stale epoch, an expired lease and a lease from the future
+PASS     HS-V02-12 / AC-HS-V02-12  tests/contracts/leases.test.ts :: garbage signatures never throw
+PASS     HS-V02-12 / AC-HS-V02-12  tests/contracts/leases.test.ts :: sign then verify round-trips with a runtime key
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.IdentityAndVectorTests.The_typescript_signed_vector_verifies_and_the_canonical_payload_is_byte_equal
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.IdentityAndVectorTests.Device_key_is_generated_at_runtime_stored_owner_only_and_proves_possession
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.IdentityAndVectorTests.The_private_seed_never_lands_in_the_edge_database
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.PersistBeforeAckTests.Database_is_wal_with_full_synchronous
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.PersistBeforeAckTests.Death_after_commit_keeps_the_row_resends_from_the_outbox_and_applies_once
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.PersistBeforeAckTests.Death_before_commit_leaves_nothing_and_sends_nothing_then_the_retry_works
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.PersistBeforeAckTests.The_outbox_row_is_committed_before_the_sink_sees_the_ack
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.PersistBeforeAckTests.Events_are_append_only_and_ordered
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.LeaseTests.A_valid_signed_lease_unlocks_the_picture_and_the_ack_is_labelled_simulated
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.LeaseTests.A_lease_that_does_not_verify_is_refused_and_the_picture_stays_locked
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.LeaseTests.A_replayed_or_reordered_sequence_is_refused
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.LeaseTests.A_fenced_edge_stops_granting_and_refuses_starts
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.LeaseTests.The_edge_issues_a_lease_its_own_trust_bundle_accepts
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.CecTests.With_no_cec_driver_start_pause_expire_and_reboot_all_lock_the_picture
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.CecTests.A_failing_optional_cec_driver_cannot_stop_the_independent_lock
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.CecTests.A_display_that_is_not_ready_blocks_the_start_so_no_billing_begins_without_activation
+PASS     HS-50 / dotnet-edge-core  dotnet-edge-core :: Hatch.VenueEdge.Tests.CecTests.The_display_adapter_is_a_labelled_simulator_and_has_no_console_power_method
+PASS     HS-V02-12 / dotnet-edge-offline  dotnet-edge-offline :: Hatch.VenueEdge.Tests.OfflineProofTests.Offline_scenario_with_every_connection_refused
+PASS     HS-V02-12 / dotnet-edge-offline  dotnet-edge-offline :: Hatch.VenueEdge.Tests.OfflineProofTests.The_refusing_handler_really_throws_for_any_host
+PASS     HS-V02-12 / dotnet-edge-offline  dotnet-edge-offline :: Hatch.VenueEdge.Tests.LeaseTests.Wan_down_the_valid_lease_runs_to_its_deadline_then_locks_locally
+PASS     HS-V02-12 / dotnet-edge-offline  dotnet-edge-offline :: Hatch.VenueEdge.Tests.LeaseTests.Offline_new_start_extend_and_money_actions_are_refused_with_allowance_zero
+PASS     HS-V02-12 / dotnet-edge-offline  dotnet-edge-offline :: Hatch.VenueEdge.Tests.LeaseTests.Wall_clock_rollback_in_the_same_boot_cannot_gain_a_second
+PASS     HS-V02-12 / dotnet-edge-offline  dotnet-edge-offline :: Hatch.VenueEdge.Tests.RebootTests.A_fresh_start_is_refused_while_time_is_untrusted
+PASS     HS-V02-12 / dotnet-edge-offline  dotnet-edge-offline :: Hatch.VenueEdge.Tests.RebootTests.A_plausible_wall_clock_after_reboot_does_not_unlock_anything
+PASS     HS-V02-12 / dotnet-edge-offline  dotnet-edge-offline :: Hatch.VenueEdge.Tests.RebootTests.Reboot_locks_the_picture_and_asks_for_recovery_instead_of_resetting_the_time
+PASS     HS-V02-12 / dotnet-edge-offline  dotnet-edge-offline :: Hatch.VenueEdge.Tests.RebootTests.Reconciliation_past_the_signed_deadline_stays_locked
+PASS     HS-V02-12 / dotnet-edge-offline  dotnet-edge-offline :: Hatch.VenueEdge.Tests.RebootTests.Trusted_reconciliation_resumes_with_no_more_than_the_checkpoint
+PASS     HS-V02-12 / dotnet-edge-offline  dotnet-edge-offline :: Hatch.VenueEdge.Tests.RebootTests.Rolling_the_wall_clock_back_after_reconcile_does_not_add_time
+PASS     HS-V02-12 / dotnet-edge-offline  dotnet-edge-offline :: Hatch.VenueEdge.Tests.StaleTrustRegressionTests.D1_running_lease_stays_locked_in_recovery_across_reboot_and_a_restart_in_the_new_boot
+PASS     HS-V02-12 / dotnet-edge-offline  dotnet-edge-offline :: Hatch.VenueEdge.Tests.StaleTrustRegressionTests.D1_reboot_then_process_restart_in_new_boot_does_not_restore_stale_trust_or_accept_an_expired_lease
+PASS     HS-V02-12 / dotnet-edge-offline  dotnet-edge-offline :: Hatch.VenueEdge.Tests.StaleTrustRegressionTests.Same_boot_process_restart_still_keeps_trust_established_in_that_boot
+PASS     HS-V02-12 / dotnet-edge-offline  dotnet-edge-offline :: Hatch.VenueEdge.Tests.StaleTrustRegressionTests.Fresh_trusted_time_after_reboot_and_restart_is_the_only_way_trust_returns
+PASS     HS-50 external dotnet-edge-core: 45 .NET tests: SQLite WAL persists before ACK (kill before/after commit), Ed25519 lease, WAN drop expiry, offline allowance 0, reboot fail closed, optional CEC. Simulator display; no hardware.
+PASS     HS-V02-12 external dotnet-edge-offline: Offline scenario with an in-process transport refusing every connection (SIMULATOR). Physical Ethernet-unplugged test is BLOCKED: no venue hardware.
+
+OK ticket 50

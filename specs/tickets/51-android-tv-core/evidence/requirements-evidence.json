@@ -1,6 +1,6 @@
 {
   "ticket": "51",
-  "note": "Fixture/simulator evidence only. No requirement is hardware verified. Ticket status unchanged.",
+  "note": "Fixture/simulator evidence only. No requirement is hardware verified. Ticket status unchanged. Fix round 1: D1 dispatcher now verifies named external tests from JUnit/TRX reports; D2 checkpoint-cap test added (red without cap).",
   "requirements": [
     {
       "requirement": "HS-51/AC-HS-51",
@@ -12,10 +12,19 @@
       "command": "cd agents/android-tv && ./gradlew --no-daemon testDebugUnitTest assembleDebug :contracts:test --rerun-tasks",
       "exitCode": 0,
       "expected": "managed profile locks neutral setup and consumes Home/Back/Input; UNPROVISIONED never claims kiosk; WAN expiry, replay, reboot add no seconds; permission revoke => repair, no grant; CEC not needed",
-      "actual": "31 core, 6 app, 6 contracts tests, 0 failed, 0 skipped; assembleDebug OK",
+      "actual": "32 core, 6 app, 6 contracts tests, 0 failed, 0 skipped; assembleDebug OK",
       "artifact": "agents/android-tv/app/build/outputs/apk/debug/app-debug.apk (sha256 209f26b2b9b9e7df1c65d984e3ddff883ffbc9e1c81c966336f9f22f87454c6e, untracked build output)",
       "verificationLevel": "SIMULATOR (JVM unit tests, fake clock, in-memory store; no device, no hardware)",
-      "blockedPhysical": "P1,P2,P5,P7,P8 BLOCKED (no hardware)"
+      "blockedPhysical": "P1,P2,P5,P7,P8 BLOCKED (no hardware)",
+      "fix1": {
+        "checkpointCapTest": "FaultScenariosTest::checkpoint cap alone stops a replay after reboot from gaining seconds when the trusted-time floor is lost",
+        "redLog": "evidence/red-first-checkpoint-cap.log",
+        "greenLog": "evidence/green-checkpoint-cap.log",
+        "dispatcherNamedTests": "tests/tickets.manifest.json external.mandatory, verified from JUnit XML",
+        "deleteTestRedLog": "evidence/d1-delete-test-red.log",
+        "dispatcherLog": "evidence/test-ticket-51-fix1.log",
+        "verificationLevel": "SIMULATOR"
+      }
     },
     {
       "requirement": "HS-V02-10/AC-HS-V02-10",
@@ -30,7 +39,16 @@
       "actual": "all pass; device owner => PROVISIONED_UNPAIRED mapping unit-tested; real device-owner provisioning not exercised",
       "artifact": "agents/android-tv/app/build/outputs/apk/debug/app-debug.apk (sha256 209f26b2b9b9e7df1c65d984e3ddff883ffbc9e1c81c966336f9f22f87454c6e, untracked build output)",
       "verificationLevel": "SIMULATOR (JVM unit tests, fake clock, in-memory store; no device, no hardware)",
-      "blockedPhysical": "P1,P2,P3,P4 BLOCKED (physical Home/Back/input tests required by AC)"
+      "blockedPhysical": "P1,P2,P3,P4 BLOCKED (physical Home/Back/input tests required by AC)",
+      "fix1": {
+        "checkpointCapTest": "FaultScenariosTest::checkpoint cap alone stops a replay after reboot from gaining seconds when the trusted-time floor is lost",
+        "redLog": "evidence/red-first-checkpoint-cap.log",
+        "greenLog": "evidence/green-checkpoint-cap.log",
+        "dispatcherNamedTests": "tests/tickets.manifest.json external.mandatory, verified from JUnit XML",
+        "deleteTestRedLog": "evidence/d1-delete-test-red.log",
+        "dispatcherLog": "evidence/test-ticket-51-fix1.log",
+        "verificationLevel": "SIMULATOR"
+      }
     },
     {
       "requirement": "HS-V02-11/AC-HS-V02-11",
@@ -45,7 +63,16 @@
       "actual": "3 simulated reboots pass; no grant method on probe; manifest has only SYSTEM_ALERT_WINDOW and RECEIVE_BOOT_COMPLETED",
       "artifact": "agents/android-tv/app/build/outputs/apk/debug/app-debug.apk (sha256 209f26b2b9b9e7df1c65d984e3ddff883ffbc9e1c81c966336f9f22f87454c6e, untracked build output)",
       "verificationLevel": "SIMULATOR (JVM unit tests, fake clock, in-memory store; no device, no hardware)",
-      "blockedPhysical": "P5,P6 BLOCKED (exact certified model/firmware absent); no model certified"
+      "blockedPhysical": "P5,P6 BLOCKED (exact certified model/firmware absent); no model certified",
+      "fix1": {
+        "checkpointCapTest": "FaultScenariosTest::checkpoint cap alone stops a replay after reboot from gaining seconds when the trusted-time floor is lost",
+        "redLog": "evidence/red-first-checkpoint-cap.log",
+        "greenLog": "evidence/green-checkpoint-cap.log",
+        "dispatcherNamedTests": "tests/tickets.manifest.json external.mandatory, verified from JUnit XML",
+        "deleteTestRedLog": "evidence/d1-delete-test-red.log",
+        "dispatcherLog": "evidence/test-ticket-51-fix1.log",
+        "verificationLevel": "SIMULATOR"
+      }
     },
     {
       "requirement": "HS-V02-13/AC-HS-V02-13",
@@ -59,7 +86,16 @@
       "actual": "all pass",
       "artifact": "agents/android-tv/app/build/outputs/apk/debug/app-debug.apk (sha256 209f26b2b9b9e7df1c65d984e3ddff883ffbc9e1c81c966336f9f22f87454c6e, untracked build output)",
       "verificationLevel": "SIMULATOR (JVM unit tests, fake clock, in-memory store; no device, no hardware)",
-      "blockedPhysical": "P9,P10,P11 BLOCKED (real TV+console absent)"
+      "blockedPhysical": "P9,P10,P11 BLOCKED (real TV+console absent)",
+      "fix1": {
+        "checkpointCapTest": "FaultScenariosTest::checkpoint cap alone stops a replay after reboot from gaining seconds when the trusted-time floor is lost",
+        "redLog": "evidence/red-first-checkpoint-cap.log",
+        "greenLog": "evidence/green-checkpoint-cap.log",
+        "dispatcherNamedTests": "tests/tickets.manifest.json external.mandatory, verified from JUnit XML",
+        "deleteTestRedLog": "evidence/d1-delete-test-red.log",
+        "dispatcherLog": "evidence/test-ticket-51-fix1.log",
+        "verificationLevel": "SIMULATOR"
+      }
     }
   ]
 }
