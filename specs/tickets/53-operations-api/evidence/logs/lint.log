@@ -1,0 +1,5 @@
+
+> yravg-hatchsystem@ lint /home/dev/orca/workspaces/yravgHatchSystem/t53-operations
+> eslint .
+
+exit 0

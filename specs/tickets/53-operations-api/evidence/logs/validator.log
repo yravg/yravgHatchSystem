@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "scope": "Structural specification traceability only; no runtime/browser/hardware/payment tests performed",
+  "checked_at_Asia_Shanghai": "2026-11-09T14:00:59.956986+08:00",
+  "requirements": 1089,
+  "canonical_vertical_slices": 54,
+  "own_gap_requirements": 15,
+  "tickets": 54,
+  "team_tickets": 13,
+  "dispositions": {
+    "ticket": 840,
+    "deferred": 104,
+    "out-of-scope": 145
+  },
+  "checks": 16765,
+  "passed": 16765,
+  "errors": []
+}
+exit 0

@@ -1,0 +1,6 @@
+up: 0001_identity, 0002_stations_rates, 0003_ledger_payments, 0004_edge_devices, 0005_sessions, 0006_operations
+up exit 0
+down: 0006_operations, 0005_sessions, 0004_edge_devices, 0003_ledger_payments, 0002_stations_rates, 0001_identity
+down exit 0
+up: 0001_identity, 0002_stations_rates, 0003_ledger_payments, 0004_edge_devices, 0005_sessions, 0006_operations
+up exit 0

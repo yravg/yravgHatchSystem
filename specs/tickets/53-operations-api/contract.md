@@ -15,6 +15,7 @@ Agreed: 2026-11-09T05:39:20Z. Mode "team" but exactly ONE worker (T53 worker, Cl
 - services/api/src/app.ts: one import and one registration line for T53 routes.
 - services/api/src/tenancy/permissions.ts: T53's own new permissions only (stock.manage, stock.read, shift.operate, shift.policy); no existing role is widened except by adding these.
 - services/api/src/ledger/service.ts: only the LedgerKind union gains T53 kinds (order_sale, order_refund, order_refund_paid); no behaviour change.
+- services/api/src/payments/settlement.ts: the keyword `export` added to `settlementAccepted` (reuse, not copy).
 - packages/domain/src/index.ts: one export line.
 - tests/tickets.manifest.json: T53 entry. tests/{identity,pricing,ledger,session}/migrate.test.ts: expected migration list gains 0006_operations.
 - CHANGELOG.md: one Unreleased line.
