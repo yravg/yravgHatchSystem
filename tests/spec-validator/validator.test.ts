@@ -4,7 +4,10 @@ import { spawnSync } from "node:child_process";
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+
+// Each case runs the full validator (hundreds of files), so allow more than the 20 s default.
+vi.setConfig({ testTimeout: 120_000, hookTimeout: 120_000 });
 
 const repo = resolve(import.meta.dirname, "../..");
 const CHECK = "no prohibited vendor/raw/binary artifacts";
