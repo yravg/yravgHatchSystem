@@ -1,0 +1,11 @@
+DROP TABLE outbox;
+DROP TABLE provider_events;
+DROP TABLE refunds;
+DROP TABLE payment_allocations;
+DROP TABLE payment_intents;
+DROP FUNCTION t48_intent_guard();
+DROP TABLE ledger_balances;
+DROP TABLE ledger_entries;
+DROP TABLE ledger_transactions;
+DROP FUNCTION t48_check_balanced();
+DROP FUNCTION t48_append_only();

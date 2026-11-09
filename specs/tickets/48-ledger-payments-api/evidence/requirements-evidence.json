@@ -1,0 +1,123 @@
+{
+  "ticket": "HS-T48",
+  "generatedFrom": "HEAD of branch t48-ledger",
+  "fullSuite": {
+    "command": "pnpm test",
+    "exitCode": 0,
+    "files": 18,
+    "tests": 206
+  },
+  "gates": [
+    {
+      "command": "pnpm install --frozen-lockfile",
+      "exitCode": 0,
+      "note": "no dependency changed, lockfile untouched"
+    },
+    {
+      "command": "pnpm lint",
+      "exitCode": 0,
+      "artifact": "specs/tickets/48-ledger-payments-api/evidence/lint.log"
+    },
+    {
+      "command": "pnpm typecheck",
+      "exitCode": 0,
+      "artifact": "specs/tickets/48-ledger-payments-api/evidence/typecheck.log"
+    },
+    {
+      "command": "pnpm test",
+      "exitCode": 0,
+      "artifact": "specs/tickets/48-ledger-payments-api/evidence/test.log"
+    },
+    {
+      "command": "pnpm test:ticket -- 48",
+      "exitCode": 0,
+      "artifact": "specs/tickets/48-ledger-payments-api/evidence/t48.log"
+    },
+    {
+      "command": "pnpm test:ticket -- 47",
+      "exitCode": 0,
+      "artifact": "specs/tickets/48-ledger-payments-api/evidence/t47.log"
+    },
+    {
+      "command": "pnpm test:ticket -- 46",
+      "exitCode": 0,
+      "artifact": "specs/tickets/48-ledger-payments-api/evidence/t46.log"
+    },
+    {
+      "command": "python3 -I tools/validate_spec.py (clean git archive export)",
+      "exitCode": 0,
+      "artifact": "specs/tickets/48-ledger-payments-api/evidence/validator.log",
+      "note": "16764 checks, 0 errors"
+    },
+    {
+      "command": "migrate-cli up / down / up on hatch_t48",
+      "exitCode": 0,
+      "artifact": "specs/tickets/48-ledger-payments-api/evidence/migrate.log"
+    }
+  ],
+  "requirements": [
+    {
+      "requirement": "HS-48",
+      "acceptance": "AC-HS-48",
+      "verificationLevel": "fixture+simulator (local mock Midtrans on 127.0.0.1, real Postgres hatch_t48, real HTTP via Fastify inject); no real provider, no hardware",
+      "evidence": [
+        {
+          "testPath": "tests/ledger/journal.test.ts",
+          "command": "pnpm test:ticket -- 48",
+          "exitCode": 0,
+          "expected": "unbalanced, both-sided, negative and unknown-account journals refused; reversal swaps sides; allocation <= due; exact above 2^53",
+          "actual": "5 passed",
+          "artifact": "specs/tickets/48-ledger-payments-api/evidence/t48.log"
+        },
+        {
+          "testPath": "tests/ledger/migrate.test.ts",
+          "command": "pnpm test:ticket -- 48",
+          "exitCode": 0,
+          "expected": "DB refuses unbalanced commit, entry/transaction update or delete; source event unique per tenant; intent cannot return to pending; refunded needs proof; up/down/up",
+          "actual": "5 passed",
+          "artifact": "specs/tickets/48-ledger-payments-api/evidence/t48.log"
+        },
+        {
+          "testPath": "tests/ledger/ledger.test.ts",
+          "command": "pnpm test:ticket -- 48",
+          "exitCode": 0,
+          "expected": "balanced post moves balances; duplicate source event 409; idempotent replay; 8 concurrent same source event -> 1; immutable reversal once; negative balance refused; tenant scoped 404; session-derived tenant; cashier 403/anon 401",
+          "actual": "11 passed",
+          "artifact": "specs/tickets/48-ledger-payments-api/evidence/t48.log"
+        },
+        {
+          "testPath": "tests/payments/config.test.ts",
+          "command": "pnpm test:ticket -- 48",
+          "exitCode": 0,
+          "expected": "startup fails closed without signature secret; no ServerKey fallback; equal legacy values accepted as two settings; live base URL refused; SHA512 formula over exact strings",
+          "actual": "6 passed",
+          "artifact": "specs/tickets/48-ledger-payments-api/evidence/t48.log"
+        },
+        {
+          "testPath": "tests/payments/payments.test.ts",
+          "command": "pnpm test:ticket -- 48",
+          "exitCode": 0,
+          "expected": "duplicate/out-of-order settlement credits once; provider down/timeout stays pending; crash rolls back; 2 racing workers once; clock rollback once; tenant from stored intent",
+          "actual": "see requirement HS-V02-17 list; 32 passed in file",
+          "artifact": "specs/tickets/48-ledger-payments-api/evidence/t48.log"
+        }
+      ]
+    },
+    {
+      "requirement": "HS-V02-17",
+      "acceptance": "AC-HS-V02-17",
+      "verificationLevel": "fixture+simulator (local mock Midtrans on 127.0.0.1, real Postgres hatch_t48, real HTTP via Fastify inject); no real provider, no hardware",
+      "evidence": [
+        {
+          "testPath": "tests/payments/payments.test.ts",
+          "command": "pnpm test:ticket -- 48",
+          "exitCode": 0,
+          "expected": "value only after valid signature + authenticated GET (Basic ServerKey) + merchant/order/amount/currency match; wrong signature/ServerKey-signed/tampered/replayed refused; rotation previous secret; pending GET beats a settlement callback; redirect/screenshot not proof (404 on any confirm route); unknown order stored and 200; provider down -> 503 on create, pending on poll; late settlement after abandon, expiry or station reassignment -> refund_pending with pending refund row and refund_payable, station untouched; refund cannot be 'refunded' without provider proof; polling-only settlement; dead-letter after 8 attempts; production loop drains and aborts",
+          "actual": "32 passed",
+          "artifact": "specs/tickets/48-ledger-payments-api/evidence/t48.log"
+        }
+      ]
+    }
+  ],
+  "redFirst": "specs/tickets/48-ledger-payments-api/evidence/red-run.txt"
+}

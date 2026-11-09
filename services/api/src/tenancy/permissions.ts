@@ -8,11 +8,12 @@ const OWNER = [
   "staff.read", "staff.manage", "mfa.revoke.other", "outlet.config", "report.read",
   "refund.approve", "price.override", "session.manage", "checkout", "order.kitchen", "device.manage",
   "station.manage", "rate.manage",
+  "ledger.read", "ledger.post", "ledger.reverse",
 ] as const;
 
 export const ROLE_PERMISSIONS: Readonly<Record<Role, readonly string[]>> = {
   owner: OWNER,
-  manager: ["staff.read", "report.read", "refund.approve", "price.override", "session.manage", "checkout", "station.manage"],
+  manager: ["staff.read", "report.read", "refund.approve", "price.override", "session.manage", "checkout", "station.manage", "ledger.read", "ledger.post", "ledger.reverse"],
   cashier: ["session.manage", "checkout"],
   kitchen: ["order.kitchen"],
   technician: ["device.manage"],

@@ -1,0 +1,41 @@
+      1       Tests  21 failed (21)
+      1      → expected [Function] to not throw an error but 'TypeError: (0 , __vite_ssr_import_0__…' was thrown
+      1  FAIL  tests/ledger/journal.test.ts > journal rules > a line must carry exactly one positive side and never a negative amount
+      1  FAIL  tests/ledger/journal.test.ts > journal rules > allocation never exceeds what is still due
+      1  FAIL  tests/ledger/journal.test.ts > journal rules > an unbalanced journal is refused
+      1  FAIL  tests/ledger/journal.test.ts > journal rules > reverseLines swaps the sides and the result is still balanced
+      1  FAIL  tests/ledger/journal.test.ts > journal rules > stays exact above 2^53
+      1  FAIL  tests/ledger/ledger.test.ts > ledger API > a cashier cannot post, reverse or read the ledger, and an anonymous caller gets 401
+      1  FAIL  tests/ledger/ledger.test.ts > ledger API > a correction is an immutable reversal; a second reversal and a reversal of a reversal are refused
+      1  FAIL  tests/ledger/ledger.test.ts > ledger API > a duplicate source event is a 409 and does not post twice
+      1  FAIL  tests/ledger/ledger.test.ts > ledger API > a movement that would make a balance negative is refused and changes nothing
+      1  FAIL  tests/ledger/ledger.test.ts > ledger API > an unbalanced, float-money or unknown-account request is a 400 and nothing is stored
+      1  FAIL  tests/ledger/ledger.test.ts > ledger API > concurrent posts with the same source event create exactly one transaction
+      1  FAIL  tests/ledger/ledger.test.ts > ledger API > owner posts a balanced transaction and the balances move
+      1  FAIL  tests/ledger/ledger.test.ts > ledger API > reversing a sale whose cash was already paid out would go negative: refused, nothing changes
+      1  FAIL  tests/ledger/ledger.test.ts > ledger API > tenant and outlet come from the session; a body that names them is rejected
+      1  FAIL  tests/ledger/ledger.test.ts > ledger API > the ledger is tenant scoped: another tenant sees its own books and gets 404 for foreign ids
+      1  FAIL  tests/ledger/ledger.test.ts > ledger API > the same Idempotency-Key replays the first answer instead of posting twice
+      1  FAIL  tests/ledger/migrate.test.ts > T48 migration 0003 > a payment intent cannot go back to pending and its amount is frozen
+      1  FAIL  tests/ledger/migrate.test.ts > T48 migration 0003 > applies up, rolls back down to nothing, and applies up again
+      1  FAIL  tests/ledger/migrate.test.ts > T48 migration 0003 > source event is unique per tenant but may repeat across tenants
+      1  FAIL  tests/ledger/migrate.test.ts > T48 migration 0003 > the database refuses an unbalanced transaction at commit
+      1  FAIL  tests/ledger/migrate.test.ts > T48 migration 0003 > the database refuses to update or delete a ledger entry or transaction
+      1  FAIL  tests/payments/config.test.ts [ tests/payments/config.test.ts ]
+      1  FAIL  tests/payments/payments.test.ts [ tests/payments/payments.test.ts ]
+      1  Test Files  5 failed (5)
+      1 "TypeError: (0 , __vite_ssr_import_0__.assertBalanced) is not a function"
+      7 AssertionError: expected 404 to be 200 // Object.is equality
+      1 AssertionError: expected 404 to be 400 // Object.is equality
+      1 AssertionError: expected 404 to be 403 // Object.is equality
+      1 AssertionError: expected [ '0001_identity', …(1) ] to deeply equal [ '0001_identity', …(2) ]
+      1 AssertionError: expected [Function] to not throw an error but 'TypeError: (0 , __vite_ssr_import_0__…' was thrown
+      2 AssertionError: expected error to be instance of DomainError
+      1 Caused by: Error: Failed to load url ../../services/api/src/payments/config.ts (resolved id: ../../services/api/src/payments/config.ts) in /home/dev/orca/worksp
+      1 Caused by: Error: Failed to load url ../../services/worker/src/payments/runner.ts (resolved id: ../../services/worker/src/payments/runner.ts) in /home/dev/orca/
+      1 Error: Cannot find module '../../services/api/src/payments/config.ts' imported from '/home/dev/orca/workspaces/yravgHatchSystem/t48-ledger/tests/payments/config
+      1 Error: Cannot find module '../../services/worker/src/payments/runner.ts' imported from '/home/dev/orca/workspaces/yravgHatchSystem/t48-ledger/tests/payments/sup
+      1 TypeError: (0 , allocatePayment) is not a function
+      1 TypeError: (0 , reverseLines) is not a function
+      2 TypeError: Cannot read properties of undefined (reading 'transactionId')
+exit 1 (red, before any implementation)

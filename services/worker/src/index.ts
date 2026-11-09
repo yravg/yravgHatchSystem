@@ -1,2 +1,2 @@
-// T01 shell only. The transactional-outbox worker is built by the first ticket that owns an outbox event.
-export {};
+// The transactional-outbox worker. T01 shipped the shell; T48 adds the payments runner.
+export * from "./payments/index.ts";
