@@ -13,6 +13,7 @@ Branch: spec-v0.2, pushed to origin (public) on owner approval 2026-11-09. Route
 | T01 status | done | board.md + 01-foundation/rd.md |
 | T46 identity/tenancy/2FA API | done | worker t46-identity 528346d; Merger merge-t46 efe6a70 (no conflicts, all gates 0, validator 16764/16764 on git archive); Checker PASS (6/6 mutations caught, real HTTP 21/21, 0 secret hits, migration up/down/up, Kotlin JVM :contracts:test 6/6; Android BLOCKED no SDK). Evidence VPS /home/user/dev/HatchSystem/evidence/t46-checker/ |
 | T47 stations/rational pricing/minimum API | done | worker t47-pricing 18d3b4b (red-first logged); Merger merge-t47 def55d2 (no conflicts, all gates 0, 147 tests, validator 16764/16764); Checker PASS (6 mutations caught, live HTTP 61s=Rp169, 20/30/40min=5000/5000/7000, 10 concurrent reserves = 1 winner, 6000 random cases 0 mismatches vs independent BigInt reference). Evidence VPS /home/user/dev/HatchSystem/evidence/t47-checker/ |
+| T48 ledger/Midtrans QRIS sandbox | done | worker t48-ledger ec3b0d7 (red-first commit e73cbee); Merger merge-t48 2680a2e (no conflicts, 206 tests, validator 16764/16764); Checker PASS (11/12 mutations killed, 1 equivalent; 36/36 real-HTTP checks vs Checker's own loopback Midtrans mock; fail-closed startup). Evidence VPS /home/user/dev/HatchSystem/evidence/t48-checker/REPORT.md |
 
 ## Machine toolchain (2026-11-08)
 node v24.14.1, pnpm 10.33.0, Python 3.11 (`python`, no `python3` on Windows), OpenJDK 11.
@@ -45,8 +46,9 @@ Missing: .NET SDK (dotnet host present, no SDK), JDK 17+, Gradle, Android SDK, P
 - Validator flags node_modules inside a worktree; gates run it on a `git archive HEAD` export.
 - T46: worker wrote tests after code (mutation check substitutes); no RLS (explicit scoped queries); trustProxy unset; no server key bootstrap; owner must lock role/MFA/step-up TTL assumptions in specs/tickets/46-identity-api/results.md before production.
 - T47: zone-transfer minimum-once and insufficient-balance activation refusal proven only in the pure core; T49 must test both over its API. New permissions station.manage/rate.manage (manager gets station.manage) need owner D02 lock. Money values are sandbox fixtures (D01/D26 unapproved).
+- T48 advisories: public Midtrans notification endpoint has no rate limit (add edge limit before production); no provider refund API (refunds stay pending, per D15); real Midtrans sandbox schema unverified (mock only); equal ServerKey and signature secret is accepted; T01 test:ticket matches test names by substring.
 - VPS deploy key not yet added on GitHub: lead relays VPS branches from the laptop.
 - Android SDK absent on VPS: Android tasks blocked (T51 needs it; owner approved licence at T51).
 
 ## Next step
-T46, T47 done. Dispatch T48 and T50 in parallel next; then T48 and T50 in parallel; then T49 and T51; then T53; then T54. Each needs its dependencies done (Merger + independent Checker) first.
+T46, T47, T48 done; T50 built, Merger next; then T48 and T50 in parallel; then T49 and T51; then T53; then T54. Each needs its dependencies done (Merger + independent Checker) first.
