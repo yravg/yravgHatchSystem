@@ -12,12 +12,15 @@ import { registerPayments } from "./payments/routes.ts";
 import { registerLedger } from "./ledger/routes.ts";
 import { registerRates } from "./rates/routes.ts";
 import { registerStations } from "./stations/routes.ts";
+import { registerSessions, SessionError, type SessionsOptions } from "./sessions/index.ts";
 
 export interface AppOptions {
   /** When absent the identity routes are not registered (the T01 scaffold: health only). */
   identity?: IdentityDeps;
   /** Midtrans sandbox settings. Without them the payment routes are not registered; with an invalid set startup throws. */
   payments?: PaymentsConfig;
+  /** T49 session coordinator options (fixture switches). The routes are registered whenever identity is. */
+  sessions?: SessionsOptions;
   logger?: { level: string; stream: NodeJS.WritableStream };
 }
 
@@ -26,7 +29,7 @@ export function buildApp(opts: AppOptions = {}): FastifyInstance {
   const app = Fastify({ genReqId: () => randomUUID(), ...(opts.logger ? { logger: opts.logger } : {}) });
 
   app.setErrorHandler((err: FastifyError, req, reply) => {
-    if (err instanceof IdentityError || err instanceof PaymentError) {
+    if (err instanceof IdentityError || err instanceof PaymentError || err instanceof SessionError) {
       return reply.status(err.status).send({ error: { code: err.code, messageKey: err.messageKey, retryable: err.retryable, details: { ...err.details } }, requestId: req.id });
     }
     // Never echo err.message or the stack: unknown failures become INTERNAL_ERROR (CONTRACTS section 1).
@@ -51,6 +54,7 @@ export function buildApp(opts: AppOptions = {}): FastifyInstance {
     if (opts.payments) registerPayments(app, opts.identity, opts.payments);
     registerDevices(app, opts.identity);
     registerEdge(app, opts.identity);
+    registerSessions(app, opts.identity, opts.sessions);
   }
 
   return app;

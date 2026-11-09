@@ -1,0 +1,29 @@
+
+> yravg-hatchsystem@ typecheck /home/dev/orca/workspaces/yravgHatchSystem/t49-session
+> tsc -p tsconfig.json --noEmit && pnpm -r --if-present typecheck
+
+Scope: 6 of 7 workspace projects
+
+> @yravg/contracts@0.0.0 typecheck /home/dev/orca/workspaces/yravgHatchSystem/t49-session/packages/contracts
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/ui@0.0.0 typecheck /home/dev/orca/workspaces/yravgHatchSystem/t49-session/packages/ui
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/web@0.0.0 typecheck /home/dev/orca/workspaces/yravgHatchSystem/t49-session/apps/web
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/domain@0.0.0 typecheck /home/dev/orca/workspaces/yravgHatchSystem/t49-session/packages/domain
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/api@0.0.0 typecheck /home/dev/orca/workspaces/yravgHatchSystem/t49-session/services/api
+> tsc -p tsconfig.json --noEmit
+
+
+> @yravg/worker@0.0.0 typecheck /home/dev/orca/workspaces/yravgHatchSystem/t49-session/services/worker
+> tsc -p tsconfig.json --noEmit
+
