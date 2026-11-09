@@ -25,6 +25,7 @@ android {
 
 dependencies {
     implementation(project(":core"))
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
     implementation("org.bouncycastle:bcprov-jdk18on:1.85") // Ed25519 below API 33; lightweight API, no provider registration
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:2.4.20")

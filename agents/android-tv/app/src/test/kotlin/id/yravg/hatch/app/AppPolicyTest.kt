@@ -13,7 +13,7 @@ class AppPolicyTest {
 
     @Test fun `manifest requests no hidden or privileged capability`() {
         val forbidden = listOf(
-            "WRITE_SECURE_SETTINGS", "INSTALL_PACKAGES", "DELETE_PACKAGES", "MANAGE_DEVICE_POLICY", "BIND_DEVICE_ADMIN", "MANAGE_EXTERNAL_STORAGE",
+            "WRITE_SECURE_SETTINGS", "INSTALL_PACKAGES", "DELETE_PACKAGES", "MANAGE_DEVICE_POLICY", "MANAGE_EXTERNAL_STORAGE",
             "CHANGE_CONFIGURATION", "REBOOT", "SET_ALWAYS_FINISH", "DUMP", "INJECT_EVENTS", "READ_LOGS", "MASTER_CLEAR", "ACCESS_SUPERUSER", "BIND_ACCESSIBILITY_SERVICE",
         )
         for (p in forbidden) assertFalse(manifest.contains(p), p)

@@ -521,5 +521,86 @@
         ]
       }
     }
+  },
+  "51": {
+    "title": "Kotlin TV provisioning, reboot dan offline core",
+    "requirements": {
+      "HS-51": {
+        "acceptance": "AC-HS-51",
+        "tests": [],
+        "external": [
+          {
+            "id": "android-tv-51",
+            "tool": "java",
+            "cwd": "agents/android-tv",
+            "command": [
+              "./gradlew",
+              "--no-daemon",
+              "testDebugUnitTest",
+              "assembleDebug",
+              ":contracts:test"
+            ],
+            "note": "31 core + 5 app JVM tests plus assembleDebug (SIMULATOR). Physical Home/Back/input, cold reboot and Ethernet-unplugged tests are BLOCKED: no Android TV hardware (tests/hardware/android-tv P1-P11)."
+          }
+        ]
+      },
+      "HS-V02-10": {
+        "acceptance": "AC-HS-V02-10",
+        "tests": [],
+        "external": [
+          {
+            "id": "android-tv-v02-10",
+            "tool": "java",
+            "cwd": "agents/android-tv",
+            "command": [
+              "./gradlew",
+              "--no-daemon",
+              "testDebugUnitTest",
+              "assembleDebug",
+              ":contracts:test"
+            ],
+            "note": "Provisioning profiles, locked setup, HTTP 200/pairing never grant, technician escape audited (SIMULATOR). Physical key tests BLOCKED."
+          }
+        ]
+      },
+      "HS-V02-11": {
+        "acceptance": "AC-HS-V02-11",
+        "tests": [],
+        "external": [
+          {
+            "id": "android-tv-v02-11",
+            "tool": "java",
+            "cwd": "agents/android-tv",
+            "command": [
+              "./gradlew",
+              "--no-daemon",
+              "testDebugUnitTest",
+              "assembleDebug",
+              ":contracts:test"
+            ],
+            "note": "Three simulated cold reboots, permission revoke => capability fail + fallback lock, no grant API (SIMULATOR). Real 3-reboot run on an exact model BLOCKED."
+          }
+        ]
+      },
+      "HS-V02-13": {
+        "acceptance": "AC-HS-V02-13",
+        "tests": [],
+        "external": [
+          {
+            "id": "android-tv-v02-13",
+            "tool": "java",
+            "cwd": "agents/android-tv",
+            "command": [
+              "./gradlew",
+              "--no-daemon",
+              "testDebugUnitTest",
+              "assembleDebug",
+              ":contracts:test"
+            ],
+            "note": "CEC off recorded on TV and console, lock lifecycle with a CEC driver that fails if touched, unsupported power advertised (SIMULATOR). Real TV+console BLOCKED."
+          }
+        ]
+      }
+    }
   }
 }

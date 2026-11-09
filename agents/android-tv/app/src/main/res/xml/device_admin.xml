@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- No device-admin policies are requested: this component only lets venue provisioning make the app device owner for lock task mode. -->
+<device-admin />
