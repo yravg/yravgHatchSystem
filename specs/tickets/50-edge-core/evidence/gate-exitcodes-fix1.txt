@@ -9,3 +9,4 @@
 /home/user/dev/HatchSystem/capped.sh pnpm exec vitest run tests/identity/migrate.test.ts exit 0
 dotnet build HatchAgents.slnx exit 0
 dotnet test HatchAgents.slnx exit 0
+python3 -I tools/validate_spec.py (clean git archive of 3d17dc8) exit 0
